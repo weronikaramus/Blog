@@ -65,8 +65,10 @@ class __TwigTemplate_72ea56908b0a604873b03f91ff144ee6 extends Template
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
 
         // line 4
-        echo "    <nav class=\"navbar navbar-expand-sm navbar-dark\">
-      <a href=\"#\" class=\"navbar-brand\"><img src=\"ww.png\"></a>
+        echo "    
+    
+    <nav class=\"navbar navbar-expand-sm navbar-dark\">
+      <a href=\"#\" class=\"navbar-brand\"><img src=\"logo.png\"></a>
       <button class=\"navbar-toggler\" data-toggle=\"collapse\" data-target=\"#navbar-menu\">
         <span class=\"navbar-toddler-icon\"></span>
       </button>
@@ -79,26 +81,27 @@ class __TwigTemplate_72ea56908b0a604873b03f91ff144ee6 extends Template
     </div>
 
     </nav>
+    
+    <div class=\"main-container\">
+\t\t\t<form
+        id=\"search\"
+        class=\"search-form\"
+        action=\"search.php\"
+        method=\"post\"
+        autocomplete=\"on\"
+      >
+          
+            <input
+              type=\"search\"
+              placeholder=\"Search\"
+              id=\"search\"
+              name=\"search\"
+            />
+          
+\t\t\t\t</form>
 
-    ";
-        // line 19
-        if (twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 19, $this->source); })()), "user", [], "any", false, false, false, 19)) {
-            // line 20
-            echo "        <div class=\"mx-auto w-4/5 my-8\">
-            <a 
-                href=\"/movies/create\" 
-                class=\"uppercase border border-gray-500 text-lg py-4 px-6 rounded transition transition-all bg-gray-800 text-white hover:bg-white hover:text-gray-800\">
-                Create New movie
-            </a>
-        </div>
-    ";
-        }
-        // line 28
-        echo "    
-    <div class=\"md:grid lg:grid-cols-3 gap-20 w-4/5 mx-auto py-15 \">
-        ";
-        // line 56
-        echo "    </div>
+            
+\t\t</div>
 ";
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -120,7 +123,7 @@ class __TwigTemplate_72ea56908b0a604873b03f91ff144ee6 extends Template
 
     public function getDebugInfo()
     {
-        return array (  101 => 56,  97 => 28,  87 => 20,  85 => 19,  68 => 4,  58 => 3,  35 => 1,);
+        return array (  68 => 4,  58 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
@@ -128,8 +131,10 @@ class __TwigTemplate_72ea56908b0a604873b03f91ff144ee6 extends Template
         return new Source("{% extends \"./base.html.twig\" %}
 
 {% block body %}
+    
+    
     <nav class=\"navbar navbar-expand-sm navbar-dark\">
-      <a href=\"#\" class=\"navbar-brand\"><img src=\"ww.png\"></a>
+      <a href=\"#\" class=\"navbar-brand\"><img src=\"logo.png\"></a>
       <button class=\"navbar-toggler\" data-toggle=\"collapse\" data-target=\"#navbar-menu\">
         <span class=\"navbar-toddler-icon\"></span>
       </button>
@@ -142,45 +147,27 @@ class __TwigTemplate_72ea56908b0a604873b03f91ff144ee6 extends Template
     </div>
 
     </nav>
-
-    {% if app.user %}
-        <div class=\"mx-auto w-4/5 my-8\">
-            <a 
-                href=\"/movies/create\" 
-                class=\"uppercase border border-gray-500 text-lg py-4 px-6 rounded transition transition-all bg-gray-800 text-white hover:bg-white hover:text-gray-800\">
-                Create New movie
-            </a>
-        </div>
-    {% endif %}
     
-    <div class=\"md:grid lg:grid-cols-3 gap-20 w-4/5 mx-auto py-15 \">
-        {# <!-- Review Item -->
-        {% for movie in movies %}
-            <div class=\"text-center pt-8 pb-4\">
-                <img
-                    src=\"{{ movie.imagePath }}\"
-                    alt=\"\"
-                    class=\"shadow-xl rounded-md\"
-                />
+    <div class=\"main-container\">
+\t\t\t<form
+        id=\"search\"
+        class=\"search-form\"
+        action=\"search.php\"
+        method=\"post\"
+        autocomplete=\"on\"
+      >
+          
+            <input
+              type=\"search\"
+              placeholder=\"Search\"
+              id=\"search\"
+              name=\"search\"
+            />
+          
+\t\t\t\t</form>
 
-                <h2 class=\"text-gray-700 font-bold text-3xl py-2\">
-                    {{ movie.title }}
-                </h2>
-
-                <span class=\"text-gray-500\">
-                    By <span class=\"italic text-sm text-gray-800\">Code With Dary | 28.01.2022
-                </span>
-
-                <p class=\"text-base text-gray-700 pt-4 pb-10 leading-8 font-light\">
-                    {{ movie.description }}
-                </p>
-
-                <a href=\"/movies/{{ movie.id }}\" class=\"uppercase border border-gray-500 text-gray-600 text-lg py-4 px-12 rounded transition transition-all hover:bg-gray-800 hover:text-white\">
-                    Keep Reading
-                </a>
-            </div>
-        {% endfor %} #}
-    </div>
+            
+\t\t</div>
 {% endblock %}", "blog/index.html.twig", "/home/wwwroot/app/templates/blog/index.html.twig");
     }
 }

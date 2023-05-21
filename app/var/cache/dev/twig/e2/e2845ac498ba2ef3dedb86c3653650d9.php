@@ -12,7 +12,7 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* ./base.html.twig */
+/* base.html.twig */
 class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
 {
     private $source;
@@ -38,10 +38,10 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
     {
         $macros = $this->macros;
         $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
-        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "./base.html.twig"));
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "base.html.twig"));
 
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
-        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "./base.html.twig"));
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "base.html.twig"));
 
         // line 1
         echo "<!DOCTYPE html>
@@ -183,7 +183,7 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
 
     public function getTemplateName()
     {
-        return "./base.html.twig";
+        return "base.html.twig";
     }
 
     public function getDebugInfo()
@@ -230,6 +230,6 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
     {% endblock %}
     </body>
 </html>
-", "./base.html.twig", "/home/wwwroot/app/templates/base.html.twig");
+", "base.html.twig", "/home/wwwroot/app/templates/base.html.twig");
     }
 }
