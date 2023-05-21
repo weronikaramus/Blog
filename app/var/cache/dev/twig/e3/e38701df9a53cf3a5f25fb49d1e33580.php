@@ -90,12 +90,12 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
         // line 8
         echo "
         <div class=\"row\">
-                <div class=\"col-md-6 col-sm-12 left-box\">
+                <div class=\"col-lg-6 col-md-12 col-sm-12 left-box\">
                     <h1>
                     Start<br>writing<br>now!
                     </h1>
                 </div>
-                <div class=\"login-register col-md-6 col-sm-12 right-box bg-white\">
+                <div class=\"col-lg-6 login-register col-md-12 col-sm-12 right-box bg-white\">
                     ";
         // line 16
         $this->displayBlock('register', $context, $blocks);
@@ -213,12 +213,12 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
 {% block body %}
 
         <div class=\"row\">
-                <div class=\"col-md-6 col-sm-12 left-box\">
+                <div class=\"col-lg-6 col-md-12 col-sm-12 left-box\">
                     <h1>
                     Start<br>writing<br>now!
                     </h1>
                 </div>
-                <div class=\"login-register col-md-6 col-sm-12 right-box bg-white\">
+                <div class=\"col-lg-6 login-register col-md-12 col-sm-12 right-box bg-white\">
                     {% block register %}
                     <div class=\"register-form\">
 \t\t\t<p class=\"form-title\">Sign up</p>
@@ -279,6 +279,8 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
                 </div>
         </div>
 
-{% endblock %}", "login/index.html.twig", "/home/wwwroot/app/templates/login/index.html.twig");
+{% endblock %}
+
+", "login/index.html.twig", "/home/wwwroot/app/templates/login/index.html.twig");
     }
 }

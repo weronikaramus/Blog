@@ -62,12 +62,14 @@ input{
 	background-size: 1rem;
 	background-position: 10px 10px;
 	background-repeat: no-repeat;
+    text-align: end;
 }
 
 .form-control{
     border-style: none;
 	list-style: none;
 	display: inline-block;
+    margin-bottom: 1.5rem;
 
 }
 
@@ -85,13 +87,7 @@ input{
 	padding: 3rem;
 }
 
-.login-form .form-title {
-	margin-bottom: 1rem;
-	font-size: 2rem;
-	font-weight: 900;
-}
-
-.register-form .form-title {
+.form-title {
 	margin-bottom: 2rem;
 	font-size: 2rem;
 	font-weight: 900;
@@ -117,8 +113,6 @@ input{
 	color: #34786C;
 	text-decoration: none;
 	text-align: center;
-
-    
 }
 
 label {
