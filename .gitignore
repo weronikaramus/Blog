@@ -1,7 +1,4 @@
 .idea
-var
-vendor
 .php_cs.cache
 .phpunit.result.cache
-.docker
 .DS_Store
