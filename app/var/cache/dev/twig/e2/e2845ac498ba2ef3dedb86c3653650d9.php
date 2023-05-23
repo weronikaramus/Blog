@@ -12,7 +12,7 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* base.html.twig */
+/* ./base.html.twig */
 class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
 {
     private $source;
@@ -29,7 +29,7 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
         $this->blocks = [
             'title' => [$this, 'block_title'],
             'stylesheets' => [$this, 'block_stylesheets'],
-            'body' => [$this, 'block_body'],
+            'main' => [$this, 'block_main'],
             'javascripts' => [$this, 'block_javascripts'],
         ];
     }
@@ -38,10 +38,10 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
     {
         $macros = $this->macros;
         $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
-        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "base.html.twig"));
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "./base.html.twig"));
 
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
-        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "base.html.twig"));
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "./base.html.twig"));
 
         // line 1
         echo "<!DOCTYPE html>
@@ -59,15 +59,48 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
         echo "    </head>
     <body>
         <main role=\"main\" class=\"container-fluid\">
-            ";
-        // line 17
-        $this->displayBlock('body', $context, $blocks);
-        // line 21
-        echo "        </main>
+            <nav class=\"navbar navbar-expand-sm navbar-dark\">
+                <a href=\"";
+        // line 18
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("blog_index");
+        echo "\" class=\"navbar-brand\"><img src=\"";
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/ww.png"), "html", null, true);
+        echo "\"></a>
+                <button class=\"navbar-toggler\" data-toggle=\"collapse\" data-target=\"#navbar-menu\">
+                    <span class=\"navbar-toddler-icon\"></span>
+                </button>
+                <div class=\"collapse navbar-collapse\" id=\"navbar-menu\">
+                    <ul class=\"navbar-nav ms-auto\">
+                    <li class=\"nav-item\"><a href=\"";
+        // line 24
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("blog_menu", ["nav" => "create"]);
+        echo "\" class=\"nav-link\">New post</a></li>
+                    <li class=\"nav-item\"><a href=\"";
+        // line 25
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("blog_menu", ["nav" => "myposts"]);
+        echo "\" class=\"nav-link\">My posts</a></li>
+                    <li class=\"nav-item\"><a href=\"";
+        // line 26
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("blog_menu", ["nav" => "settings"]);
+        echo "\" class=\"nav-link\">Settings</a></li>
+                    </ul>
+                </div>
+
+            </nav>
+    
+            <div class=\"main-container\">
+\t\t\t";
+        // line 33
+        $this->displayBlock('main', $context, $blocks);
+        // line 37
+        echo "
+            
+\t\t    </div>
+        </main>
     ";
-        // line 22
+        // line 41
         $this->displayBlock('javascripts', $context, $blocks);
-        // line 36
+        // line 55
         echo "    </body>
 </html>
 ";
@@ -127,19 +160,19 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
 
     }
 
-    // line 17
-    public function block_body($context, array $blocks = [])
+    // line 33
+    public function block_main($context, array $blocks = [])
     {
         $macros = $this->macros;
         $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
-        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "main"));
 
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
-        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "main"));
 
-        // line 18
-        echo "            
-            
+        // line 34
+        echo "
+                
             ";
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -149,7 +182,7 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
 
     }
 
-    // line 22
+    // line 41
     public function block_javascripts($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -159,7 +192,7 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "javascripts"));
 
-        // line 23
+        // line 42
         echo "        <script
                 src=\"https://code.jquery.com/jquery-3.6.0.slim.min.js\"
                 integrity=\"sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=\"
@@ -183,12 +216,17 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
 
     public function getTemplateName()
     {
-        return "base.html.twig";
+        return "./base.html.twig";
+    }
+
+    public function isTraitable()
+    {
+        return false;
     }
 
     public function getDebugInfo()
     {
-        return array (  163 => 23,  153 => 22,  141 => 18,  131 => 17,  119 => 12,  112 => 7,  102 => 6,  83 => 5,  71 => 36,  69 => 22,  66 => 21,  64 => 17,  59 => 14,  57 => 6,  53 => 5,  47 => 1,);
+        return array (  196 => 42,  186 => 41,  174 => 34,  164 => 33,  152 => 12,  145 => 7,  135 => 6,  116 => 5,  104 => 55,  102 => 41,  96 => 37,  94 => 33,  84 => 26,  80 => 25,  76 => 24,  65 => 18,  59 => 14,  57 => 6,  53 => 5,  47 => 1,);
     }
 
     public function getSourceContext()
@@ -209,10 +247,29 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
     </head>
     <body>
         <main role=\"main\" class=\"container-fluid\">
-            {% block body %}
-            
-            
+            <nav class=\"navbar navbar-expand-sm navbar-dark\">
+                <a href=\"{{ path('blog_index') }}\" class=\"navbar-brand\"><img src=\"{{ asset('images/ww.png') }}\"></a>
+                <button class=\"navbar-toggler\" data-toggle=\"collapse\" data-target=\"#navbar-menu\">
+                    <span class=\"navbar-toddler-icon\"></span>
+                </button>
+                <div class=\"collapse navbar-collapse\" id=\"navbar-menu\">
+                    <ul class=\"navbar-nav ms-auto\">
+                    <li class=\"nav-item\"><a href=\"{{ path('blog_menu', {nav: 'create'}) }}\" class=\"nav-link\">New post</a></li>
+                    <li class=\"nav-item\"><a href=\"{{ path('blog_menu', {nav: 'myposts'}) }}\" class=\"nav-link\">My posts</a></li>
+                    <li class=\"nav-item\"><a href=\"{{ path('blog_menu', {nav: 'settings'}) }}\" class=\"nav-link\">Settings</a></li>
+                    </ul>
+                </div>
+
+            </nav>
+    
+            <div class=\"main-container\">
+\t\t\t{% block main %}
+
+                
             {% endblock %}
+
+            
+\t\t    </div>
         </main>
     {% block javascripts %}
         <script
@@ -230,6 +287,6 @@ class __TwigTemplate_889f9b7f938eac54a1a70c0f5a95a815 extends Template
     {% endblock %}
     </body>
 </html>
-", "base.html.twig", "/home/wwwroot/app/templates/base.html.twig");
+", "./base.html.twig", "/home/wwwroot/app/templates/base.html.twig");
     }
 }

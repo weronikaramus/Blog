@@ -25,7 +25,8 @@ class __TwigTemplate_72ea56908b0a604873b03f91ff144ee6 extends Template
         $this->source = $this->getSourceContext();
 
         $this->blocks = [
-            'body' => [$this, 'block_body'],
+            'title' => [$this, 'block_title'],
+            'main' => [$this, 'block_main'],
         ];
     }
 
@@ -55,34 +56,38 @@ class __TwigTemplate_72ea56908b0a604873b03f91ff144ee6 extends Template
     }
 
     // line 3
-    public function block_body($context, array $blocks = [])
+    public function block_title($context, array $blocks = [])
     {
         $macros = $this->macros;
         $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
-        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "title"));
 
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
-        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "title"));
 
         // line 4
-        echo "    
-    
-    <nav class=\"navbar navbar-expand-sm navbar-dark\">
-      <a href=\"#\" class=\"navbar-brand\"><img src=\"logo.png\"></a>
-      <button class=\"navbar-toggler\" data-toggle=\"collapse\" data-target=\"#navbar-menu\">
-        <span class=\"navbar-toddler-icon\"></span>
-      </button>
-      <div class=\"collapse navbar-collapse\" id=\"navbar-menu\">
-        <ul class=\"navbar-nav ml-auto\">
-          <li class=\"nav-item\"><a href=\"\" class=\"nav-link\">New post</a></li>
-          <li class=\"nav-item\"><a href=\"\" class=\"nav-link\">My posts</a></li>
-          <li class=\"nav-item\"><a href=\"\" class=\"nav-link\">Settings</a></li>
-        </ul>
-    </div>
+        echo "  Write!
+";
+        
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
 
-    </nav>
-    
-    <div class=\"main-container\">
+        
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->leave($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof);
+
+    }
+
+    // line 7
+    public function block_main($context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "main"));
+
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "main"));
+
+        // line 8
+        echo "
 \t\t\t<form
         id=\"search\"
         class=\"search-form\"
@@ -100,8 +105,7 @@ class __TwigTemplate_72ea56908b0a604873b03f91ff144ee6 extends Template
           
 \t\t\t\t</form>
 
-            
-\t\t</div>
+        <h2>See recent posts</h2>
 ";
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -123,32 +127,19 @@ class __TwigTemplate_72ea56908b0a604873b03f91ff144ee6 extends Template
 
     public function getDebugInfo()
     {
-        return array (  68 => 4,  58 => 3,  35 => 1,);
+        return array (  90 => 8,  80 => 7,  69 => 4,  59 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
     {
         return new Source("{% extends \"./base.html.twig\" %}
 
-{% block body %}
-    
-    
-    <nav class=\"navbar navbar-expand-sm navbar-dark\">
-      <a href=\"#\" class=\"navbar-brand\"><img src=\"logo.png\"></a>
-      <button class=\"navbar-toggler\" data-toggle=\"collapse\" data-target=\"#navbar-menu\">
-        <span class=\"navbar-toddler-icon\"></span>
-      </button>
-      <div class=\"collapse navbar-collapse\" id=\"navbar-menu\">
-        <ul class=\"navbar-nav ml-auto\">
-          <li class=\"nav-item\"><a href=\"\" class=\"nav-link\">New post</a></li>
-          <li class=\"nav-item\"><a href=\"\" class=\"nav-link\">My posts</a></li>
-          <li class=\"nav-item\"><a href=\"\" class=\"nav-link\">Settings</a></li>
-        </ul>
-    </div>
+{% block title %}
+  Write!
+{% endblock %}
 
-    </nav>
-    
-    <div class=\"main-container\">
+{% block main %}
+
 \t\t\t<form
         id=\"search\"
         class=\"search-form\"
@@ -166,8 +157,7 @@ class __TwigTemplate_72ea56908b0a604873b03f91ff144ee6 extends Template
           
 \t\t\t\t</form>
 
-            
-\t\t</div>
+        <h2>See recent posts</h2>
 {% endblock %}", "blog/index.html.twig", "/home/wwwroot/app/templates/blog/index.html.twig");
     }
 }

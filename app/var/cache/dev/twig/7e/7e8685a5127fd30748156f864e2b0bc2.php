@@ -1149,6 +1149,6 @@ class __TwigTemplate_64c2cbbfb071b6db324dce1c09fa2932 extends Template
         </span>
     {%- endif -%}
 {%- endblock form_help %}
-", "bootstrap_3_layout.html.twig", "/Users/weronika/PROJEKT/app/vendor/symfony/twig-bridge/Resources/views/Form/bootstrap_3_layout.html.twig");
+", "bootstrap_3_layout.html.twig", "/Users/weronika/Blog-1/app/vendor/symfony/twig-bridge/Resources/views/Form/bootstrap_3_layout.html.twig");
     }
 }

@@ -15,6 +15,16 @@ h1 {
     margin-top: 10%;
 }
 
+h2 {
+	display: inline-block;
+	color: black;
+	font-weight: bold;
+}
+
+.navbar-brand img {
+	height: 4rem;
+}
+
 .login-register {
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
@@ -22,7 +32,7 @@ h1 {
 }
 
 .navbar {
-    width: 90%;
+    width: 85%;
     left: 50%;
     transform: translateX(-50%);
     margin: 0;
@@ -95,9 +105,9 @@ input{
 }
 
 .form-signup-link {
-	position: absolute;
+	position: relative;
 	left: 50%;
-	bottom: 10%;
+	bottom: 5%;
 	transform: translate(-50%, 0%);
 	color: #34786C;
 	text-decoration: none;
@@ -106,7 +116,7 @@ input{
 }
 
 .form-login-link {
-	position: absolute;
+	position: relative;
 	left: 50%;
 	bottom: 5%;
 	transform: translate(-50%, 0%);
@@ -128,7 +138,7 @@ label {
 	display: block;
 	font-size: 16px;
 	padding: 10px;
-	margin: 2rem 0 5rem;
+	margin-top: 2rem;
 	position: relative;
 	left: 50%;
 	transform: translate(-50%, 0%);

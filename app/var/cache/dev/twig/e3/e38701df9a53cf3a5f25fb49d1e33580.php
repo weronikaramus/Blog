@@ -91,15 +91,16 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
         echo "
         <div class=\"row\">
                 <div class=\"col-lg-6 col-md-12 col-sm-12 left-box\">
+                
                     <h1>
                     Start<br>writing<br>now!
                     </h1>
                 </div>
                 <div class=\"col-lg-6 login-register col-md-12 col-sm-12 right-box bg-white\">
                     ";
-        // line 16
+        // line 17
         $this->displayBlock('register', $context, $blocks);
-        // line 73
+        // line 51
         echo "                </div>
         </div>
 
@@ -112,7 +113,7 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
 
     }
 
-    // line 16
+    // line 17
     public function block_register($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -122,26 +123,16 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "register"));
 
-        // line 17
-        echo "                    <div class=\"register-form\">
-\t\t\t<p class=\"form-title\">Sign up</p>
+        // line 18
+        echo "                    <div class=\"login-form\">
+\t\t\t<p class=\"form-title\">Log in</p>
 \t\t\t<form
 \t\t\t\tid=\"form\"
 \t\t\t\tclass=\"form\"
-\t\t\t\taction=\"register.php\"
+\t\t\t\taction=\"login.php\"
 \t\t\t\tmethod=\"post\"
 \t\t\t\tautocomplete=\"on\"
 \t\t\t>
-\t\t\t\t<div class=\"form-control\">
-\t\t\t\t\t<label for=\"username\">Username</label>
-\t\t\t\t\t<input
-\t\t\t\t\t\ttype=\"text\"
-\t\t\t\t\t\tplaceholder=\"example\"
-\t\t\t\t\t\tid=\"username\"
-\t\t\t\t\t\tname=\"username\"
-\t\t\t\t\t/>
-\t\t\t\t\t
-\t\t\t\t</div>
 \t\t\t\t<div class=\"form-control\">
 \t\t\t\t\t<label for=\"email\">Email</label>
 \t\t\t\t\t<input
@@ -150,7 +141,6 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
 \t\t\t\t\t\tid=\"email\"
 \t\t\t\t\t\tname=\"email\"
 \t\t\t\t\t/>
-\t\t\t\t\t
 \t\t\t\t</div>
 \t\t\t\t<div class=\"form-control\">
 \t\t\t\t\t<label for=\"passwd\">Password</label>
@@ -160,24 +150,12 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
 \t\t\t\t\t\tid=\"passwd\"
 \t\t\t\t\t\tname=\"passwd\"
 \t\t\t\t\t/>
-\t\t\t\t\t
-\t\t\t\t</div>
-\t\t\t\t<div class=\"form-control\">
-\t\t\t\t\t<label for=\"conf_passwd\">Confirm password</label>
-\t\t\t\t\t<input
-\t\t\t\t\t\ttype=\"password\"
-\t\t\t\t\t\tplaceholder=\"********\"
-\t\t\t\t\t\tid=\"conf_passwd\"
-\t\t\t\t\t\tname=\"conf_passwd\"
-\t\t\t\t\t/>
-\t\t\t\t\t
 \t\t\t\t</div>
 \t\t\t\t<button type=\"submit\">Submit</button>
 \t\t\t</form>
-\t\t\t<a href=\"login.html\" class=\"form-login-link\"
-\t\t\t\t>Already have an account? Log in!</a
+\t\t\t<a href=\"register.html\" class=\"form-signup-link\"
+\t\t\t\t>Don't have an account? Sign up!</a
 \t\t\t>
-\t\t</div>
                     ";
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -199,7 +177,7 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
 
     public function getDebugInfo()
     {
-        return array (  126 => 17,  116 => 16,  103 => 73,  101 => 16,  91 => 8,  81 => 7,  70 => 4,  60 => 3,  37 => 1,);
+        return array (  127 => 18,  117 => 17,  104 => 51,  102 => 17,  91 => 8,  81 => 7,  70 => 4,  60 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -214,31 +192,22 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
 
         <div class=\"row\">
                 <div class=\"col-lg-6 col-md-12 col-sm-12 left-box\">
+                
                     <h1>
                     Start<br>writing<br>now!
                     </h1>
                 </div>
                 <div class=\"col-lg-6 login-register col-md-12 col-sm-12 right-box bg-white\">
                     {% block register %}
-                    <div class=\"register-form\">
-\t\t\t<p class=\"form-title\">Sign up</p>
+                    <div class=\"login-form\">
+\t\t\t<p class=\"form-title\">Log in</p>
 \t\t\t<form
 \t\t\t\tid=\"form\"
 \t\t\t\tclass=\"form\"
-\t\t\t\taction=\"register.php\"
+\t\t\t\taction=\"login.php\"
 \t\t\t\tmethod=\"post\"
 \t\t\t\tautocomplete=\"on\"
 \t\t\t>
-\t\t\t\t<div class=\"form-control\">
-\t\t\t\t\t<label for=\"username\">Username</label>
-\t\t\t\t\t<input
-\t\t\t\t\t\ttype=\"text\"
-\t\t\t\t\t\tplaceholder=\"example\"
-\t\t\t\t\t\tid=\"username\"
-\t\t\t\t\t\tname=\"username\"
-\t\t\t\t\t/>
-\t\t\t\t\t
-\t\t\t\t</div>
 \t\t\t\t<div class=\"form-control\">
 \t\t\t\t\t<label for=\"email\">Email</label>
 \t\t\t\t\t<input
@@ -247,7 +216,6 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
 \t\t\t\t\t\tid=\"email\"
 \t\t\t\t\t\tname=\"email\"
 \t\t\t\t\t/>
-\t\t\t\t\t
 \t\t\t\t</div>
 \t\t\t\t<div class=\"form-control\">
 \t\t\t\t\t<label for=\"passwd\">Password</label>
@@ -257,24 +225,12 @@ class __TwigTemplate_bba1dedf8ac2fcd0df4e53541cce0625 extends Template
 \t\t\t\t\t\tid=\"passwd\"
 \t\t\t\t\t\tname=\"passwd\"
 \t\t\t\t\t/>
-\t\t\t\t\t
-\t\t\t\t</div>
-\t\t\t\t<div class=\"form-control\">
-\t\t\t\t\t<label for=\"conf_passwd\">Confirm password</label>
-\t\t\t\t\t<input
-\t\t\t\t\t\ttype=\"password\"
-\t\t\t\t\t\tplaceholder=\"********\"
-\t\t\t\t\t\tid=\"conf_passwd\"
-\t\t\t\t\t\tname=\"conf_passwd\"
-\t\t\t\t\t/>
-\t\t\t\t\t
 \t\t\t\t</div>
 \t\t\t\t<button type=\"submit\">Submit</button>
 \t\t\t</form>
-\t\t\t<a href=\"login.html\" class=\"form-login-link\"
-\t\t\t\t>Already have an account? Log in!</a
+\t\t\t<a href=\"register.html\" class=\"form-signup-link\"
+\t\t\t\t>Don't have an account? Sign up!</a
 \t\t\t>
-\t\t</div>
                     {% endblock %}
                 </div>
         </div>

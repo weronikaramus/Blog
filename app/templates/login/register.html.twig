@@ -15,15 +15,25 @@
                 </div>
                 <div class="col-lg-6 login-register col-md-12 col-sm-12 right-box bg-white">
                     {% block register %}
-                    <div class="login-form">
-			<p class="form-title">Log in</p>
+                    <div class="register-form">
+			<p class="form-title">Sign up</p>
 			<form
 				id="form"
 				class="form"
-				action="login.php"
+				action="register.php"
 				method="post"
 				autocomplete="on"
 			>
+				<div class="form-control">
+					<label for="username">Username</label>
+					<input
+						type="text"
+						placeholder="example"
+						id="username"
+						name="username"
+					/>
+					
+				</div>
 				<div class="form-control">
 					<label for="email">Email</label>
 					<input
@@ -32,6 +42,7 @@
 						id="email"
 						name="email"
 					/>
+					
 				</div>
 				<div class="form-control">
 					<label for="passwd">Password</label>
@@ -41,12 +52,24 @@
 						id="passwd"
 						name="passwd"
 					/>
+					
+				</div>
+				<div class="form-control">
+					<label for="conf_passwd">Confirm password</label>
+					<input
+						type="password"
+						placeholder="********"
+						id="conf_passwd"
+						name="conf_passwd"
+					/>
+					
 				</div>
 				<button type="submit">Submit</button>
 			</form>
-			<a href="register.html" class="form-signup-link"
-				>Don't have an account? Sign up!</a
+			<a href="login.html" class="form-login-link"
+				>Already have an account? Log in!</a
 			>
+		</div>
                     {% endblock %}
                 </div>
         </div>

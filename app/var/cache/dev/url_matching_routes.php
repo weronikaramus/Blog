@@ -16,35 +16,39 @@ return [
     ],
     [ // $regexpList
         0 => '{^(?'
-                .'|/blog(?:/([a-zA-Z]+))?(*:29)'
-                .'|/login(?:/([a-zA-Z]+))?(*:59)'
+                .'|/blog(?'
+                    .'|(?:/([^/]++))?(*:29)'
+                    .'|/blog/([^/]++)(*:50)'
+                .')'
+                .'|/login(?:/([a-zA-Z]+))?(*:81)'
                 .'|/_(?'
-                    .'|error/(\\d+)(?:\\.([^/]++))?(*:97)'
-                    .'|wdt/([^/]++)(*:116)'
+                    .'|error/(\\d+)(?:\\.([^/]++))?(*:119)'
+                    .'|wdt/([^/]++)(*:139)'
                     .'|profiler/([^/]++)(?'
                         .'|/(?'
-                            .'|search/results(*:162)'
-                            .'|router(*:176)'
+                            .'|search/results(*:185)'
+                            .'|router(*:199)'
                             .'|exception(?'
-                                .'|(*:196)'
-                                .'|\\.css(*:209)'
+                                .'|(*:219)'
+                                .'|\\.css(*:232)'
                             .')'
                         .')'
-                        .'|(*:219)'
+                        .'|(*:242)'
                     .')'
                 .')'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
-        29 => [[['_route' => 'hello_index', 'name' => 'World', '_controller' => 'App\\Controller\\HelloController::index'], ['name'], ['GET' => 0], null, false, true, null]],
-        59 => [[['_route' => 'login_index', 'name' => 'World', '_controller' => 'App\\Controller\\LoginController::index'], ['name'], ['GET' => 0], null, false, true, null]],
-        97 => [[['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
-        116 => [[['_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'], ['token'], null, null, false, true, null]],
-        162 => [[['_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'], ['token'], null, null, false, false, null]],
-        176 => [[['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false, null]],
-        196 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
-        209 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
-        219 => [
+        29 => [[['_route' => 'blog_index', 'name' => 'index', '_controller' => 'App\\Controller\\BlogController::index'], ['name'], ['GET' => 0], null, false, true, null]],
+        50 => [[['_route' => 'blog_menu', '_controller' => 'App\\Controller\\BlogController::show'], ['nav'], null, null, false, true, null]],
+        81 => [[['_route' => 'login_index', 'name' => 'World', '_controller' => 'App\\Controller\\LoginController::index'], ['name'], ['GET' => 0], null, false, true, null]],
+        119 => [[['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
+        139 => [[['_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'], ['token'], null, null, false, true, null]],
+        185 => [[['_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'], ['token'], null, null, false, false, null]],
+        199 => [[['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false, null]],
+        219 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
+        232 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
+        242 => [
             [['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

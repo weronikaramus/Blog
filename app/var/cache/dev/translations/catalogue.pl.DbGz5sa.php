@@ -323,6 +323,18 @@ $catalogueEn = new MessageCatalogue('en', array (
     'Too many failed login attempts, please try again in %minutes% minute.' => 'Too many failed login attempts, please try again in %minutes% minute.',
     'Too many failed login attempts, please try again in %minutes% minutes.' => 'Too many failed login attempts, please try again in %minutes% minutes.',
   ),
+  'messages' => 
+  array (
+    'label.actions' => 'Actions',
+    'label.id' => 'Id',
+    'label.title' => 'Title',
+    'label.content' => 'Content',
+    'label.tags' => 'Tags',
+    'message.empty_list' => 'List is empty.',
+    'message.record_not_found' => 'Record not found.',
+    'title.record_list' => 'Records list',
+    'title.record_view' => 'Record view #%id%',
+  ),
 ));
 $catalogue->addFallbackCatalogue($catalogueEn);
 
