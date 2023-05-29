@@ -25,7 +25,6 @@
 
         <h2>See recent Posts</h2>
 
-    <h1>{{ 'title.post_list'|trans }}</h1>
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
@@ -46,7 +45,6 @@
                 <tr>
                     <td>{{ post.id }}</td>
                     <td>{{ post.createdAt|date('Y/m/d') }}</td>
-                    <td>{{ post.updatedAt|date('Y/m/d') }}</td>
                     <td>{{ post.title }}</td>
                     <td>
                         <a href="{{ url('post_show', {id: post.id}) }}" title="{{ 'action.show'|trans }}">

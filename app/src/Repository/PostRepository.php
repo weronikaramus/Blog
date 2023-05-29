@@ -53,7 +53,7 @@ class PostRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->orderBy('post.updatedAt', 'DESC');
+            ->orderBy('post.createdAt', 'DESC');
     }
 
     /**
