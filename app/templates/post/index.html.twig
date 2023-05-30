@@ -44,7 +44,7 @@
             {% for post in pagination.items %}
                 <tr>
                     <td>{{ post.id }}</td>
-                    <td>{{ post.createdAt|date('Y/m/d') }}</td>
+                    <td>{{ post.createdAt|format_date('long') }}</td>
                     <td>{{ post.title }}</td>
                     <td>
                         <a href="{{ url('post_show', {id: post.id}) }}" title="{{ 'action.show'|trans }}">

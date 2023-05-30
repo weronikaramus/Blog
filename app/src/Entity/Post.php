@@ -8,6 +8,7 @@ namespace App\Entity;
 use App\Repository\PostRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class Post.
@@ -52,11 +53,10 @@ class Post
      * Created at.
      *
      * @var DateTimeImmutable|null
-     *
-     * @psalm-suppress PropertyNotSetInConstructor
      */
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Gedmo\Timestampable(on: 'create')]
+    private ?\DateTimeImmutable $createdAt;
 
     /**
      * Id of author.
@@ -68,15 +68,6 @@ class Post
     #[ORM\Column]
     private ?int $authorId = null;
 
-    /**
-     * Id of category.
-     *
-     * @var Integer|null
-     *
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    #[ORM\Column]
-    private ?int $categoryId = null;
 
     /**
      * Is published.
@@ -97,6 +88,9 @@ class Post
      */
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    #[ORM\ManyToOne]
+    private ?Category $category = null;
 
     /**
      * Getter for Id.
@@ -171,17 +165,6 @@ class Post
         return $this;
     }
 
-    public function getCategoryId(): ?int
-    {
-        return $this->categoryId;
-    }
-
-    public function setCategoryId(int $categoryId): self
-    {
-        $this->categoryId = $categoryId;
-
-        return $this;
-    }
 
     public function isIsPublished(): ?bool
     {
@@ -203,6 +186,18 @@ class Post
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

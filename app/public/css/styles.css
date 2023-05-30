@@ -1,6 +1,7 @@
 
 body {
     background-color: #34786C;
+	
 }
 
 /* img {
@@ -143,4 +144,8 @@ label {
 	left: 50%;
 	transform: translate(-50%, 0%);
 	width: 30%;
+}
+
+dt, dd {
+	color: black;
 }

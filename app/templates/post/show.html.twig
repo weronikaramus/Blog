@@ -1,19 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.post_details'|trans({'%id%': post.id|default('')}) }}
+    {{ 'title.post'|trans({'%id%': post.id|default('')}) }}
 {% endblock %}
 
-{% block body %}
-    <h1>{{ 'title.post_details'|trans({'%id%': post.id|default('')}) }}</h1>
+{% block main %}
+    <h2>{{  post.title }}</h2>
     {% if post is defined and post|length %}
         <dl class="dl-horizontal">
             <dt>{{ 'label.id'|trans }}</dt>
             <dd>{{ post.id }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
-            <dd>{{ post.createdAt|date('Y/m/d') }}</dd>
-            <dt>{{ 'label.title'|trans }}</dt>
-            <dd>{{  post.title }}</dd>
+            <dd>{{ post.createdAt|format_date('long') }}</dd>
+            <dd>{{  post.content }}</dd>
         </dl>
         <p>
             <a href="{{ url('post_index') }}" title="{{ 'action.back_to_list'|trans }}">
