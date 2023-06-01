@@ -12,7 +12,12 @@
             <dd>{{ post.id }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
             <dd>{{ post.createdAt|format_date('long') }}</dd>
-            <dd>{{  post.content }}</dd>
+            <dt>{{ 'label.content' }}</dt>
+            <dd>{{ post.content }}</dd>
+            <dt>{{ 'label.title'|trans }}</dt>
+            <dd>{{  post.title }}</dd>
+            <dt>{{ 'label.category'|trans }}</dt>
+            <dd>{{  post.category.title }}</dd>
         </dl>
         <p>
             <a href="{{ url('post_index') }}" title="{{ 'action.back_to_list'|trans }}">

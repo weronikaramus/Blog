@@ -81,16 +81,15 @@ class Post
 
     /**
      * Slug.
-     *
-     * @var String|null
-     *
-     * @psalm-suppress PropertyNotSetInConstructor
+     * @var string|null
      */
-    #[ORM\Column(length: 255)]
-    private ?string $slug = null;
+    #[ORM\Column(type: 'string', length: 64)]
+    #[Gedmo\Slug(fields: ['title'])]
+    private ?string $slug;
 
     #[ORM\ManyToOne]
     private ?Category $category = null;
+
 
     /**
      * Getter for Id.
@@ -201,4 +200,5 @@ class Post
 
         return $this;
     }
+
 }
