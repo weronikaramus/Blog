@@ -6,8 +6,7 @@
  namespace App\Controller;
 
  use App\Entity\Post;
- use App\Repository\PostRepository;
- use Knp\Component\Pager\PaginatorInterface;
+ use App\Service\PostServiceInterface;
  use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  use Symfony\Component\HttpFoundation\Response;
  use Symfony\Component\HttpFoundation\Request;
@@ -20,21 +19,38 @@
 class PostController extends AbstractController
 {
     /**
+     * Post service.
+     */
+    private PostServiceInterface $postService;
+
+    /**
+     * Constructor.
+     */
+    public function __construct(PostServiceInterface $postService)
+    {
+        $this->postService = $postService;
+    }
+
+    /**
      * Index action.
      *
-     * @param Request            $request        HTTP Request
-     * @param PostRepository     $postRepository Post repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param Request $request HTTP Request
      *
      * @return Response HTTP response
      */
-    #[Route(name: 'post_index', methods: 'GET')]
-    public function index(Request $request, PostRepository $postRepository, PaginatorInterface $paginator): Response
+    #[Route(
+        name: 'post_index',
+        methods: 'GET'
+    )]
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $postRepository->queryAll(),
+        $filters = $this->getFilters($request);
+        /** @var User $user */
+        $user = $this->getUser();
+        $pagination = $this->postService->getPaginatedList(
             $request->query->getInt('page', 1),
-            PostRepository::PAGINATOR_ITEMS_PER_PAGE
+            $user,
+            $filters
         );
 
         return $this->render('post/index.html.twig', ['pagination' => $pagination]);
@@ -76,5 +92,23 @@ class PostController extends AbstractController
             'post/'.$nav.'.html.twig',
             ['nav' => $nav]
         );
+    }
+
+    /**
+     * Get filters from request.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return array<string, int> Array of filters
+     *
+     * @psalm-return array{category_id: int, tag_id: int, status_id: int}
+     */
+    private function getFilters(Request $request): array
+    {
+        $filters = [];
+        $filters['category_id'] = $request->query->getInt('filters_category_id');
+        // $filters['tag_id'] = $request->query->getInt('filters_tag_id');
+
+        return $filters;
     }
 }

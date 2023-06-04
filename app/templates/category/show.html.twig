@@ -1,0 +1,53 @@
+{% extends "./base.html.twig" %}
+
+{% block title %}
+  Write!
+{% endblock %}
+
+{% block main %}
+
+			<form
+        id="search"
+        class="search-form"
+        action="search.php"
+        method="category"
+        autocomplete="on"
+      >
+          
+            <input
+              type="search"
+              placeholder="Search"
+              id="search"
+              name="search"
+            />
+          
+				</form>
+
+        <h2>See all in "{{ category.title }}"</h2>
+        
+        {% if post is defined and post|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.id'|trans }}</dt>
+            <dd>{{ post.id }}</dd>
+            <dt>{{ 'label.created_at'|trans }}</dt>
+            <dd>{{ post.createdAt|format_date('long') }}</dd>
+            <dt>{{ 'label.content' }}</dt>
+            <dd>{{ post.content }}</dd>
+            <dt>{{ 'label.title'|trans }}</dt>
+            <dd>{{  post.title }}</dd>
+            <dt>{{ 'label.category'|trans }}</dt>
+            <dd>{{  post.category.title }}</dd>
+        </dl>
+        <p>
+            <a href="{{ url('post_index') }}" title="{{ 'action.back_to_list'|trans }}">
+                {{ 'action.back_to_list'|trans }}
+            </a>
+        </p>
+    {% else %}
+        <p>
+            {{ 'message.record_not_found'|trans }}
+        </p>
+    {% endif %}
+
+    
+{% endblock %}

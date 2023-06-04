@@ -1,28 +1,25 @@
 <?php
 /**
- * Post repository.
+ * Category repository.
  */
-
 namespace App\Repository;
 
-use App\Entity\Post;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class PostRepository.
+ * @method Category|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Category|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Category[]    findAll()
+ * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  *
- * @method Post|null find($id, $lockMode = null, $lockVersion = null)
- * @method Post|null findOneBy(array $criteria, array $orderBy = null)
- * @method Post[]    findAll()
- * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- *
- * @extends ServiceEntityRepository<Post>
- *
- * @psalm-suppress LessSpecificImplementedReturnType
+ * @extends ServiceEntityRepository<Category>
  */
-class PostRepository extends ServiceEntityRepository
+class CategoryRepository extends ServiceEntityRepository
 {
     /**
      * Items per page.
@@ -42,7 +39,7 @@ class PostRepository extends ServiceEntityRepository
      */
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Post::class);
+        parent::__construct($registry, Category::class);
     }
 
     /**
@@ -53,7 +50,8 @@ class PostRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->orderBy('post.createdAt', 'DESC');
+            ->select('partial category.{id, title}')
+            ->orderBy('category.title', 'DESC');
     }
 
     /**
@@ -65,26 +63,17 @@ class PostRepository extends ServiceEntityRepository
      */
     private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
-        return $queryBuilder ?? $this->createQueryBuilder('post');
+        return $queryBuilder ?? $this->createQueryBuilder('category');
     }
 
     /**
-     * Prepare filters for the tasks list.
+     * Save entity.
      *
-     * @param array<string, int> $filters Raw filters from request
-     *
-     * @return array<string, object> Result array of filters
+     * @param Category $category Category entity
      */
-    private function prepareFilters(array $filters): array
+    public function save(Category $category): void
     {
-        $resultFilters = [];
-        if (!empty($filters['category_id'])) {
-            $category = $this->categoryService->findOneById($filters['category_id']);
-            if (null !== $category) {
-                $resultFilters['category'] = $category;
-            }
-        }
-
-        return $resultFilters;
+        $this->_em->persist($category);
+        $this->_em->flush();
     }
 }

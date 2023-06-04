@@ -7,7 +7,12 @@ body {
 /* img {
     height: 4rem;
 } */
-
+label {
+	color: black;
+}
+.btn .btn-primary {
+	width: 25rem;
+}
 h1 {
     color: white;
     font-size: 8rem;

@@ -91,6 +91,7 @@ class Post
     private ?Category $category = null;
 
 
+
     /**
      * Getter for Id.
      *
