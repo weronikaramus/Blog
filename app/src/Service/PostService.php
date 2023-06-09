@@ -5,6 +5,7 @@
 
 namespace App\Service;
 
+use App\Entity\Post;
 use App\Repository\PostRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -14,11 +15,6 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class PostService implements PostServiceInterface
 {
-    /**
-     * Category service.
-     */
-    private CategoryServiceInterface $categoryService;
-
     /**
      * Post repository.
      */
@@ -32,21 +28,13 @@ class PostService implements PostServiceInterface
     /**
      * Constructor.
      *
-     * @param CategoryServiceInterface $categoryService Category service
-     * @param PaginatorInterface       $paginator       Paginator
-    //  * @param TagServiceInterface      $tagService      Tag service
-     * @param PostRepository           $taskRepository  Task repository
+     * @param PostRepository     $postRepository Post repository
+     * @param PaginatorInterface $paginator      Paginator
      */
-    public function __construct(
-        CategoryServiceInterface $categoryService,
-        PaginatorInterface $paginator,
-        // TagServiceInterface $tagService,
-        PostRepository $taskRepository
-    ) {
-        $this->categoryService = $categoryService;
+    public function __construct(PostRepository $postRepository, PaginatorInterface $paginator)
+    {
+        $this->postRepository = $postRepository;
         $this->paginator = $paginator;
-        // $this->tagService = $tagService;
-        $this->postRepository = $taskRepository;
     }
 
     /**
@@ -64,4 +52,25 @@ class PostService implements PostServiceInterface
             PostRepository::PAGINATOR_ITEMS_PER_PAGE
         );
     }
+
+    /**
+     * Save entity.
+     *
+     * @param Post $post Post entity
+     */
+    public function save(Post $post): void
+    {
+        $this->postRepository->save($post);
+    }
+
+    /**
+     * Delete entity.
+     *
+     * @param Post $post Post entity
+     */
+    public function delete(Post $post): void
+    {
+        $this->postRepository->delete($post);
+    }
+
 }

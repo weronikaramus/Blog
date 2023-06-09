@@ -24,30 +24,21 @@
 				</form>
 
         <h2>See all in "{{ category.title }}"</h2>
-        
-        {% if post is defined and post|length %}
-        <dl class="dl-horizontal">
-            <dt>{{ 'label.id'|trans }}</dt>
-            <dd>{{ post.id }}</dd>
-            <dt>{{ 'label.created_at'|trans }}</dt>
-            <dd>{{ post.createdAt|format_date('long') }}</dd>
-            <dt>{{ 'label.content' }}</dt>
-            <dd>{{ post.content }}</dd>
-            <dt>{{ 'label.title'|trans }}</dt>
-            <dd>{{  post.title }}</dd>
-            <dt>{{ 'label.category'|trans }}</dt>
-            <dd>{{  post.category.title }}</dd>
-        </dl>
+         <tr>
+                    <td>{{ posts }}</td>
+                    <td>{{ category.title }}</td>
+                    <td>
+                        <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">
+                            {{ 'action.show'|trans }}
+                        </a>
+                    </td>
+                </tr>
         <p>
-            <a href="{{ url('post_index') }}" title="{{ 'action.back_to_list'|trans }}">
+            <a href="{{ url('category_index') }}" title="{{ 'action.back_to_list'|trans }}">
                 {{ 'action.back_to_list'|trans }}
             </a>
         </p>
-    {% else %}
-        <p>
-            {{ 'message.record_not_found'|trans }}
-        </p>
-    {% endif %}
+   
 
     
 {% endblock %}

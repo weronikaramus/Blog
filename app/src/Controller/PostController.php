@@ -3,14 +3,17 @@
  * Post controller.
  */
 
- namespace App\Controller;
+namespace App\Controller;
 
- use App\Entity\Post;
- use App\Service\PostServiceInterface;
- use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
- use Symfony\Component\HttpFoundation\Response;
- use Symfony\Component\HttpFoundation\Request;
- use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Post;
+use App\Form\Type\PostType;
+use App\Service\PostServiceInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class PostController.
@@ -24,11 +27,20 @@ class PostController extends AbstractController
     private PostServiceInterface $postService;
 
     /**
-     * Constructor.
+     * Translator.
      */
-    public function __construct(PostServiceInterface $postService)
+    private TranslatorInterface $translator;
+
+    /**
+     * Constructor.
+     *
+     * @param PostServiceInterface $postService Post service
+     * @param TranslatorInterface  $translator  Translator
+     */
+    public function __construct(PostServiceInterface $postService, TranslatorInterface $translator)
     {
         $this->postService = $postService;
+        $this->translator = $translator;
     }
 
     /**
@@ -38,19 +50,11 @@ class PostController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(
-        name: 'post_index',
-        methods: 'GET'
-    )]
+    #[Route(name: 'post_index', methods: 'GET')]
     public function index(Request $request): Response
     {
-        $filters = $this->getFilters($request);
-        /** @var User $user */
-        $user = $this->getUser();
         $pagination = $this->postService->getPaginatedList(
-            $request->query->getInt('page', 1),
-            $user,
-            $filters
+            $request->query->getInt('page', 1)
         );
 
         return $this->render('post/index.html.twig', ['pagination' => $pagination]);
@@ -63,21 +67,125 @@ class PostController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(
-        '/{id}',
-        name: 'post_show',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: 'GET',
-    )]
+    #[Route('/{id}', name: 'post_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     public function show(Post $post): Response
     {
+        return $this->render('post/show.html.twig', ['post' => $post]);
+    }
+
+    /**
+     * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/create', name: 'post_create', methods: 'GET|POST', )]
+    public function create(Request $request): Response
+    {
+        $post = new Post();
+        $form = $this->createForm(
+            PostType::class, 
+            $post, 
+            ['action' => $this->generateUrl('post_create')]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->postService->save($post);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
+            return $this->redirectToRoute('post_index');
+        }
+
+        return $this->render('post/create.html.twig',  ['form' => $form->createView()]);
+    }
+
+    /**
+     * Edit action.
+     *
+     * @param Request $request HTTP request
+     * @param Post    $post    Post entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/edit', name: 'post_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    public function edit(Request $request, Post $post): Response
+    {
+        $form = $this->createForm(
+            PostType::class, 
+            $post, 
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('post_edit', ['id' => $post->getId()]),
+            ]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->postService->save($post);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.edited_successfully')
+            );
+
+            return $this->redirectToRoute('post_index');
+        }
+
         return $this->render(
-            'post/show.html.twig',
-            ['post' => $post]
+            'post/edit.html.twig', 
+            [
+                'form' => $form->createView(),
+                'post' => $post,
+            ]
         );
     }
 
+    /**
+     * Delete action.
+     *
+     * @param Request $request HTTP request
+     * @param Post    $post    Post entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/delete', name: 'post_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    public function delete(Request $request, Post $post): Response
+    {
+        $form = $this->createForm(
+            FormType::class, 
+            $post, 
+            [
+                'method' => 'DELETE',
+                'action' => $this->generateUrl('post_delete', ['id' => $post->getId()]),
+            ]
+        );
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->postService->delete($post);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
+
+            return $this->redirectToRoute('post_index');
+        }
+
+        return $this->render(
+            'post/delete.html.twig', 
+            [
+                'form' => $form->createView(),
+                'post' => $post,
+            ]
+        );
+    }
     /**
      * Navigation action.
      *
@@ -92,23 +200,5 @@ class PostController extends AbstractController
             'post/'.$nav.'.html.twig',
             ['nav' => $nav]
         );
-    }
-
-    /**
-     * Get filters from request.
-     *
-     * @param Request $request HTTP request
-     *
-     * @return array<string, int> Array of filters
-     *
-     * @psalm-return array{category_id: int, tag_id: int, status_id: int}
-     */
-    private function getFilters(Request $request): array
-    {
-        $filters = [];
-        $filters['category_id'] = $request->query->getInt('filters_category_id');
-        // $filters['tag_id'] = $request->query->getInt('filters_tag_id');
-
-        return $filters;
     }
 }

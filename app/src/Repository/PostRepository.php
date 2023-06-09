@@ -5,8 +5,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,8 +22,6 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  *
  * @extends ServiceEntityRepository<Post>
- *
- * @psalm-suppress LessSpecificImplementedReturnType
  */
 class PostRepository extends ServiceEntityRepository
 {
@@ -53,7 +54,55 @@ class PostRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
+            ->select(
+                'partial post.{id, createdAt, title}',
+                'partial category.{id, title}'
+            )
+            ->join('post.category', 'category')
             ->orderBy('post.createdAt', 'DESC');
+    }
+
+    /**
+     * Count posts by category.
+     *
+     * @param Category $category Category
+     *
+     * @return int Number of posts in category
+     *
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function countByCategory(Category $category): int
+    {
+        $qb = $this->getOrCreateQueryBuilder();
+
+        return $qb->select($qb->expr()->countDistinct('post.id'))
+            ->where('post.category = :category')
+            ->setParameter(':category', $category)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Save entity.
+     *
+     * @param Post $post Post entity
+     */
+    public function save(Post $post): void
+    {
+        $this->_em->persist($post);
+        $this->_em->flush();
+    }
+
+    /**
+     * Delete entity.
+     *
+     * @param Post $post Post entity
+     */
+    public function delete(Post $post): void
+    {
+        $this->_em->remove($post);
+        $this->_em->flush();
     }
 
     /**
@@ -68,23 +117,4 @@ class PostRepository extends ServiceEntityRepository
         return $queryBuilder ?? $this->createQueryBuilder('post');
     }
 
-    /**
-     * Prepare filters for the tasks list.
-     *
-     * @param array<string, int> $filters Raw filters from request
-     *
-     * @return array<string, object> Result array of filters
-     */
-    private function prepareFilters(array $filters): array
-    {
-        $resultFilters = [];
-        if (!empty($filters['category_id'])) {
-            $category = $this->categoryService->findOneById($filters['category_id']);
-            if (null !== $category) {
-                $resultFilters['category'] = $category;
-            }
-        }
-
-        return $resultFilters;
-    }
 }

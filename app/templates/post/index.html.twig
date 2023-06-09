@@ -24,7 +24,11 @@
 				</form>
 
         <h2>See recent Posts</h2>
+        
 
+<a href="{{ url('post_create') }}" title="{{ 'action.create'|trans }}">
+                            {{ 'action.create'|trans }}
+                        </a>
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
@@ -33,14 +37,13 @@
 
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'post.id') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'post.createdAt') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.content'|trans, 'post.updatedAt') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'post.title') }}</th>
-                <th>{{ 'label.category'|trans }}</th>
-                <th>{{ 'label.actions'|trans }}</th>
-            </tr>
+                <tr>
+                    <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'post.id') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'post.createdAt') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'post.title') }}</th>
+                    <th>{{ 'label.category'|trans }}</th>
+                    <th>{{ 'label.actions'|trans }}</th>
+                </tr>
             </thead>
             <tbody>
             {% for post in pagination.items %}
@@ -49,7 +52,11 @@
                     <td>{{ post.createdAt|format_date('long') }}</td>
                     <td>{{ post.content }}</td>
                     <td>{{ post.title }}</td>
-                    <td>{{ post.category.title }}</td>
+                    <td>
+                    <a href="{{ url('category_show', {id: post.category.id}) }}">
+                        {{ post.category.title }}
+                    </a>
+                    </td>
                     <td>
                         <a href="{{ url('post_show', {id: post.id}) }}" title="{{ 'action.show'|trans }}">
                             {{ 'action.show'|trans }}

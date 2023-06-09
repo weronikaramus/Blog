@@ -66,7 +66,7 @@ class Post
      * @psalm-suppress PropertyNotSetInConstructor
      */
     #[ORM\Column]
-    private ?int $authorId = null;
+    private ?int $authorId = 1;
 
 
     /**
@@ -77,7 +77,7 @@ class Post
      * @psalm-suppress PropertyNotSetInConstructor
      */
     #[ORM\Column]
-    private ?bool $isPublished = null;
+    private ?bool $isPublished = true;
 
     /**
      * Slug.
@@ -87,10 +87,14 @@ class Post
     #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug;
 
-    #[ORM\ManyToOne]
+    /**
+     * Category.
+     *
+     * @var Category
+     */
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
-
-
 
     /**
      * Getter for Id.
@@ -201,5 +205,7 @@ class Post
 
         return $this;
     }
+
+    
 
 }

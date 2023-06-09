@@ -50,8 +50,8 @@ class CategoryRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->select('partial category.{id, title}')
-            ->orderBy('category.title', 'DESC');
+        ->select('partial category.{id, title}')
+        ->orderBy('category.title', 'ASC');
     }
 
     /**
@@ -65,7 +65,6 @@ class CategoryRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('category');
     }
-
     /**
      * Save entity.
      *

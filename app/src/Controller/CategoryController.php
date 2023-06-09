@@ -6,8 +6,8 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Service\CategoryServiceInterface;
 use App\Form\Type\CategoryType;
+use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,8 +65,7 @@ class CategoryController extends AbstractController
     )]
     public function show(Category $category): Response
     {
-        return $this->render('category/show.html.twig',
-        ['category' => $category]);
+        return $this->render('category/show.html.twig', ['category' => $category]);
     }
 
     /**
