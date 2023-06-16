@@ -25,7 +25,7 @@
 
         <h2>See all in "{{ category.title }}"</h2>
          <tr>
-                    <td>{{ posts }}</td>
+                    <td>{{ post.title }}</td>
                     <td>{{ category.title }}</td>
                     <td>
                         <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">
