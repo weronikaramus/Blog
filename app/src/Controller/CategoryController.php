@@ -7,11 +7,14 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\Type\CategoryType;
+use App\Repository\CategoryRepository;
 use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 /**
@@ -28,9 +31,9 @@ class CategoryController extends AbstractController
     /**
      * Constructor.
      */
-    public function __construct(CategoryServiceInterface $taskService)
+    public function __construct(CategoryServiceInterface $categoryService)
     {
-        $this->categoryService = $taskService;
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -41,10 +44,12 @@ class CategoryController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(name: 'category_index', methods: 'GET')]
-    public function index(Request $request): Response
+    public function index(Request $request, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
     {
-        $pagination = $this->categoryService->getPaginatedList(
-            $request->query->getInt('page', 1)
+        $pagination = $paginator->paginate(
+            $categoryRepository->queryAll(),
+            $request->query->getInt('page', 1),
+            CategoryRepository::PAGINATOR_ITEMS_PER_PAGE
         );
 
         return $this->render('category/index.html.twig', ['pagination' => $pagination]);
@@ -63,9 +68,25 @@ class CategoryController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
-    public function show(Category $category): Response
+    public function show(Request $request, CategoryRepository $categoryRepository, $id, PaginatorInterface $paginator): Response
     {
-        return $this->render('category/show.html.twig', ['category' => $category]);
+        $category = $categoryRepository->find($id);
+        
+        if (!$category) {
+            throw $this->createNotFoundException('Category not found');
+        }
+
+        $pagination = $paginator->paginate(
+            $posts = $category->getPosts(),
+            $request->query->getInt('page', 1),
+            CategoryRepository::PAGINATOR_ITEMS_PER_PAGE
+        );
+
+        return $this->render('category/show.html.twig', [
+            'category' => $category,
+            'posts' => $posts,
+            'pagination' => $pagination,
+        ]);
     }
 
     /**

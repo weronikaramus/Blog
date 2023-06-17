@@ -6,29 +6,29 @@
 
 {% block main %}
 
-			<form
+    <form
+    id="search"
+    class="search-form"
+    action="search.php"
+    method="post"
+    autocomplete="on"
+    >
+          
+    <input
+        type="search"
+        placeholder="Search"
         id="search"
-        class="search-form"
-        action="search.php"
-        method="post"
-        autocomplete="on"
-      >
+        name="search"
+    />
           
-            <input
-              type="search"
-              placeholder="Search"
-              id="search"
-              name="search"
-            />
-          
-				</form>
+	</form>
 
-        <h2>See recent Posts</h2>
+    <h2>See recent Posts</h2>
         
 
-<a href="{{ url('post_create') }}" title="{{ 'action.create'|trans }}">
+    <a href="{{ url('post_create') }}" title="{{ 'action.create'|trans }}">
                             {{ 'action.create'|trans }}
-                        </a>
+    </a>
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
@@ -50,12 +50,11 @@
                 <tr>
                     <td>{{ post.id }}</td>
                     <td>{{ post.createdAt|format_date('long') }}</td>
-                    <td>{{ post.content }}</td>
                     <td>{{ post.title }}</td>
                     <td>
-                    <a href="{{ url('category_show', {id: post.category.id}) }}">
-                        {{ post.category.title }}
-                    </a>
+                        <a href="{{ url('category_show', {id: post.category.id}) }}">
+                            {{ post.category.title }}
+                        </a>
                     </td>
                     <td>
                         <a href="{{ url('post_show', {id: post.id}) }}" title="{{ 'action.show'|trans }}">

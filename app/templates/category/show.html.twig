@@ -6,39 +6,66 @@
 
 {% block main %}
 
-			<form
-        id="search"
-        class="search-form"
-        action="search.php"
-        method="category"
-        autocomplete="on"
-      >
+  <form
+    id="search"
+    class="search-form"
+    action="search.php"
+    method="category"
+    autocomplete="on"
+  >
+      
+    <input
+      type="search"
+      placeholder="Search"
+      id="search"
+      name="search"
+    />
           
-            <input
-              type="search"
-              placeholder="Search"
-              id="search"
-              name="search"
-            />
-          
-				</form>
+	</form>
 
-        <h2>See all in "{{ category.title }}"</h2>
-         <tr>
-                    <td>{{ post.title }}</td>
-                    <td>{{ category.title }}</td>
-                    <td>
-                        <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">
-                            {{ 'action.show'|trans }}
-                        </a>
-                    </td>
-                </tr>
-        <p>
-            <a href="{{ url('category_index') }}" title="{{ 'action.back_to_list'|trans }}">
-                {{ 'action.back_to_list'|trans }}
-            </a>
-        </p>
-   
+  <h2>See all in "{{ category.title }}"</h2>
 
+  {% if pagination is defined and pagination.items|length %}
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'post.title') }}</th>
+          <th>{{ 'label.actions'|trans }}</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for post in pagination.items %}
+    
+          <tr>
+            <td>{{ post.title }}</td>
+            <td>
+              <a href="{{ url('post_show', {id: post.id}) }}" title="{{ 'action.show'|trans }}">
+                  {{ 'action.show'|trans }}
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    <p>
+      <a href="{{ url('category_index') }}" title="{{ 'action.back_to_list'|trans }}">
+          {{ 'action.back_to_list'|trans }}
+      </a>
+    </p>
+    {% else %}
+      <p>
+          {{ 'message.empty_list'|trans }}
+      </p>
+    {% endif %}
     
 {% endblock %}

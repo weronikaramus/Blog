@@ -4,6 +4,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4"
     },
     "require": {
-        "sensio/framework-extra-bundle": "^6.2"
+        "sensio/framework-extra-bundle": "^6.2",
+        "knplabs/knp-paginator-bundle": "5.9"
     }
 }
