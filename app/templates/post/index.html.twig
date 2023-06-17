@@ -25,6 +25,7 @@
 
     <h2>See recent Posts</h2>
         
+        </br>
 
     <a href="{{ url('post_create') }}" title="{{ 'action.create'|trans }}">
                             {{ 'action.create'|trans }}
@@ -72,7 +73,10 @@
 
     {% else %}
         <p>
-            {{ 'message.empty_list'|trans }}
+            {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.empty_list'|trans
+        } %}
         </p>
     {% endif %}
 {% endblock %}

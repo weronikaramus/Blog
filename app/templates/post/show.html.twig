@@ -19,14 +19,18 @@
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{  post.category.title }}</dd>
         </dl>
+        
+    {% else %}
         <p>
+            {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.empty_list'|trans
+        } %}
+        </p>
+    {% endif %}
+    <p>
             <a href="{{ url('post_index') }}" title="{{ 'action.back_to_list'|trans }}">
                 {{ 'action.back_to_list'|trans }}
             </a>
         </p>
-    {% else %}
-        <p>
-            {{ 'message.record_not_found'|trans }}
-        </p>
-    {% endif %}
 {% endblock %}

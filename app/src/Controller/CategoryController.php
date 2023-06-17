@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 /**
@@ -27,6 +28,11 @@ class CategoryController extends AbstractController
      * Category service.
      */
     private CategoryServiceInterface $categoryService;
+
+    /**
+     * Translator.
+     */
+    private TranslatorInterface $translator;
 
     /**
      * Constructor.
@@ -116,6 +122,73 @@ class CategoryController extends AbstractController
         return $this->render(
             'category/create.html.twig',
             ['form' => $form->createView()]
+        );
+    }
+
+    /**
+     * Delete action.
+     *
+     * @param Request  $request  HTTP request
+     * @param Category $category Category entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/delete', name: 'category_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    public function delete(Request $request, Category $category): Response
+    {
+        if(!$this->categoryService->canBeDeleted($category)) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.category_contains_tasks')
+            );
+
+            return $this->redirectToRoute('category_index');
+        }
+
+        $form = $this->createForm(
+            FormType::class, 
+            $category, 
+            [
+              'method' => 'DELETE',
+              'action' => $this->generateUrl('category_delete', ['id' => $category->getId()]),
+            ]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->categoryService->delete($category);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
+
+            return $this->redirectToRoute('category_index');
+        }
+
+        return $this->render(
+            'category/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'category' => $category,
+            ]
+        );
+    }
+
+
+    /**
+     * Navigation action.
+     *
+     * @param Post $post Post entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/', name: 'category_menu')]
+    public function showNav(string $nav): Response
+    {
+        return $this->render(
+            'category/'.$nav.'.html.twig',
+            ['nav' => $nav]
         );
     }
 }

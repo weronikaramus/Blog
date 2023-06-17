@@ -13,23 +13,13 @@
         {% endblock %}
     </head>
     <body>
+        {% include 'default/_navbar.html.twig' %}
         <main role="main" class="container-fluid">
-            <nav class="navbar navbar-expand-sm navbar-dark">
-                <a href="{{ path('post_index') }}" class="navbar-brand"><img src="{{ asset('images/ww.png') }}"></a>
-                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbar-menu">
-                    <span class="navbar-toddler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbar-menu">
-                    <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a href="{{ path('post_menu', {nav: 'create'}) }}" class="nav-link">New post</a></li>
-                    <li class="nav-item"><a href="{{ path('post_menu', {nav: 'myposts'}) }}" class="nav-link">My posts</a></li>
-                    <li class="nav-item"><a href="{{ path('post_menu', {nav: 'settings'}) }}" class="nav-link">Settings</a></li>
-                    </ul>
-                </div>
+        
 
-            </nav>
-    
             <div class="main-container">
+            {% include 'default/_flash_messages.html.twig' %}
+
 			{% block main %}
 
                 
