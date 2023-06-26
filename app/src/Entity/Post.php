@@ -6,9 +6,14 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Class Post.
@@ -28,6 +33,7 @@ class Post
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
 
     /**
      * Title.
@@ -58,16 +64,6 @@ class Post
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt;
 
-    /**
-     * Id of author.
-     *
-     * @var Integer|null
-     *
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    #[ORM\Column]
-    private ?int $authorId = 1;
-
 
     /**
      * Is published.
@@ -84,6 +80,8 @@ class Post
      * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
+    #[Assert\Type('string')]
+    #[Assert\Length(min: 3, max: 64)]
     #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug;
 
@@ -95,6 +93,27 @@ class Post
     #[ORM\ManyToOne(targetEntity: Category::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
+
+    /**
+     * Tags.
+     *
+     * @var ArrayCollection<int, Tag>
+     */
+    #[Assert\Valid]
+    #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
+    #[ORM\JoinTable(name: 'tasks_tags')]
+    private $tags;
+
+    #[ORM\ManyToOne]
+    private ?User $author = null;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * Getter for Id.
@@ -129,7 +148,7 @@ class Post
     }
 
     /**
-     * Setter for content.
+     * Getter for content.
      *
      * @param text|null $content Content
      */
@@ -138,6 +157,11 @@ class Post
         return $this->content;
     }
 
+    /**
+     * Setter for content.
+     *
+     * @param text|null $content Content
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -145,26 +169,24 @@ class Post
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    /**
+     * Getter for created at.
+     *
+     * @return DateTimeImmutable|null Created at
+     */
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
+    /**
+     * Setter for created at.
+     *
+     * @param DateTimeImmutable $createdAt Created at
+     */
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getAuthorId(): ?int
-    {
-        return $this->authorId;
-    }
-
-    public function setAuthorId(int $authorId): self
-    {
-        $this->authorId = $authorId;
 
         return $this;
     }
@@ -182,6 +204,7 @@ class Post
         return $this;
     }
 
+
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -194,14 +217,74 @@ class Post
         return $this;
     }
 
+    /**
+     * Getter for category.
+     *
+     * @return Category|null Category
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    /**
+     * Setter for category.
+     *
+     * @param Category|null $category Category
+     */
+    public function setCategory(?Category $category): void
     {
         $this->category = $category;
+    }
+
+    /**
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Setter for tags.
+     *
+     * @param Category|null $category Category
+     */
+    public function setTags(?Tag $tags): void
+    {
+        $this->tags = $tags;
+    }
+
+    /**
+     * Add tag.
+     *
+     * @param Tag $tag Tag entity
+     */
+    public function addTag(Tag $tag): void
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+    }
+
+    /**
+     * Remove tag.
+     *
+     * @param Tag $tag Tag entity
+     */
+    public function removeTag(Tag $tag): void
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }

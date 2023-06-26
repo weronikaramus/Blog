@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.tag'|trans({'%id%': tag.id|default('')}) }}
+{% endblock %}
+
+{% block main %}
+    {% include 'default/_form.html.twig' with {
+    page_title: 'title.tag_edit'|trans,
+    form: form,
+    submit_label: 'action.save'|trans,
+    back_to_list_path: 'tag_index',
+} %}
+{% endblock %}

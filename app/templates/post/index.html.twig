@@ -40,6 +40,7 @@
             <thead>
                 <tr>
                     <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'post.id') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'post.author') }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'post.createdAt') }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'post.title') }}</th>
                     <th>{{ 'label.category'|trans }}</th>
@@ -50,6 +51,7 @@
             {% for post in pagination.items %}
                 <tr>
                     <td>{{ post.id }}</td>
+                    <td>{{ post.author.email }}</td>
                     <td>{{ post.createdAt|format_date('long') }}</td>
                     <td>{{ post.title }}</td>
                     <td>

@@ -41,11 +41,14 @@ class PostFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             );
             $post->setContent($this->faker->paragraph(5));
             $post->setIsPublished($this->faker->numberBetween(0,1));
-            $post->setAuthorId($this->faker->numberBetween(1,100));
 
             /** @var Category $category */
             $category = $this->getRandomReference('categories');
             $post->setCategory($category);
+
+            /** @var User $author */
+            $author = $this->getRandomReference('users');
+            $post->setAuthor($author);
 
             return $post;
         });

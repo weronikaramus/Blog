@@ -10,6 +10,8 @@
         <dl class="dl-horizontal">
             <dt>{{ 'label.id'|trans }}</dt>
             <dd>{{ post.id }}</dd>
+            <dt>{{ 'label.author'|trans }}</dt>
+            <dd>{{ post.author.email }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
             <dd>{{ post.createdAt|format_date('long') }}</dd>
             <dt>{{ 'label.content' }}</dt>
@@ -18,6 +20,10 @@
             <dd>{{  post.title }}</dd>
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{  post.category.title }}</dd>
+            <dt>{{ 'label.tags'|trans }}</dt>
+            {% for tag in post.tags %}
+            <dd>{{  post.tags }}</dd>
+            {% endfor %}
         </dl>
         
     {% else %}
