@@ -6,10 +6,10 @@ parameters:
     - form: form view variable
     - submit_label: label for submit button
 #}
-{% extends 'base.html.twig' %}
+
 
 {% block title %}
-    {{ page_title }}
+    {# {{ page_title }} #}
 {% endblock %}
 
 {% block main %}
@@ -32,5 +32,6 @@ parameters:
             </a>
         </div>
     {% endif %}
+    
     {{ form_end(form) }}
 {% endblock %}

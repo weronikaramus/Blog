@@ -102,7 +102,7 @@ class CategoryService implements CategoryServiceInterface
     /**
      * Delete entity.
      *
-     * @param Task $task Task entity
+     * @param Post $post Post entity
      */
     public function delete(Category $category): void
     {

@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.post'|trans({'%id%': post.id|default('')}) }}
+    {{ 'title.category'|trans({'%id%': category.id|default('')}) }}
 {% endblock %}
 
 {% block main %}
     {% include 'default/_form.html.twig' with {
-    page_title: 'title.post_edit'|trans,
+    page_title: 'title.category_edit'|trans,
     form: form,
     submit_label: 'action.save'|trans,
-    back_to_list_path: 'post_index',
+    back_to_list_path: 'category_index',
 } %}
 {% endblock %}

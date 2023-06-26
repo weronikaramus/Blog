@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 
 /**
@@ -37,9 +38,10 @@ class CategoryController extends AbstractController
     /**
      * Constructor.
      */
-    public function __construct(CategoryServiceInterface $categoryService)
+    public function __construct(CategoryServiceInterface $categoryService, TranslatorInterface $translator)
     {
         $this->categoryService = $categoryService;
+        $this->translator = $translator;
     }
 
     /**
@@ -168,6 +170,48 @@ class CategoryController extends AbstractController
 
         return $this->render(
             'category/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'category' => $category,
+            ]
+        );
+    }
+    
+    
+    /**
+     * Edit action.
+     *
+     * @param Request $request HTTP request
+     * @param Category    $category    Category entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/edit', name: 'category_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    public function edit(Request $request, Category $category): Response
+    {
+        $form = $this->createForm(
+            CategoryType::class, 
+            $category, 
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('category_edit', ['id' => $category->getId()]),
+            ]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->categoryService->save($category);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.edited_successfully')
+            );
+
+            return $this->redirectToRoute('category_index');
+        }
+
+        return $this->render(
+            'category/edit.html.twig', 
             [
                 'form' => $form->createView(),
                 'category' => $category,

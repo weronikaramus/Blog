@@ -30,7 +30,7 @@ class CategoryRepository extends ServiceEntityRepository
      *
      * @constant int
      */
-    public const PAGINATOR_ITEMS_PER_PAGE = 3;
+    public const PAGINATOR_ITEMS_PER_PAGE = 10;
 
     /**
      * Constructor.
@@ -77,4 +77,17 @@ class CategoryRepository extends ServiceEntityRepository
         $this->_em->persist($category);
         $this->_em->flush();
     }
+
+    /**
+     * Delete entity.
+     *
+     * @param Category $category Category entity
+     */
+    public function delete(Category $category): void
+    {
+        $this->_em->remove($category);
+        $this->_em->flush();
+    }
+
+    
 }

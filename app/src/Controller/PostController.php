@@ -186,6 +186,9 @@ class PostController extends AbstractController
             ]
         );
     }
+
+    
+
     /**
      * Navigation action.
      *
