@@ -21,7 +21,9 @@ interface PostServiceInterface
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedList(int $page, User $user): PaginationInterface;
+    public function getPaginatedList(int $page, User $author, array $filters = []): PaginationInterface;
+
+
 
     /**
      * Save entity.

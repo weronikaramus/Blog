@@ -52,12 +52,11 @@ class CategoryController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(name: 'category_index', methods: 'GET')]
-    public function index(Request $request, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $categoryRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            CategoryRepository::PAGINATOR_ITEMS_PER_PAGE
+       
+        $pagination = $this->categoryService->getPaginatedList(
+            $request->query->getInt('page', 1)
         );
 
         return $this->render('category/index.html.twig', ['pagination' => $pagination]);

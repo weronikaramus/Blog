@@ -50,7 +50,7 @@ class TagRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-        // ->select('tag.title}')
+        // ->select('tag.{id, title}')
         // ->join('post.tag', 'tag')
         ->orderBy('tag.title', 'ASC');
 
@@ -89,5 +89,6 @@ class TagRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
+  
     
 }

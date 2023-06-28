@@ -64,17 +64,6 @@ class Post
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt;
 
-
-    /**
-     * Is published.
-     *
-     * @var Boolean|null
-     *
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    #[ORM\Column]
-    private ?bool $isPublished = true;
-
     /**
      * Slug.
      * @var string|null
@@ -101,12 +90,13 @@ class Post
      */
     #[Assert\Valid]
     #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
-    #[ORM\JoinTable(name: 'tasks_tags')]
+    #[ORM\JoinTable(name: 'posts_tags')]
     private $tags;
+
 
     #[ORM\ManyToOne]
     private ?User $author = null;
-
+    
     /**
      * Constructor.
      */
@@ -190,20 +180,6 @@ class Post
 
         return $this;
     }
-
-
-    public function isIsPublished(): ?bool
-    {
-        return $this->isPublished;
-    }
-
-    public function setIsPublished(bool $isPublished): self
-    {
-        $this->isPublished = $isPublished;
-
-        return $this;
-    }
-
 
     public function getSlug(): ?string
     {
@@ -290,5 +266,6 @@ class Post
     }
 
     
+
 
 }

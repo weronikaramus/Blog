@@ -6,6 +6,7 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
+use App\Entity\Post;
 use App\Form\Type\TagType;
 use App\Repository\TagRepository;
 use App\Service\TagServiceInterface;
@@ -52,23 +53,54 @@ class TagController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(name: 'tag_index', methods: 'GET')]
-    public function index(Request $request, TagRepository $tagRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $tagRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            TagRepository::PAGINATOR_ITEMS_PER_PAGE
+        $pagination = $this->tagService->getPaginatedList(
+            $request->query->getInt('page', 1)
         );
 
         return $this->render('tag/index.html.twig', ['pagination' => $pagination]);
     }
 
+    // /**
+    //  * Show action.
+    //  *
+    //  * @param Category $category Category
+    //  *
+    //  * @return Response HTTP response
+    //  */
+    // #[Route(
+    //     '/{id}',
+    //     name: 'tag_show',
+    //     requirements: ['id' => '[1-9]\d*'],
+    //     methods: 'GET'
+    // )]
+    // public function show(Request $request, TagRepository $tagRepository, $id, PaginatorInterface $paginator): Response
+    // {
+    //     $tag = $tagRepository->find($id);
+        
+    //     if (!$tag) {
+    //         throw $this->createNotFoundException('Tag not found');
+    //     }
+
+    //     $pagination = $paginator->paginate(
+    //         $posts = $tag->getPosts(),
+    //         $request->query->getInt('page', 1),
+    //         TagRepository::PAGINATOR_ITEMS_PER_PAGE
+    //     );
+
+    //     return $this->render('tag/show.html.twig', [
+    //         'tag' => $tag,
+    //         'posts' => $posts,
+    //         'pagination' => $pagination,
+    //     ]);
+    // }
     /**
      * Show action.
      *
-     * @param Tag $tag Tag
+     * @param Category $category
      *
-     * @return Response HTTP response
+     * @return Response
      */
     #[Route(
         '/{id}',
@@ -76,25 +108,12 @@ class TagController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
-    public function show(Request $request, TagRepository $tagRepository, $id, PaginatorInterface $paginator): Response
+    public function show(Tag $tag): Response
     {
-        $tag = $tagRepository->find($id);
-        
-        if (!$tag) {
-            throw $this->createNotFoundException('Tag not found');
-        }
-
-        $pagination = $paginator->paginate(
-            $posts = $tag->getPosts(),
-            $request->query->getInt('page', 1),
-            TagRepository::PAGINATOR_ITEMS_PER_PAGE
+        return $this->render(
+            'tag/show.html.twig',
+            ['tag' => $tag]
         );
-
-        return $this->render('tag/show.html.twig', [
-            'tag' => $tag,
-            'posts' => $posts,
-            'pagination' => $pagination,
-        ]);
     }
 
     /**
@@ -138,14 +157,6 @@ class TagController extends AbstractController
     #[Route('/{id}/delete', name: 'tag_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     public function delete(Request $request, Tag $tag): Response
     {
-        if(!$this->tagService->canBeDeleted($tag)) {
-            $this->addFlash(
-                'warning',
-                $this->translator->trans('message.tag_contains_tasks')
-            );
-
-            return $this->redirectToRoute('tag_index');
-        }
 
         $form = $this->createForm(
             FormType::class, 

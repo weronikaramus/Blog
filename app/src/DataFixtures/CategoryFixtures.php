@@ -6,7 +6,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
-use DateTimeImmutable;
 
 /**
  * Class CategoryFixtures.
@@ -23,6 +22,9 @@ class CategoryFixtures extends AbstractBaseFixtures
      */
     public function loadData(): void
     {
+        if (null === $this->manager || null === $this->faker) {
+            return;
+        }
         $this->createMany(20, 'categories', function (int $i) {
             $category = new Category();
             $category->setTitle($this->faker->unique()->word);

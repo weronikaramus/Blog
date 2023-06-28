@@ -5,14 +5,33 @@
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbar-menu">
         <span class="navbar-toddler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbar-menu">
-        <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a href="{{ path('post_menu', {nav: 'create'}) }}" class="nav-link">New post</a></li>
-        <li class="nav-item"><a href="{{ path('category_index') }}" class="nav-link">Categories</a></li>
-        <li class="nav-item"><a href="{{ path('post_menu', {nav: 'myposts'}) }}" class="nav-link">My posts</a></li>
-        <li class="nav-item"><a href="{{ path('post_menu', {nav: 'settings'}) }}" class="nav-link">Settings</a></li>
-        </ul>
-    </div>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="collapse navbar-collapse" id="navbar-menu">
+            <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a href="{{ path('post_menu', {nav: 'create'}) }}" class="nav-link">{{ 'post.create'|trans }}</a></li>
+            <li class="nav-item"><a href="{{ path('category_index') }}" class="nav-link">{{ 'categories.show'|trans }}</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('user_index') }}" title="{{ 'action.index'|trans }}">
+                            {{ 'action.index'|trans }}
+                </a>
+            </li>
+            {% endif %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="nav-item">
+                <a href="{{ url('app_logout') }}"  class="nav-link">{{ 'action_logout'|trans }}</a>
+            </li>
+            {% endif %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('user_show', {id: app.user.id}) }}" title="{{ 'action.edit'|trans }}">
+                            {{ 'action.show'|trans }}
+                        </a>
+            </li>
+            {% endif %}
+            </ul>
+        </div>
+    {% endif %}
 
 </nav>
 {% endblock %}

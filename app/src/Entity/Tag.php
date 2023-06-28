@@ -39,6 +39,9 @@ class Tag
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    #[ORM\ManyToOne]
+    private ?User $author = null;
+
     /**
      * Slug.
      * @var string|null
@@ -112,4 +115,17 @@ class Tag
 
         return $this;
     }
+    
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
 }

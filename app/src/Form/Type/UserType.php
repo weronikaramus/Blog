@@ -1,12 +1,12 @@
 <?php
 /**
- * Post type.
+ * User type.
  */
 
 namespace App\Form\Type;
 
 use App\Entity\Category;
-use App\Entity\Post;
+use App\Entity\User;
 use App\Entity\Tag;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -16,16 +16,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class PostType.
+ * Class UserType.
  */
-class PostType extends AbstractType
+class UserType extends AbstractType
 {
-    /**
-     * Tags data transformer.
-     *
-     * @var TagsDataTransformer
-     */
-    private TagsDataTransformer $tagsDataTransformer;
 
     /**
      * Constructor.
@@ -34,7 +28,7 @@ class PostType extends AbstractType
      */
     public function __construct(TagsDataTransformer $tagsDataTransformer)
     {
-        $this->tagsDataTransformer = $tagsDataTransformer;
+        // $this->tagsDataTransformer = $tagsDataTransformer;
     }
     /**
      * Builds the form.
@@ -49,48 +43,24 @@ class PostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        
         $builder->add(
-            'title',
+            'email',
             TextType::class,
             [
-                'label' => 'label.title',
+                'label' => 'label.email',
                 'required' => true,
                 'attr' => ['max_length' => 255],
-            ]);
-        $builder->add(
-            'category',
-            EntityType::class,
-            [
-                'class' => Category::class,
-                'choice_label' => function ($category): string {
-                    return $category->getTitle();
-                },
-                'label' => 'label.category',
-                'placeholder' => 'label.none',
-                'required' => true,
             ]
         );
         $builder->add(
-            'content',
+            'password',
             TextType::class,
             [
-                'label' => 'label.content',
+                'label' => 'label.password',
                 'required' => true,
-                // 'attr' => ['max_length' => 255],
+                'attr' => ['class' => 'hidden-field','max_length' => 255]
             ]);
-            $builder->add(
-                'tags',
-                TextType::class,
-                [
-                    'label' => 'label.tags',
-                    'required' => false,
-                    'attr' => ['max_length' => 128],
-                ]
-            );
-    
-            $builder->get('tags')->addModelTransformer(
-                $this->tagsDataTransformer
-            );
     }
 
     /**
@@ -100,7 +70,7 @@ class PostType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Post::class]);
+        $resolver->setDefaults(['data_class' => User::class]);
     }
 
     /**
@@ -113,6 +83,6 @@ class PostType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'post';
+        return 'user';
     }
 }

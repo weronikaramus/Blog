@@ -7,6 +7,9 @@ namespace App\Service;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Service\PostServiceInterface;
+use App\Service\CategoryServiceInterface;
+use App\Service\TagServiceInterface;
 use App\Repository\PostRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -17,9 +20,9 @@ use Knp\Component\Pager\PaginatorInterface;
 class PostService implements PostServiceInterface
 {
     /**
-     * Post repository.
+     * Category service.
      */
-    private PostRepository $postRepository;
+    private CategoryServiceInterface $categoryService;
 
     /**
      * Paginator.
@@ -27,33 +30,80 @@ class PostService implements PostServiceInterface
     private PaginatorInterface $paginator;
 
     /**
+     * Tag service.
+     */
+    private TagServiceInterface $tagService;
+
+    /**
+     * Post repository.
+     */
+    private PostRepository $postRepository;
+
+    /**
      * Constructor.
      *
-     * @param PostRepository     $postRepository Post repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param CategoryServiceInterface $categoryService Category service
+     * @param PaginatorInterface       $paginator       Paginator
+     * @param TagServiceInterface      $tagService      Tag service
+     * @param PostRepository           $postRepository  Post repository
      */
-    public function __construct(PostRepository $postRepository, PaginatorInterface $paginator)
-    {
-        $this->postRepository = $postRepository;
+    public function __construct(
+        CategoryServiceInterface $categoryService,
+        PaginatorInterface $paginator,
+        TagServiceInterface $tagService,
+        PostRepository $postRepository
+    ) {
+        $this->categoryService = $categoryService;
         $this->paginator = $paginator;
+        $this->tagService = $tagService;
+        $this->postRepository = $postRepository;
     }
+    /**
+     * Prepare filters for the posts list.
+     *
+     * @param array<string, int> $filters Raw filters from request
+     *
+     * @return array<string, object> Result array of filters
+     */
+    private function prepareFilters(array $filters): array
+    {
+        $resultFilters = [];
+        if (!empty($filters['category_id'])) {
+            $category = $this->categoryService->findOneById($filters['category_id']);
+            if (null !== $category) {
+                $resultFilters['category'] = $category;
+            }
+        }
 
+        if (!empty($filters['tag_id'])) {
+            $tag = $this->tagService->findOneById($filters['tag_id']);
+            if (null !== $tag) {
+                $resultFilters['tag'] = $tag;
+            }
+        }
+
+        return $resultFilters;
+    }
     /**
      * Get paginated list.
      *
-     * @param int  $page   Page number
-     * @param User $author Author
+     * @param int                $page    Page number
+     * @param User               $author  Posts author
+     * @param array<string, int> $filters Filters array
      *
-     * @return PaginationInterface<string, mixed> Paginated list
+     * @return PaginationInterface<SlidingPagination> Paginated list
      */
-    public function getPaginatedList(int $page, User $author): PaginationInterface
+    public function getPaginatedList(int $page, User $author, array $filters = []): PaginationInterface
     {
+        $filters = $this->prepareFilters($filters);
+
         return $this->paginator->paginate(
-            $this->postRepository->queryByAuthor($author),
+            $this->postRepository->queryAll($filters),
             $page,
             PostRepository::PAGINATOR_ITEMS_PER_PAGE
         );
     }
+
 
     
 
@@ -77,4 +127,6 @@ class PostService implements PostServiceInterface
         $this->postRepository->delete($post);
     }
 
+    
+    
 }

@@ -6,23 +6,6 @@
 
 {% block main %}
 
-  <form
-    id="search"
-    class="search-form"
-    action="search.php"
-    method="category"
-    autocomplete="on"
-  >
-      
-    <input
-      type="search"
-      placeholder="Search"
-      id="search"
-      name="search"
-    />
-          
-	</form>
-
   <h2>See all in "{{ category.title }}"</h2>
 
   {% if pagination is defined and pagination.items|length %}

@@ -6,28 +6,8 @@
 
 {% block main %}
 
-	<form
-        id="search"
-        class="search-form"
-        action="search.php"
-        method="category"
-        autocomplete="on"
-    >
-          
-    <input
-        type="search"
-        placeholder="Search"
-        id="search"
-        name="search"
-    />
-          
-    </form>
-
     <h2>See all categories</h2>
     <br>
-    <a href="{{ url('category_create') }}" title="{{ 'action.create'|trans }}">
-                        {{ 'action.create'|trans }}
-    </a>
 
     {% if pagination is defined and pagination.items|length %}
 
@@ -38,7 +18,6 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'category.id') }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'category.title') }}</th>
                     <th>{{ 'label.actions'|trans }}</th>
                 </tr>
@@ -46,7 +25,6 @@
             <tbody>
             {% for category in pagination.items %}
                 <tr>
-                    <td>{{ category.id }}</td>
                     <td>{{ category.title }}</td>
                     <td>
                         <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">

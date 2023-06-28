@@ -70,19 +70,6 @@ class CategoryService implements CategoryServiceInterface
         $this->categoryRepository->save($category);
     }
 
-    /**
-     * Find by id.
-     *
-     * @param int $id Category id
-     *
-     * @return Category|null Category entity
-     *
-     * @throws NonUniqueResultException
-     */
-    public function findOneById(int $id): ?Category
-    {
-        return $this->categoryRepository->findOneById($id);
-    }
 
     /**
      * Can Category be deleted?
@@ -107,5 +94,19 @@ class CategoryService implements CategoryServiceInterface
     public function delete(Category $category): void
     {
         $this->categoryRepository->delete($category);
+    }
+
+    /**
+     * Find by id.
+     *
+     * @param int $id Category id
+     *
+     * @return Category|null Category entity
+     *
+     * @throws NonUniqueResultException
+     */
+    public function findOneById(int $id): ?Category
+    {
+        return $this->categoryRepository->findOneById($id);
     }
 }

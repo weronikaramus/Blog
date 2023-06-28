@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.user'|trans({'%id%': user.id|default('')}) }}
+{% endblock %}
+
+{% block main %}
+    <h2>{{  user.username }}</h2>
+    {% if user is defined and user|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.email'|trans }}</dt>
+            <dd>{{ user.email }}</dd>
+            <dt>{{ 'label.password' }}</dt>
+            <dd>********</dd>
+        </dl>
+        {% if is_granted('EDIT', user) %}
+                    <a class="btn btn-outline-success" href="{{ url('user_edit', {id: user.id}) }}" title="{{ 'action.edit'|trans }}">
+                        {{ 'action.edit'|trans }}
+                    </a>
+                    {% endif %}
+                    
+                    {% if is_granted('DELETE', user) %}
+                    <a class="btn btn-outline-danger" href="{{ url('user_delete', {id: user.id}) }}" title="{{ 'action.delete'|trans }}">
+                        {{ 'action.delete'|trans }}
+                    </a>
+                    {% endif %}
+    {% else %}
+        <p>
+            {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.empty_list'|trans
+        } %}
+        </p>
+    {% endif %}
+    <p>
+            <a href="{{ url('user_index') }}" title="{{ 'action.back_to_list'|trans }}">
+                {{ 'action.back_to_list'|trans }}
+            </a>
+        </p>
+{% endblock %}

@@ -6,6 +6,7 @@
 namespace App\Service;
 
 use App\Entity\Tag;
+use App\Entity\Post;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
@@ -40,18 +41,18 @@ interface TagServiceInterface
     public function save(Tag $tag): void;
 
     /**
-     * Can Tag be deleted?
-     *
-     * @param Tag $tag Tag entity
-     *
-     * @return bool Result
-     */
-    public function canBeDeleted(Tag $tag): bool;
-
-    /**
      * Delete entity.
      *
      * @param Tag $tag Tag entity
      */
     public function delete(Tag $tag): void;
+
+    /**
+     * Find category by ID
+     *
+     * @param int $id
+     *
+     * @return Tag|null
+     */
+    public function findOneById(int $id): ?Tag;
 }

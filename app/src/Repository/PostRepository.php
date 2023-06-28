@@ -7,12 +7,15 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use App\Entity\Post;
+use App\Entity\Tag;
 use App\Entity\User;
+// use App\Repository\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Service\UserService;
 
 /**
  * Class PostRepository.
@@ -50,31 +53,36 @@ class PostRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
+     * @param array<string, object> $filters Filters
+     *
      * @return QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(array $filters): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
+        $queryBuilder = $this->getOrCreateQueryBuilder()
             ->select(
                 'partial post.{id, createdAt, title}',
                 'partial category.{id, title}',
-                'partial user.{id, email}'
+                'partial tags.{id, title}'
             )
             ->join('post.category', 'category')
-            ->join('post.author', 'user')
+            ->leftJoin('post.tags', 'tags')
             ->orderBy('post.createdAt', 'DESC');
+
+        return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
     /**
      * Query posts by author.
      *
-     * @param User $user User entity
+     * @param UserInterface         $user    User entity
+     * @param array<string, object> $filters Filters
      *
      * @return QueryBuilder Query builder
      */
-    public function queryByAuthor(User $user): QueryBuilder
+    public function queryByAuthor(User $user, array $filters = []): QueryBuilder
     {
-        $queryBuilder = $this->queryAll();
+        $queryBuilder = $this->queryAll($filters);
 
         $queryBuilder->andWhere('post.author = :author')
             ->setParameter('author', $user);
@@ -137,4 +145,27 @@ class PostRepository extends ServiceEntityRepository
         return $queryBuilder ?? $this->createQueryBuilder('post');
     }
 
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param QueryBuilder          $queryBuilder Query builder
+     * @param array<string, object> $filters      Filters array
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, array $filters = []): QueryBuilder
+    {
+        if (isset($filters['category']) && $filters['category'] instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters['category']);
+        }
+
+        if (isset($filters['tag']) && $filters['tag'] instanceof Tag) {
+            $queryBuilder->andWhere('tags IN (:tag)')
+                ->setParameter('tag', $filters['tag']);
+        }
+
+        return $queryBuilder;
+    }
+    
 }

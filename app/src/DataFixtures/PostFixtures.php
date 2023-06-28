@@ -40,7 +40,6 @@ class PostFixtures extends AbstractBaseFixtures implements DependentFixtureInter
                 )
             );
             $post->setContent($this->faker->paragraph(5));
-            $post->setIsPublished($this->faker->numberBetween(0,1));
 
             /** @var Category $category */
             $category = $this->getRandomReference('categories');
@@ -49,6 +48,12 @@ class PostFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             /** @var User $author */
             $author = $this->getRandomReference('users');
             $post->setAuthor($author);
+
+            /** @var Tag $tag */
+            $tags = $this->getRandomReferences('tags',3);
+            foreach($tags as $tag){
+                $post->addTag($tag);
+            }
 
             return $post;
         });

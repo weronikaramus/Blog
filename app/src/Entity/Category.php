@@ -33,6 +33,9 @@ class Category
    #[ORM\Column(type: 'integer')]
    private ?int $id = null;
 
+    #[ORM\ManyToOne]
+    private ?User $author = null;
+
     /**
      * Title.
      *
@@ -139,5 +142,16 @@ class Category
         return $this;
     }
     
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
+
+        return $this;
+    }
 
 }
