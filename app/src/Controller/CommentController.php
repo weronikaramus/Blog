@@ -56,17 +56,7 @@ class CommentController extends AbstractController
         name: 'comment_index',
         methods: 'GET'
     )]
-    public function index(Request $request): Response
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-        $pagination = $this->commentService->getPaginatedList(
-            $request->query->getInt('page', 1),
-            $user
-        );
-
-        return $this->render('comment/index.html.twig', ['pagination' => $pagination]);
-    }
+    
     /**
      * Show action.
      *
@@ -77,6 +67,7 @@ class CommentController extends AbstractController
     #[Route('/{id}', name: 'comment_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET', )]
     public function show(Comment $comment): Response
     {
+        
         return $this->render('comment/show.html.twig', ['comment' => $comment]);
     }
 
@@ -88,16 +79,18 @@ class CommentController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/create', name: 'comment_create', methods: 'GET|POST')]
+    // #[Route('/create', name: 'comment_create', methods: 'GET', )]
     public function create(Request $request): Response
     {
         /** @var User $user */
         $user = $this->getUser();
         $comment = new Comment();
         $comment->setAuthor($user);
+
         $form = $this->createForm(
             CommentType::class,
             $comment,
-            ['action' => $this->generateUrl('comment_create')]
+            ['action' => $this->generateUrl('post_show')]
         );
         $form->handleRequest($request);
 
@@ -109,7 +102,7 @@ class CommentController extends AbstractController
                 $this->translator->trans('message.created_successfully')
             );
 
-            return $this->redirectToRoute('comment_index');
+            return $this->redirectToRoute('post_show');
         }
 
         return $this->render(
@@ -216,6 +209,7 @@ class CommentController extends AbstractController
             ]
         );
     }
+
 
     /**
      * Navigation action.

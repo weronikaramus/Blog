@@ -7,8 +7,11 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Entity\Comment;
 use App\Form\Type\PostType;
+use App\Form\Type\CommentType;
 use App\Service\PostServiceInterface;
+use App\Service\CommentServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 /**
  * Class PostController.
@@ -29,6 +34,11 @@ class PostController extends AbstractController
     private PostServiceInterface $postService;
 
     /**
+     * Comment service.
+     */
+    private CommentServiceInterface $commentService;
+
+    /**
      * Translator.
      */
     private TranslatorInterface $translator;
@@ -39,10 +49,11 @@ class PostController extends AbstractController
      * @param PostServiceInterface $postService Post service
      * @param TranslatorInterface  $translator  Translator
      */
-    public function __construct(PostServiceInterface $postService, TranslatorInterface $translator)
+    public function __construct(PostServiceInterface $postService, TranslatorInterface $translator, CommentServiceInterface $commentService)
     {
         $this->postService = $postService;
         $this->translator = $translator;
+        $this->commentService = $commentService;
     }
 
     /**
@@ -75,10 +86,38 @@ class PostController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}', name: 'post_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET', )]
-    public function show(Post $post): Response
+    #[Route('/{id}', name: 'post_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST', )]
+    public function show(Request $request, $id, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('post/show.html.twig', ['post' => $post]);
+        $post = $entityManager->getRepository(Post::class)->find($id);
+        
+        $comment = new Comment();
+        $comment->setPost($post); // Set the post for the comment
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $comment->setAuthor($user);
+         
+        
+        $form = $this->createForm(
+            CommentType::class,
+            $comment,
+            ['action' => $this->generateUrl('post_show', ['id' => $id])]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->commentService->save($comment);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
+            return $this->redirectToRoute('post_show', ['id' => $id]);
+        }
+
+        return $this->render('post/show.html.twig', ['post' => $post, 'form' => $form->createView()]);
     }
 
     /**

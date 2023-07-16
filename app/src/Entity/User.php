@@ -8,6 +8,7 @@ namespace App\Entity;
 use App\Entity\Enum\UserRole;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
 #[ORM\UniqueConstraint(name: 'email_idx', columns: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
@@ -39,6 +41,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     #[Assert\Email]
     private ?string $email;
+
+    /**
+     * Username.
+     *
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 20, unique: true)]
+    #[Assert\NotBlank]
+    private ?string $username;
 
     /**
      * Roles.
@@ -106,7 +117,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
+    }
+
+    /**
+     * Setter for username.
+     *
+     * @param string $email Email
+     */
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
     }
 
     /**
@@ -146,6 +167,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->password;
     }
+    
 
     /**
      * Setter for password.

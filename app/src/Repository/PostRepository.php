@@ -64,12 +64,24 @@ class PostRepository extends ServiceEntityRepository
                 'partial post.{id, createdAt, title}',
                 'partial category.{id, title}',
                 'partial tags.{id, title}'
+                
             )
             ->join('post.category', 'category')
             ->leftJoin('post.tags', 'tags')
             ->orderBy('post.createdAt', 'DESC');
 
         return $this->applyFiltersToList($queryBuilder, $filters);
+    }
+
+    public function showComments(): QueryBuilder
+    {
+        $queryBuilder = $this->getOrCreateQueryBuilder()
+            ->select(
+                'partial comments.{content, createdAt, author}'
+            )
+            ->join('comments.post', 'post')
+            ->orderBy('comment.createdAt', 'DESC');
+        return $this->showComments();
     }
 
     /**

@@ -24,32 +24,29 @@ class CommentService implements CommentServiceInterface
         $this->paginator = $paginator;
     }
 
-    public function getPaginatedList (int $page, Post $post) : PaginationInterface {
-        return $this->paginator->paginate(
-            $this->commentRepository->findBy(
-                ['post' => $post]
-            ),
-            $page,
-            CommentRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
-    }
 
-    public function getPaginatedListOfAllComments (int $page) : PaginationInterface {
-        return $this->paginator->paginate(
-            $this->commentRepository->queryAll(),
-            $page,
-            CommentRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
-    }
 
-    public function saveComment(Comment $comment): void
+
+    /**
+     * Save entity.
+     *
+     * @param Comment $category Comment entity
+     */
+    public function save(Comment $comment): void
     {
-        
+        if ($comment->getId() == null) {
+            $comment->setCreatedAt(new DateTimeImmutable());
+        }
         $this->commentRepository->save($comment);
     }
 
-    public function deleteComment(Comment $comment) : void
+    /**
+     * Delete entity.
+     *
+     * @param Comment $comment Comment entity
+     */
+    public function delete(Comment $comment): void
     {
-        $this->commentRepository->remove($comment);
+        $this->commentRepository->delete($comment);
     }
 }

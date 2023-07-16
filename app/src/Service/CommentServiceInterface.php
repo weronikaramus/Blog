@@ -8,7 +8,16 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 
 interface CommentServiceInterface
 {
-    public function getPaginatedList(int $page, Post $post) : PaginationInterface;
 
-    public function saveComment(Comment $comment) : void;
+
+
+    public function save(Comment $comment) : void;
+
+    /**
+     * Delete entity.
+     *
+     * @param Comment $comment Comment entity
+     */
+    public function delete(Comment $comment): void;
 }
+

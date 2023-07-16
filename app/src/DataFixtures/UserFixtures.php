@@ -46,6 +46,7 @@ class UserFixtures extends AbstractBaseFixtures
                     'user1234'
                 )
             );
+            $user->setUsername($this->faker->unique()->word);
 
             return $user;
         });
@@ -60,6 +61,7 @@ class UserFixtures extends AbstractBaseFixtures
                     'admin1234'
                 )
             );
+            $user->setUsername($this->faker->unique()->word);
 
             return $user;
         });
