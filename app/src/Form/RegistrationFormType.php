@@ -19,9 +19,8 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email')
             ->add('username')
-            ->add('password', PasswordType::class, [
-                'mapped' => false])
-        ;
+            ->add('password', PasswordType::class
+);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
