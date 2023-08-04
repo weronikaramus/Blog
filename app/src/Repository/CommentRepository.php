@@ -38,9 +38,8 @@ class CommentRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->orderBy('comment.createdAt', 'ASC');
+            ->orderBy('comment.createdAt', 'DESC');
     }
-
     /**
      * Save entity.
      *

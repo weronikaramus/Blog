@@ -157,16 +157,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Getter for password.
-     *
-     * @return string|null Password
-     *
-     * @see PasswordAuthenticatedUserInterface
+     * @return string the hashed password for this user
      */
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }
+    
     
 
     /**

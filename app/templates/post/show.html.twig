@@ -36,6 +36,11 @@
             <dd>{{ comment.createdAt|format_date('long') }}</dd>
             <dt>{{ 'label.content' }}</dt>
             <dd>{{  comment.content }}</dd>
+            {% if is_granted('DELETE', comment) %}
+                        <dd><a class="btn btn-outline-danger" href="{{ url('comment_delete', {id: comment.id}) }}" title="{{ 'action.delete'|trans }}">
+                            {{ 'action.delete'|trans }}
+                        </a></dd>
+                    {% endif %}
             {% endfor %}
 
             

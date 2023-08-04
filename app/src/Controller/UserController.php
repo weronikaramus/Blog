@@ -101,43 +101,43 @@ class UserController extends AbstractController
         return $this->redirectToRoute('post_index');
     }
 
-    /**
-     * Create action.
-     *
-     * @param Request $request HTTP request
-     *
-     * @return Response HTTP response
-     */
-    #[Route('/create', name: 'user_create', methods: 'GET|POST')]
-    public function create(Request $request): Response
-    {
+    // /**
+    //  * Create action.
+    //  *
+    //  * @param Request $request HTTP request
+    //  *
+    //  * @return Response HTTP response
+    //  */
+    // #[Route('/create', name: 'user_create', methods: 'GET|POST')]
+    // public function create(Request $request): Response
+    // {
         
-        /** @var User $user */
-        $user = $this->getUser();
-        $user = new User();
-        $form = $this->createForm(
-            UserType::class,
-            $user,
-            ['action' => $this->generateUrl('user_create')]
-        );
-        $form->handleRequest($request);
+    //     /** @var User $user */
+    //     $user = $this->getUser();
+    //     $user = new User();
+    //     $form = $this->createForm(
+    //         UserType::class,
+    //         $user,
+    //         ['action' => $this->generateUrl('user_create')]
+    //     );
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->userService->save($user);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $this->userService->save($user);
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.created_successfully')
-            );
+    //         $this->addFlash(
+    //             'success',
+    //             $this->translator->trans('message.created_successfully')
+    //         );
 
-            return $this->redirectToRoute('user_index');
-        }
+    //         return $this->redirectToRoute('user_index');
+    //     }
 
-        return $this->render(
-            'user/create.html.twig',
-            ['form' => $form->createView()]
-        );
-    }
+    //     return $this->render(
+    //         'user/create.html.twig',
+    //         ['form' => $form->createView()]
+    //     );
+    // }
 
     /**
      * Edit action.

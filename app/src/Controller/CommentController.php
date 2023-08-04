@@ -169,7 +169,7 @@ class CommentController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'comment_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
-    // #[IsGranted('DELETE', subject: 'comment')]
+    #[IsGranted('DELETE', subject: 'comment')]
     public function delete(Request $request, Comment $comment): Response
     {
         if ($comment->getAuthor() !== $this->getUser()) {
@@ -178,7 +178,7 @@ class CommentController extends AbstractController
                 $this->translator->trans('message.access_denied')
             );
     
-            return $this->redirectToRoute('comment_index');
+            return $this->redirectToRoute('post_index');
         }
         $form = $this->createForm(
             FormType::class, 
@@ -198,7 +198,7 @@ class CommentController extends AbstractController
                 $this->translator->trans('message.deleted_successfully')
             );
 
-            return $this->redirectToRoute('comment_index');
+            return $this->redirectToRoute('post_index');
         }
 
         return $this->render(
