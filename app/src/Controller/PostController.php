@@ -10,8 +10,10 @@ use App\Entity\User;
 use App\Entity\Comment;
 use App\Form\Type\PostType;
 use App\Form\Type\CommentType;
+use App\Repository\CommentRepository;
 use App\Service\PostServiceInterface;
 use App\Service\CommentServiceInterface;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,17 +45,20 @@ class PostController extends AbstractController
      */
     private TranslatorInterface $translator;
 
+    private EntityManagerInterface $entityManager;
+
     /**
      * Constructor.
      *
      * @param PostServiceInterface $postService Post service
      * @param TranslatorInterface  $translator  Translator
      */
-    public function __construct(PostServiceInterface $postService, TranslatorInterface $translator, CommentServiceInterface $commentService)
+    public function __construct(PostServiceInterface $postService, TranslatorInterface $translator, CommentServiceInterface $commentService, EntityManagerInterface $entityManager)
     {
         $this->postService = $postService;
         $this->translator = $translator;
         $this->commentService = $commentService;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -217,7 +222,7 @@ class PostController extends AbstractController
      */
     #[Route('/{id}/delete', name: 'post_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     // #[IsGranted('DELETE', subject: 'post')]
-    public function delete(Request $request, Post $post): Response
+    public function delete(Request $request, Post $post, CommentRepository $commentRepository): Response
     {
         if ($post->getAuthor() !== $this->getUser()) {
             $this->addFlash(
@@ -237,6 +242,10 @@ class PostController extends AbstractController
         );
         $form->handleRequest($request);
 
+        $comments = $commentRepository->findBy(['post' => $post->getId()]);
+            foreach ($comments as $comment) {
+                $this->entityManager->remove($comment);
+            }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->postService->delete($post);
 

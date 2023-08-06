@@ -14,14 +14,14 @@
             <dd>{{ post.createdAt|format_date('long') }}</dd>
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{  post.category.title }}</dd>
-            <dt>{{ 'label.content' }}</dt>
+            <dt>{{ 'label.content' |trans }}</dt>
             <dd>{{ post.content }}</dd>
             <dt>{{ 'label.tags'|trans }}</dt>
             {% for tag in post.tags %}
             <dd>{{  tag.title }}</dd>
             {% endfor %}
             <hr>
-            <h3>Comments</h3>
+            <h3>{{ 'label.comments' | trans}}</h3>
             <br>
             {% include 'default/_form.html.twig' with {
                 page_title: 'title.comment_create'|trans,

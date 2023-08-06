@@ -1,12 +1,12 @@
 {% extends "./base.html.twig" %}
 
 {% block title %}
-  Write!
+  {{category.title}}!
 {% endblock %}
 
 {% block main %}
 
-  <h2>See all in "{{ category.title }}"</h2>
+  <h2>{{'title.see_all' | trans}} "{{ category.title }}"</h2>
 
   {% if pagination is defined and pagination.items|length %}
 

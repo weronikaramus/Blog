@@ -19,13 +19,13 @@
             {% endif %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="nav-item">
-                <a href="{{ url('app_logout') }}"  class="nav-link">{{ 'action_logout'|trans }}</a>
+                <a href="{{ url('app_logout') }}" title="{{ 'action.logout'|trans }}"  class="nav-link">{{ 'action.logout'|trans }}</a>
             </li>
             {% endif %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('user_show', {id: app.user.id}) }}" title="{{ 'action.edit'|trans }}">
-                            {{ 'action.show'|trans }}
+                <a class="nav-link" href="{{ url('user_show', {id: app.user.id}) }}" title="{{ 'user.show'|trans }}">
+                            {{ 'user.show'|trans }}
                         </a>
             </li>
             {% endif %}

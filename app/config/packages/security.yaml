@@ -26,6 +26,8 @@ security:
         path: app_logout
         # where to redirect after logout
         target: app_login
+        invalidate_session: true
+
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
@@ -44,7 +46,6 @@ security:
     - { path: ^/register$, roles: PUBLIC_ACCESS }
     - { path: ^/login, roles: PUBLIC_ACCESS}
     - { path: ^/, roles: ROLE_USER}
-    - { path: ^/register$, roles: PUBLIC_ACCESS }
 
 when@test:
   security:

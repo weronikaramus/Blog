@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{'title.register'|trans}}{% endblock %}
 
 {% block main %}
-    <h2>Register</h2>
+    <h2>{{'tile.register' |trans}}</h2>
 
     {{ form_errors(registrationForm) }}
 
@@ -14,7 +14,10 @@
             label: 'Password'
         }) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn btn-outline-success">{{'label.create_account' |trans}}</button>
+        <p><a class="btn btn-outline-primary" href="{{ url('app_login') }}" title="{{ 'action.login'|trans }}">{{'label.login' | trans}}</a></p>
+
+        
     {{ form_end(registrationForm) }}
 {% endblock %}
 

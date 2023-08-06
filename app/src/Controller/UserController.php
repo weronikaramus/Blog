@@ -7,6 +7,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\UserType;
+use App\Repository\CommentRepository;
+use App\Repository\PostRepository;
 use App\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -16,6 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
+
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -41,17 +45,20 @@ class UserController extends AbstractController
      */
     private Security $security;
 
+    private EntityManagerInterface $entityManager;
+
     /**
      * Constructor.
      *
      * @param UserServiceInterface $userService User service
      * @param TranslatorInterface  $translator  Translator
      */
-    public function __construct(UserServiceInterface $userService, TranslatorInterface $translator, Security $security)
+    public function __construct(UserServiceInterface $userService, TranslatorInterface $translator, Security $security, EntityManagerInterface $entityManager)
     {
         $this->userService = $userService;
         $this->translator = $translator;
         $this->security = $security;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -168,7 +175,7 @@ class UserController extends AbstractController
                 $this->translator->trans('message.created_successfully')
             );
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
 
         return $this->render(
@@ -189,30 +196,43 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'user_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
-    public function delete(Request $request, User $user): Response
+    public function delete(Request $request, User $user, PostRepository $postRepository, CommentRepository $commentRepository, SecurityController $security): Response
     {
-        $form = $this->createForm(FormType::class, $user, [
-            'method' => 'DELETE',
-            'action' => $this->generateUrl('user_delete', ['id' => $user->getId()]),
-        ]);
+        $form = $this->createForm(
+            FormType::class,
+            $user,
+            [
+                'method' => 'DELETE',
+                'action' => $this->generateUrl('user_delete', ['id' => $user->getId()]),
+            ]
+        );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $deleted = $this->userService->delete($user);
 
-            if ($deleted) {
-                $this->addFlash(
-                    'success',
-                    $this->translator->trans('message.deleted_successfully')
-                );
-            } else {
-                $this->addFlash(
-                    'warning',
-                    $this->translator->trans('message.not_deleted')
-                );
+            $posts = $postRepository->findBy(['author' => $user->getId()]);
+            foreach ($posts as $post) {
+                $this->entityManager->remove($post);
             }
 
-            return $this->redirectToRoute('user_index');
+            $comments = $commentRepository->findBy(['author' => $user->getId()]);
+            foreach ($comments as $comment) {
+                $this->entityManager->remove($comment);
+            }
+
+            $this->entityManager->remove($user);
+            $this->entityManager->flush();
+
+            $this->userService->delete($user);
+            $request->getSession()->invalidate();
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
+
+
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render(
