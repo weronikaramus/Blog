@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     {# <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'post.id') }}</th> #}
-                    <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'post.author') }}</th>
+                    <th>{{ 'label.author'|trans }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'post.createdAt') }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'post.title') }}</th>
                     <th>{{ 'label.tag'|trans }}</th>
@@ -65,9 +65,6 @@
             {% endfor %}
             </tbody>
         </table>
-        <p><a href="{{ url('post_index') }}" title="{{ 'action.back_to_list'|trans }}">
-                        {{ 'action.back_to_list'|trans }}
-        </a></p>
 
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
