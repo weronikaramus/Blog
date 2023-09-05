@@ -12,8 +12,8 @@
             <li class="nav-item"><a href="{{ path('category_index') }}" class="nav-link">{{ 'categories.show'|trans }}</a></li>
             {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('user_index') }}" title="{{ 'action.index'|trans }}">
-                            {{ 'action.index'|trans }}
+                <a class="nav-link" href="{{ url('user_index') }}" title="{{ 'user.index'|trans }}">
+                            {{ 'user.index'|trans }}
                 </a>
             </li>
             {% endif %}

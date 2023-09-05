@@ -62,39 +62,6 @@ class TagController extends AbstractController
         return $this->render('tag/index.html.twig', ['pagination' => $pagination]);
     }
 
-    // /**
-    //  * Show action.
-    //  *
-    //  * @param Category $category Category
-    //  *
-    //  * @return Response HTTP response
-    //  */
-    // #[Route(
-    //     '/{id}',
-    //     name: 'tag_show',
-    //     requirements: ['id' => '[1-9]\d*'],
-    //     methods: 'GET'
-    // )]
-    // public function show(Request $request, TagRepository $tagRepository, $id, PaginatorInterface $paginator): Response
-    // {
-    //     $tag = $tagRepository->find($id);
-        
-    //     if (!$tag) {
-    //         throw $this->createNotFoundException('Tag not found');
-    //     }
-
-    //     $pagination = $paginator->paginate(
-    //         $posts = $tag->getPosts(),
-    //         $request->query->getInt('page', 1),
-    //         TagRepository::PAGINATOR_ITEMS_PER_PAGE
-    //     );
-
-    //     return $this->render('tag/show.html.twig', [
-    //         'tag' => $tag,
-    //         'posts' => $posts,
-    //         'pagination' => $pagination,
-    //     ]);
-    // }
     /**
      * Show action.
      *

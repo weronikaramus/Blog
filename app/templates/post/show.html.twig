@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.post'|trans({'%id%': post.id|default('')}) }}
+   {{  post.title }}
 {% endblock %}
 
 {% block main %}
@@ -9,7 +9,7 @@
     {% if post is defined and post|length %}
         <dl class="dl-horizontal">
             <dt>{{ 'label.author'|trans }}</dt>
-            <dd>{{ post.author.email }}</dd>
+            <dd>{{ post.author.username }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
             <dd>{{ post.createdAt|format_date('long') }}</dd>
             <dt>{{ 'label.category'|trans }}</dt>
@@ -34,7 +34,7 @@
             <dd>{{  comment.author.username }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
             <dd>{{ comment.createdAt|format_date('long') }}</dd>
-            <dt>{{ 'label.content' }}</dt>
+            <dt>{{ 'label.content' |trans}}</dt>
             <dd>{{  comment.content }}</dd>
             {% if is_granted('DELETE', comment) %}
                         <dd><a class="btn btn-outline-danger" href="{{ url('comment_delete', {id: comment.id}) }}" title="{{ 'action.delete'|trans }}">

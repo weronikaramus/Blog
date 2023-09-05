@@ -3,7 +3,7 @@
 {% block title %}{{'title.register'|trans}}{% endblock %}
 
 {% block main %}
-    <h2>{{'tile.register' |trans}}</h2>
+    <h2>{{'title.register' |trans}}</h2>
 
     {{ form_errors(registrationForm) }}
 
@@ -14,7 +14,7 @@
             label: 'Password'
         }) }}
 
-        <button type="submit" class="btn btn-outline-success">{{'label.create_account' |trans}}</button>
+        <button type="submit" class="btn btn-outline-success">{{'action.register' |trans}}</button>
         <p><a class="btn btn-outline-primary" href="{{ url('app_login') }}" title="{{ 'action.login'|trans }}">{{'label.login' | trans}}</a></p>
 
         

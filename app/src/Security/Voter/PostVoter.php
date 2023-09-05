@@ -112,6 +112,10 @@ class PostVoter extends Voter
      */
     private function canDelete(Post $post, User $user): bool
     {
-        return $post->getAuthor() === $user;
+        if ($post->getAuthor() === $user || $this->security->isGranted('ROLE_ADMIN')) {
+            return true;
+        }
+
+        return false;
     }
 }

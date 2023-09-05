@@ -54,10 +54,18 @@
         <source>label.none</source>
         <target>Brak</target>
       </trans-unit>
+      <trans-unit id="label.login">
+        <source>label.login</source>
+        <target>Zaloguj się</target>
+      </trans-unit>
+      <trans-unit id="label.comments">
+        <source>label.comments</source>
+        <target>Komentarze</target>
+      </trans-unit>
 
       <trans-unit id="title.user_edit">
         <source>title.user_edit</source>
-        <target>Edytuj moje dane</target>
+        <target>Edytuj dane</target>
       </trans-unit>
       <trans-unit id="title.user_delete">
         <source>title.user_delete</source>
@@ -75,9 +83,21 @@
         <source>title.categories</source>
         <target>Kategorie</target>
       </trans-unit>
+      <trans-unit id="title.category_create">
+        <source>title.category_create</source>
+        <target>Nowa kategoria</target>
+      </trans-unit>
       <trans-unit id="title.see_all">
         <source>title.see_all</source>
         <target>Zobacz wszystko w </target>
+      </trans-unit>
+      <trans-unit id="title.register">
+        <source>title.register</source>
+        <target>Utwórz konto</target>
+      </trans-unit>
+      <trans-unit id="title.comment_create">
+        <source>title.comment_create</source>
+        <target>Nowy komentarz</target>
       </trans-unit>
       
 
@@ -89,6 +109,19 @@
         <source>message.record_not_found</source>
         <target>Nie znaleziono rekordu</target>
       </trans-unit>
+      <trans-unit id="message.created_successfully">
+        <source>message.created_successfully</source>
+        <target>Utworzono pomyślnie!</target>
+      </trans-unit>
+      <trans-unit id="message.deleted_successfully">
+        <source>message.deleted_successfully</source>
+        <target>Usunięto pomyślnie!</target>
+      </trans-unit>
+      <trans-unit id="message.access_denied">
+        <source>message.access_denied</source>
+        <target>Brak uprawnień!</target>
+      </trans-unit>
+
       <trans-unit id="title.record_list">
         <source>title.record_list</source>
         <target>Lista rekordów</target>
@@ -97,6 +130,16 @@
         <source>title.record_view</source>
         <target>Widok rekordu #%id%</target>
       </trans-unit>
+      <trans-unit id="title.login">
+        <source>title.login</source>
+        <target>Logowanie</target>
+      </trans-unit>
+      <trans-unit id="title.users">
+        <source>title.users</source>
+        <target>Wszyscy użytkownicy</target>
+      </trans-unit>
+      
+
 
 
       <trans-unit id="action.show">
@@ -114,6 +157,18 @@
       <trans-unit id="action.save">
         <source>action.save</source>
         <target>Zapisz</target>
+      </trans-unit>
+      <trans-unit id="action.login">
+        <source>action.login</source>
+        <target>Zaloguj</target>
+      </trans-unit>
+      <trans-unit id="action.logout">
+        <source>action.logout</source>
+        <target>Wyloguj</target>
+      </trans-unit>
+      <trans-unit id="action.register">
+        <source>action.register</source>
+        <target>Utwórz konto</target>
       </trans-unit>
 
       <trans-unit id="post.create">
@@ -135,10 +190,6 @@
         <target>Tagi</target>
       </trans-unit>
 
-      <trans-unit id="action.logout">
-        <source>action.logout</source>
-        <target>Wyloguj</target>
-      </trans-unit>
 
        <trans-unit id="action.back_to_list">
         <source>action.back_to_list</source>
@@ -150,7 +201,10 @@
         <target>Moje konto</target>
       </trans-unit>
 
-      
+      <trans-unit id="user.index">
+        <source>user.index</source>
+        <target>Użytkownicy</target>
+      </trans-unit>
 
 
     </body>
