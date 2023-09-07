@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
  * Class User.
  */
@@ -65,7 +66,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string|null
      */
     #[ORM\Column(type: 'string')]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(groups: ['registration'])]
+    #[Assert\NotBlank(groups: ['edit'], allowNull: true)]
     private ?string $password;
 
     /**
@@ -157,9 +159,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return string the hashed password for this user
+     * Getter for password.
+     * 
+     * @return string|null the hashed password for this user
      */
-    public function getPassword(): string
+    public function getPassword(): string|null
     {
         return $this->password;
     }
@@ -169,9 +173,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Setter for password.
      *
-     * @param string $password User password
+     * @param string|null $password User password
      */
-    public function setPassword(string $password): void
+    public function setPassword(string|null $password): void
     {
         $this->password = $password;
     }

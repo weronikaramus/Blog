@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Comment entity.
+ */
+
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
@@ -8,11 +12,18 @@ use Doctrine\DBAL\Types\Types;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class Comment.
+ */
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ORM\Table(name: 'comments')]
-
 class Comment
 {
+    /**
+    * Primary key.
+    *
+    * @var int|null
+    */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -27,28 +38,58 @@ class Comment
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt;
 
+    /**
+     * Content.
+     * @var string|null
+     */
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
 
+    /**
+     * Author.
+     * @var User|null
+     */
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
+    /**
+     * Post.
+     * @var Post|null
+     */
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Post $post = null;
 
+    /**
+     * Getter for ID.
+     *
+     * @return int|null ID
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    /**
+     * Getter for content.
+     *
+     * @return string|null Content
+     */
 
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * Setter for content.
+     *
+     * @param string $content Content
+     *
+     * @return $this
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -56,10 +97,23 @@ class Comment
         return $this;
     }
 
+    /**
+     * Getter for author.
+     *
+     * @return User|null Author
+     */
     public function getAuthor(): ?User
     {
         return $this->author;
     }
+
+    /**
+     * Setter for author.
+     *
+     * @param User|null $author Author
+     *
+     * @return $this
+     */
 
     public function setAuthor(?User $author): self
     {
@@ -90,11 +144,23 @@ class Comment
         return $this;
     }
 
+    /**
+     * Getter for post.
+     *
+     * @return Post|null Post
+     */
     public function getPost(): ?Post
     {
         return $this->post;
     }
 
+    /**
+     * Setter for post.
+     *
+     * @param Post|null $post Post
+     *
+     * @return $this
+     */
     public function setPost(?Post $post): static
     {
         $this->post = $post;

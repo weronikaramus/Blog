@@ -9,8 +9,11 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 interface CommentServiceInterface
 {
 
-
-
+    /**
+     * Save entity.
+     *
+     * @param Comment $comment Comment entity
+     */
     public function save(Comment $comment) : void;
 
     /**

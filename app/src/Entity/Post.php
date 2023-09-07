@@ -94,9 +94,19 @@ class Post
     private $tags;
 
 
+    /**
+     * Author.
+     * 
+     * @var User|null
+     */
     #[ORM\ManyToOne]
     private ?User $author = null;
 
+    /**
+     * Comments.
+     *
+     * @var ArrayCollection<int, Comment>
+     */
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
     
@@ -185,11 +195,23 @@ class Post
         return $this;
     }
 
+    /**
+     * Getter for slug.
+     *
+     * @return string|null Slug
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * Setter for slug.
+     *
+     * @param string $slug Slug
+     *
+     * @return $this
+     */
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
@@ -257,11 +279,23 @@ class Post
         $this->tags->removeElement($tag);
     }
 
+    /**
+     * Getter for author.
+     *
+     * @return User|null Author
+     */
     public function getAuthor(): ?User
     {
         return $this->author;
     }
 
+    /**
+     * Setter for author.
+     *
+     * @param User|null $author Author
+     *
+     * @return $this
+     */
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
@@ -270,13 +304,22 @@ class Post
     }
 
     /**
-     * @return Collection<int, Comment>
+     * Get the comments associated with this post.
+     *
+     * @return Collection<int, Comment> The comments collection
      */
     public function getComments(): Collection
     {
         return $this->comments;
     }
 
+    /**
+     * Add a comment to this post.
+     *
+     * @param Comment $comment The comment to add
+     *
+     * @return static This post entity
+     */
     public function addComment(Comment $comment): static
     {
         if (!$this->comments->contains($comment)) {
@@ -287,6 +330,13 @@ class Post
         return $this;
     }
 
+    /**
+     * Remove a comment from this post.
+     *
+     * @param Comment $comment The comment to remove
+     *
+     * @return static This post entity
+     */
     public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
@@ -298,8 +348,5 @@ class Post
 
         return $this;
     }
-
-    
-
 
 }

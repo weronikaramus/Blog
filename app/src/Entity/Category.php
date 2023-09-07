@@ -8,7 +8,6 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -33,6 +32,11 @@ class Category
    #[ORM\Column(type: 'integer')]
    private ?int $id = null;
 
+    /**
+     * Author.
+     * 
+     * @var User|null
+     */
     #[ORM\ManyToOne]
     private ?User $author = null;
 
@@ -65,6 +69,9 @@ class Category
     private ?string $slug;
 
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -101,6 +108,8 @@ class Category
     }
 
     /**
+     * Getter for posts.
+     * 
      * @return Collection<int, Post>
      */
     public function getPosts(): Collection
@@ -108,6 +117,13 @@ class Category
         return $this->posts;
     }
 
+    /**
+     * Adds a post.
+     *
+     * @param Post $post The post to add
+     *
+     * @return $this
+     */
     public function addPost(Post $post): self
     {
         if (!$this->posts->contains($post)) {
@@ -118,6 +134,13 @@ class Category
         return $this;
     }
 
+    /**
+     * Removes a post.
+     *
+     * @param Post $post The post to remove
+     *
+     * @return $this
+     */
     public function removePost(Post $post): self
     {
         if ($this->posts->removeElement($post)) {
@@ -130,11 +153,23 @@ class Category
         return $this;
     }
 
+    /**
+     * Getter for slug.
+     *
+     * @return string|null Slug
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * Setter for slug.
+     *
+     * @param string $slug Slug
+     *
+     * @return $this
+     */
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
@@ -142,11 +177,23 @@ class Category
         return $this;
     }
     
+    /**
+     * Getter for author.
+     *
+     * @return User|null Author
+     */
     public function getAuthor(): ?User
     {
         return $this->author;
     }
 
+    /**
+     * Setter for author.
+     *
+     * @param User|null $author Author
+     *
+     * @return $this
+     */
     public function setAuthor(?User $author): static
     {
         $this->author = $author;

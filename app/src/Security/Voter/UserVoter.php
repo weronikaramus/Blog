@@ -146,7 +146,7 @@ class UserVoter extends Voter
     private function canDelete(User $user): bool
     {
         $currentUser = $this->security->getUser();
-        if ($currentUser === $user || $this->security->isGranted('ROLE_ADMIN')) {
+        if ($currentUser !== $user && $this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
 

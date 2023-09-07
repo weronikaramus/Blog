@@ -1,7 +1,7 @@
 {% extends "./base.html.twig" %}
 
 {% block title %}
-  Write!
+  {{'title'|trans}}!
 {% endblock %}
 
 {% block main %}
@@ -18,7 +18,6 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    {# <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'post.id') }}</th> #}
                     <th>{{ 'label.author'|trans }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'post.createdAt') }}</th>
                     <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'post.title') }}</th>
@@ -30,7 +29,6 @@
             <tbody>
             {% for post in pagination.items %}
                 <tr>
-                    {# <td>{{ post.id }}</td> #}
                     <td>{{ post.author.email }}</td>
                     <td>{{ post.createdAt|format_date('long') }}</td>
                     <td>{{ post.title }}</td>
@@ -41,8 +39,6 @@
                             </a>
                         {% endfor %}
                     {% endif %}
-                    
-
 
                     </td>
                     <td><a href="{{ url('category_show', {id: post.category.id}) }}">

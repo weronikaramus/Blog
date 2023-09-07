@@ -1,16 +1,14 @@
 {% extends "./base.html.twig" %}
 
 {% block title %}
-  {{'tile.tags' | trans}}!
+  {{'title.tags' | trans}}!
 {% endblock %}
 
 {% block main %}
 
-    <h2>{{'title.see_tags' | trans}}</h2>
+    <h2>{{'title.tags' | trans}}</h2>
     <br>
-    <a href="{{ url('tag_create') }}" title="{{ 'action.create'|trans }}">
-                        {{ 'action.create'|trans }}
-    </a>
+    
 
     {% if pagination is defined and pagination.items|length %}
 
@@ -21,7 +19,6 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    {# <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'tag.id') }}</th> #}
                     <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'tag.title') }}</th>
                     <th>{{ 'label.actions'|trans }}</th>
                 </tr>
@@ -29,7 +26,6 @@
             <tbody>
             {% for tag in pagination.items %}
                 <tr>
-                    {# <td>{{ tag.id }}</td> #}
                     <td>{{ tag.title }}</td>
                     <td>
                         <a class="btn btn-outline-primary" href="{{ url('tag_show', {id: tag.id}) }}" title="{{ 'action.show'|trans }}">

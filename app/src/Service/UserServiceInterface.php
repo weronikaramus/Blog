@@ -26,6 +26,7 @@ interface UserServiceInterface
      * Save entity.
      *
      * @param User $user User entity
+     * @param bool $updatePassword Whether to update the password (default is true)
      */
     public function save(User $user): void;
 

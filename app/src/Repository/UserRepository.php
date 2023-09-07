@@ -49,19 +49,34 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Save user
-     *
-     * @param User $entity
-     *
-     * @return void
-     */
-    public function save(User $entity): void
-    {
-        $hashedPassword = $this->passwordHasher->hashPassword($entity, $entity->getPassword());
+ * Save user
+ *
+ * @param User $entity
+ *
+ * @return void
+ */
+public function save(User $entity): void
+{
+    // Check if a new password is provided and not empty
+    $newPassword = $entity->getPassword();
+    
+    if ($newPassword !== null) {
+        // Hash and update the new password
+        $hashedPassword = $this->passwordHasher->hashPassword($entity, $newPassword);
         $entity->setPassword($hashedPassword);
-        $this->getEntityManager()->persist($entity);
-        $this->getEntityManager()->flush();
+    } else {
+        // If no new password is provided, load the existing user from the database
+        $existingUser = $this->find($entity->getId());
+
+        if ($existingUser) {
+            // Use the existing password to ensure it doesn't become null
+            $entity->setPassword($existingUser->getPassword());
+        }
     }
+
+    $this->getEntityManager()->persist($entity);
+    $this->getEntityManager()->flush();
+}
 
     /**
      * Create user
@@ -139,29 +154,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         return $queryBuilder ?? $this->createQueryBuilder('user');
     }
-
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

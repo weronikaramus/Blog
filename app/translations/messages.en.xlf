@@ -131,6 +131,10 @@
         <source>title.users</source>
         <target>All users</target>
       </trans-unit>
+      <trans-unit id="title.tags">
+        <source>title.tags</source>
+        <target>All tags</target>
+      </trans-unit>
       <trans-unit id="title.comment_create">
         <source>title.comment_create</source>
         <target>New comment</target>
@@ -141,6 +145,10 @@
       <trans-unit id="action.show">
         <source>action.show</source>
         <target>Show</target>
+      </trans-unit>
+       <trans-unit id="action.create">
+        <source>action.create</source>
+        <target>New</target>
       </trans-unit>
       <trans-unit id="action.edit">
         <source>action.edit</source>

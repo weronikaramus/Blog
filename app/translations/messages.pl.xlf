@@ -138,6 +138,10 @@
         <source>title.users</source>
         <target>Wszyscy użytkownicy</target>
       </trans-unit>
+      <trans-unit id="title.tags">
+        <source>title.tags</source>
+        <target>Tagi</target>
+      </trans-unit>
       
 
 
@@ -145,6 +149,10 @@
       <trans-unit id="action.show">
         <source>action.show</source>
         <target>Wyświetl</target>
+      </trans-unit>
+      <trans-unit id="action.create">
+        <source>action.create</source>
+        <target>Stwórz</target>
       </trans-unit>
       <trans-unit id="action.edit">
         <source>action.edit</source>

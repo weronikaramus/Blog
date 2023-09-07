@@ -24,9 +24,6 @@ class CommentService implements CommentServiceInterface
         $this->paginator = $paginator;
     }
 
-
-
-
     /**
      * Save entity.
      *
