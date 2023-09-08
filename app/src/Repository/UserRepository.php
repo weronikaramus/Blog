@@ -49,35 +49,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
- * Save user
- *
- * @param User $entity
- *
- * @return void
- */
-public function save(User $entity): void
-{
-    // Check if a new password is provided and not empty
-    $newPassword = $entity->getPassword();
-    
-    if ($newPassword !== null) {
-        // Hash and update the new password
-        $hashedPassword = $this->passwordHasher->hashPassword($entity, $newPassword);
+     * Save user
+     *
+     * @param User $entity
+     *
+     * @return void
+     */
+    public function save(User $entity): void
+    {
+        $hashedPassword = $this->passwordHasher->hashPassword($entity, $entity->getPassword());
         $entity->setPassword($hashedPassword);
-    } else {
-        // If no new password is provided, load the existing user from the database
-        $existingUser = $this->find($entity->getId());
-
-        if ($existingUser) {
-            // Use the existing password to ensure it doesn't become null
-            $entity->setPassword($existingUser->getPassword());
-        }
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
     }
-
-    $this->getEntityManager()->persist($entity);
-    $this->getEntityManager()->flush();
-}
-
+    
     /**
      * Create user
      *
@@ -85,14 +70,10 @@ public function save(User $entity): void
      *
      * @return void
      */
-    public function create(User $entity, $password): void
+    public function create(User $entity): void
     {
-        $password = $this->passwordHasher->hashPassword($entity, $entity->getPassword());
-        $entity->setPassword(
-            $this->passwordHasher->hashPassword(
-                $password
-            )
-        );
+        $hashedPassword = $this->passwordHasher->hashPassword($entity, $entity->getPassword());
+        $entity->setPassword($hashedPassword);
         $entity->setRoles(['ROLE_USER']);
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
@@ -111,14 +92,13 @@ public function save(User $entity): void
         $this->getEntityManager()->flush();
     }
 
-
     /**
-     * Upgrade password function
+     * Upgrade password function.
      *
-     * @param PasswordAuthenticatedUserInterface $user
-     * @param string                             $newHashedPassword
+     * @param PasswordAuthenticatedUserInterface $user              User entity
+     * @param string                             $newHashedPassword Hashed password
      *
-     * @return void
+     * @return void Result
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {

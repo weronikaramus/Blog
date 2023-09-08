@@ -62,12 +62,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Password.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string')]
-    #[Assert\NotBlank(groups: ['registration'])]
-    #[Assert\NotBlank(groups: ['edit'], allowNull: true)]
+    #[Assert\NotBlank]
     private ?string $password;
 
     /**
@@ -160,10 +157,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Getter for password.
-     * 
-     * @return string|null the hashed password for this user
+     *
+     * @return string|null Password
+     *
+     * @see PasswordAuthenticatedUserInterface Password Authenticated User Interface
      */
-    public function getPassword(): string|null
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -173,12 +172,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Setter for password.
      *
-     * @param string|null $password User password
+     * @param string $password User password
      */
-    public function setPassword(string|null $password): void
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
+
 
     /**
      * Returning a salt is only needed, if you are not using a modern

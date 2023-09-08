@@ -282,20 +282,4 @@ class PostController extends AbstractController
         return $filters;
     }
 
-
-    /**
-     * Navigation action.
-     *
-     * @param Post $post Post entity
-     *
-     * @return Response HTTP response
-     */
-    #[Route('/{nav}', name: 'post_menu')]
-    public function showNav(string $nav): Response
-    {
-        return $this->render(
-            'post/'.$nav.'.html.twig',
-            ['nav' => $nav]
-        );
-    }
 }

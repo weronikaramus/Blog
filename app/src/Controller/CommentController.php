@@ -211,19 +211,5 @@ class CommentController extends AbstractController
     }
 
 
-    /**
-     * Navigation action.
-     *
-     * @param Comment $comment Comment entity
-     *
-     * @return Response HTTP response
-     */
-    #[Route('/{nav}', name: 'comment_menu')]
-    public function showNav(string $nav): Response
-    {
-        return $this->render(
-            'comment/'.$nav.'.html.twig',
-            ['nav' => $nav]
-        );
-    }
+    
 }

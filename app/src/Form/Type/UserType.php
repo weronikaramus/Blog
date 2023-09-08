@@ -9,10 +9,8 @@ use App\Entity\User;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class UserType.
@@ -49,7 +47,7 @@ class UserType extends AbstractType
             TextType::class,
             [
                 'label' => 'label.email',
-                'required' => true,
+                'required' => false,
                 'attr' => ['max_length' => 255],
             ]
         )
@@ -58,18 +56,10 @@ class UserType extends AbstractType
             TextType::class,
             [
                 'label' => 'label.username',
-                'required' => true,
+                'required' => false,
                 'attr' => ['max_length' => 255],
             ]
-        )
-        ->add(
-            'password',
-            PasswordType::class,
-            [
-                'label' => 'label.password',
-                'required' => false,
-                'attr' => ['max_length' => 255]
-            ]);
+            );
     }
 
     /**

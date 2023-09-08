@@ -6,6 +6,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\Type\UserPasswordType;
 use App\Form\Type\UserType;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
@@ -18,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * Class UserController.
@@ -115,7 +115,7 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'user_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
-    public function edit(Request $request, User $user, UserPasswordHasherInterface $passwordHasher): Response
+    public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(
             UserType::class,
@@ -137,6 +137,47 @@ class UserController extends AbstractController
             );
 
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        return $this->render(
+            'user/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
+    }
+
+    /**
+     * Edit Password action.
+     *
+     * @param Request $request HTTP request
+     * @param User    $user    User entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/editPassword', name: 'user_password', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    public function editPassword(Request $request, User $user): Response
+    {
+        $form = $this->createForm(
+            UserPasswordType::class,
+            $user,
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('user_password', ['id' => $user->getId()]),
+            ]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->userService->save($user);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
+            return $this->redirectToRoute('post_index');
         }
 
         return $this->render(
@@ -205,20 +246,4 @@ class UserController extends AbstractController
         );
     }
 
-
-    /**
-     * Navigation action.
-     *
-     * @param User $user User entity
-     *
-     * @return Response HTTP response
-     */
-    #[Route('/{nav}', name: 'user_menu')]
-    public function showNav(string $nav): Response
-    {
-        return $this->render(
-            'user/'.$nav.'.html.twig',
-            ['nav' => $nav]
-        );
-    }
 }

@@ -9,13 +9,11 @@ use App\Entity\Category;
 use App\Entity\Post;
 use App\Entity\Tag;
 use App\Entity\User;
-// use App\Repository\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Service\UserService;
 
 /**
  * Class PostRepository.

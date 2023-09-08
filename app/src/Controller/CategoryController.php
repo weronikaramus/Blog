@@ -19,7 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 
 /**
- * Class CategoryController.
+ * Class Category Controller.
  */
 #[Route('/category')]
 class CategoryController extends AbstractController
@@ -218,19 +218,5 @@ class CategoryController extends AbstractController
     }
 
 
-    /**
-     * Navigation action.
-     *
-     * @param Post $post Post entity
-     *
-     * @return Response HTTP response
-     */
-    #[Route('/', name: 'category_menu')]
-    public function showNav(string $nav): Response
-    {
-        return $this->render(
-            'category/'.$nav.'.html.twig',
-            ['nav' => $nav]
-        );
-    }
+   
 }

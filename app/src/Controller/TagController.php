@@ -8,14 +8,11 @@ namespace App\Controller;
 use App\Entity\Tag;
 use App\Entity\Post;
 use App\Form\Type\TagType;
-use App\Repository\TagRepository;
 use App\Service\TagServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\Pagination\PaginationInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
@@ -197,20 +194,4 @@ class TagController extends AbstractController
         );
     }
 
-
-    /**
-     * Navigation action.
-     *
-     * @param Post $post Post entity
-     *
-     * @return Response HTTP response
-     */
-    #[Route('/', name: 'tag_menu')]
-    public function showNav(string $nav): Response
-    {
-        return $this->render(
-            'tag/'.$nav.'.html.twig',
-            ['nav' => $nav]
-        );
-    }
 }
