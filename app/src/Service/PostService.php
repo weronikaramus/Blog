@@ -58,6 +58,7 @@ class PostService implements PostServiceInterface
         $this->tagService = $tagService;
         $this->postRepository = $postRepository;
     }
+    
     /**
      * Prepare filters for the posts list.
      *
@@ -84,6 +85,7 @@ class PostService implements PostServiceInterface
 
         return $resultFilters;
     }
+
     /**
      * Get paginated list.
      *
@@ -103,9 +105,6 @@ class PostService implements PostServiceInterface
             PostRepository::PAGINATOR_ITEMS_PER_PAGE
         );
     }
-
-
-    
 
     /**
      * Save entity.
@@ -127,6 +126,4 @@ class PostService implements PostServiceInterface
         $this->postRepository->delete($post);
     }
 
-    
-    
 }

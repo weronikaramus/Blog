@@ -217,6 +217,95 @@
         <target>Users</target>
       </trans-unit>
 
+       <trans-unit id="message.category_contains_tasks">
+        <source>message.category_contains_tasks</source>
+        <target>Category is not empty</target>
+        </trans-unit>
+      <trans-unit id="message.edited_successfully">
+        <source>message.edited_successfully</source>
+        <target>Edited successfully</target>
+        </trans-unit>
+        <trans-unit id="title.category_delete">
+        <source>title.category_delete</source>
+        <target>Delete</target>
+        </trans-unit>
+        <trans-unit id="title.category">
+        <source>title.category</source>
+        <target>Category</target>
+        </trans-unit>
+        <trans-unit id="title.category_edit">
+        <source>title.category_edit</source>
+        <target>Edit</target>
+        </trans-unit>
+        <trans-unit id="title.comment_delete">
+        <source>title.comment_delete</source>
+        <target>Delete</target>
+        </trans-unit>
+        <trans-unit id="title.comment">
+        <source>title.comment</source>
+        <target>Comemnt</target>
+        </trans-unit>
+        <trans-unit id="label.edit">
+        <source>label.edit</source>
+        <target>Edit</target>
+        </trans-unit>
+        <trans-unit id="title.comments">
+        <source>title.comments</source>
+        <target>Comments</target>
+        </trans-unit>
+        <trans-unit id="label.comment">
+        <source>label.comment</source>
+        <target>Comment</target>
+        </trans-unit>
+        <trans-unit id="message.form_error">
+        <source>message.form_error</source>
+        <target>Form error</target>
+        </trans-unit>
+        <trans-unit id="title.post_delete">
+        <source>title.post_delete</source>
+        <target>Delete</target>
+        </trans-unit>
+        <trans-unit id="title.post">
+        <source>title.post</source>
+        <target>Post</target>
+        </trans-unit>
+        <trans-unit id="title.post_edit">
+        <source>title.post_edit</source>
+        <target>Edit</target>
+        </trans-unit>
+        <trans-unit id="label.logged_as">
+        <source>label.logged_as</source>
+        <target>Logged as</target>
+        </trans-unit>
+        <trans-unit id="label.register">
+        <source>label.register</source>
+        <target>Register</target>
+        </trans-unit>
+        <trans-unit id="message.logged_as">
+        <source>message.logged_as</source>
+        <target>Logged as</target>
+        </trans-unit>
+        <trans-unit id="title.tag_create">
+        <source>title.tag_create</source>
+        <target>Create</target>
+        </trans-unit>
+        <trans-unit id="title.tag_delete">
+        <source>title.tag_delete</source>
+        <target>Delete</target>
+        </trans-unit>
+        <trans-unit id="title.tag">
+        <source>title.tag</source>
+        <target>Tag</target>
+        </trans-unit>
+        <trans-unit id="title.tag_edit">
+        <source>title.tag_edit</source>
+        <target>Edit</target>
+        </trans-unit>
+
+
+
+
+
     </body>
   </file>
 </xliff>

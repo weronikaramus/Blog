@@ -11,7 +11,6 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Service\NonUniqueResultException;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class UserService.
@@ -34,7 +33,7 @@ class UserService implements UserServiceInterface
      * @param UserRepository     $userRepository User repository
      * @param PaginatorInterface $paginator      Paginator
      *
-     * @param Security $security Security helper
+     * @param Security           $security       Security helper
      */
     public function __construct(UserRepository $userRepository, PaginatorInterface $paginator)
     {
@@ -57,7 +56,6 @@ class UserService implements UserServiceInterface
             UserRepository::PAGINATOR_ITEMS_PER_PAGE
         );
     }
-
 
     /**
      * Save entity.
@@ -83,7 +81,6 @@ class UserService implements UserServiceInterface
         return $this->userRepository->findOneById($id);
     }
 
-
     /**
      * Delete entity.
      *
@@ -94,6 +91,11 @@ class UserService implements UserServiceInterface
         $this->userRepository->delete($user);
     }
 
+    /**
+     * Get entity.
+     *
+     * @param Post $post Post entity
+     */
     public function getUser(User $user): void
     {
         $this->userRepository->getUsername($user);

@@ -17,7 +17,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
-
 /**
  * Class Category Controller.
  */
@@ -53,7 +52,6 @@ class CategoryController extends AbstractController
     #[Route(name: 'category_index', methods: 'GET')]
     public function index(Request $request): Response
     {
-       
         $pagination = $this->categoryService->getPaginatedList(
             $request->query->getInt('page', 1)
         );
@@ -175,12 +173,11 @@ class CategoryController extends AbstractController
         );
     }
     
-    
     /**
      * Edit action.
      *
-     * @param Request $request HTTP request
-     * @param Category    $category    Category entity
+     * @param Request  $request  HTTP request
+     * @param Category $category Category entity
      *
      * @return Response HTTP response
      */
@@ -215,8 +212,5 @@ class CategoryController extends AbstractController
                 'category' => $category,
             ]
         );
-    }
-
-
-   
+    }  
 }
