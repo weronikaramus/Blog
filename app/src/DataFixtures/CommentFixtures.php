@@ -8,7 +8,6 @@ namespace App\DataFixtures;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
-use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 /**
@@ -34,20 +33,22 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             $author = $this->getRandomReference('users');
             $comment->setAuthor($author);
 
-             /** @var Post $post */
-             $post = $this->getRandomReference('posts');
-             $comment->setPost($post);
-            
-             $post->setCreatedAt(
-                DateTimeImmutable::createFromMutable(
+            /** @var Post $post */
+            $post = $this->getRandomReference('posts');
+            $comment->setPost($post);
+
+            $post->setCreatedAt(
+                \DateTimeImmutable::createFromMutable(
                     $this->faker->dateTimeBetween('-100 days', '-1 days')
                 )
             );
+
             return $comment;
         });
 
         $this->manager->flush();
     }
+
     /**
      * This method must return an array of fixtures classes
      * on which the implementing class depends on.

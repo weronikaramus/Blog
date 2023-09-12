@@ -26,8 +26,6 @@ interface UserServiceInterface
      * Save entity.
      *
      * @param User $user User entity
-     * 
-     * @param bool $updatePassword Whether to update the password (default is true)
      */
     public function save(User $user): void;
 
@@ -38,11 +36,10 @@ interface UserServiceInterface
      */
     public function delete(User $user): void;
 
-     /**
+    /**
      * Get user.
      *
      * @param User $user User entity
      */
     public function getUser(User $user): void;
-
 }

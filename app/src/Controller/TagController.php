@@ -6,7 +6,6 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
-use App\Entity\Post;
 use App\Form\Type\TagType;
 use App\Service\TagServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-
 
 /**
  * Class TagController.
@@ -35,6 +33,9 @@ class TagController extends AbstractController
 
     /**
      * Constructor.
+     *
+     * @param TagServiceInterface $tagService Tag service interface
+     * @param Translator          $translator translator
      */
     public function __construct(TagServiceInterface $tagService, TranslatorInterface $translator)
     {
@@ -62,9 +63,9 @@ class TagController extends AbstractController
     /**
      * Show action.
      *
-     * @param Category $category
+     * @param Tag $tag tag
      *
-     * @return Response
+     * @return Response HTTP response
      */
     #[Route(
         '/{id}',
@@ -113,18 +114,17 @@ class TagController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request  $request  HTTP request
-     * @param Tag $tag Tag entity
+     * @param Request $request HTTP request
+     * @param Tag     $tag     Tag  entity
      *
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'tag_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     public function delete(Request $request, Tag $tag): Response
     {
-
         $form = $this->createForm(
-            FormType::class, 
-            $tag, 
+            FormType::class,
+            $tag,
             [
               'method' => 'DELETE',
               'action' => $this->generateUrl('tag_delete', ['id' => $tag->getId()]),
@@ -151,13 +151,12 @@ class TagController extends AbstractController
             ]
         );
     }
-    
-    
+
     /**
      * Edit action.
      *
      * @param Request $request HTTP request
-     * @param Tag    $tag    Tag entity
+     * @param Tag     $tag     Tag  entity
      *
      * @return Response HTTP response
      */
@@ -165,8 +164,8 @@ class TagController extends AbstractController
     public function edit(Request $request, Tag $tag): Response
     {
         $form = $this->createForm(
-            TagType::class, 
-            $tag, 
+            TagType::class,
+            $tag,
             [
                 'method' => 'PUT',
                 'action' => $this->generateUrl('tag_edit', ['id' => $tag->getId()]),
@@ -186,12 +185,11 @@ class TagController extends AbstractController
         }
 
         return $this->render(
-            'tag/edit.html.twig', 
+            'tag/edit.html.twig',
             [
                 'form' => $form->createView(),
                 'tag' => $tag,
             ]
         );
     }
-
 }

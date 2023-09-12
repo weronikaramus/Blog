@@ -13,7 +13,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * Class User.
  */
@@ -25,8 +24,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * Primary key.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,8 +32,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Email.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank]
@@ -45,8 +40,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Username.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 20, unique: true)]
     #[Assert\NotBlank]
@@ -99,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * A visual identifier that represents this user.
-     * 
+     *
      * @return string User identifier
      *
      * @see UserInterface
@@ -111,8 +104,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
-     *  
-     * @return string Username 
+     *
+     * @return string Username
      */
     public function getUsername(): string
     {
@@ -122,7 +115,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Setter for username.
      *
-     * @param string $email Email
+     * @param string $username Username
      */
     public function setUsername(string $username): void
     {
@@ -166,8 +159,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->password;
     }
-    
-    
 
     /**
      * Setter for password.
@@ -179,12 +170,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
     }
 
-
     /**
      * Returning a salt is only needed, if you are not using a modern
      * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
      *
      * @see UserInterface
+     *
+     * @return string|null salt
      */
     public function getSalt(): ?string
     {

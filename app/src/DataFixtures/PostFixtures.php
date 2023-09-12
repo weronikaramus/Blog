@@ -6,11 +6,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
-use App\Entity\Enum\PostStatus;
 use App\Entity\Tag;
 use App\Entity\Post;
 use App\Entity\User;
-use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 /**
@@ -35,7 +33,7 @@ class PostFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             $post = new Post();
             $post->setTitle($this->faker->sentence);
             $post->setCreatedAt(
-                DateTimeImmutable::createFromMutable(
+                \DateTimeImmutable::createFromMutable(
                     $this->faker->dateTimeBetween('-100 days', '-1 days')
                 )
             );
@@ -50,8 +48,8 @@ class PostFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             $post->setAuthor($author);
 
             /** @var Tag $tag */
-            $tags = $this->getRandomReferences('tags',3);
-            foreach($tags as $tag){
+            $tags = $this->getRandomReferences('tags', 3);
+            foreach ($tags as $tag) {
                 $post->addTag($tag);
             }
 

@@ -6,11 +6,9 @@
 namespace App\Service;
 
 use App\Repository\CategoryRepository;
-use App\Repository\PostRepository;
 use App\Entity\Category;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use App\Service\NonUniqueResultException;
 
 /**
  * Class CategoryService.
@@ -30,8 +28,8 @@ class CategoryService implements CategoryServiceInterface
     /**
      * Constructor.
      *
-     * @param CategoryRepository     $categoryRepository Category repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param CategoryRepository $categoryRepository Category repository
+     * @param PaginatorInterface $paginator          Paginator
      */
     public function __construct(CategoryRepository $categoryRepository, PaginatorInterface $paginator)
     {
@@ -65,7 +63,6 @@ class CategoryService implements CategoryServiceInterface
         $this->categoryRepository->save($category);
     }
 
-
     /**
      * Can Category be deleted?
      *
@@ -75,16 +72,15 @@ class CategoryService implements CategoryServiceInterface
      */
     public function canBeDeleted(Category $category): bool
     {
-        
         $result = $category->getPosts()->count();
 
-        return $result === 0;
+        return 0 === $result;
     }
 
     /**
      * Delete entity.
      *
-     * @param Post $post Post entity
+     * @param Category $category Category entity
      */
     public function delete(Category $category): void
     {

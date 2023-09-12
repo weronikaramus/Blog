@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Comment type.
  */
@@ -19,8 +19,6 @@ class CommentType extends AbstractType
 {
     /**
      * Tags data transformer.
-     *
-     * @var TagsDataTransformer
      */
     private TagsDataTransformer $tagsDataTransformer;
 
@@ -33,6 +31,7 @@ class CommentType extends AbstractType
     {
         $this->tagsDataTransformer = $tagsDataTransformer;
     }
+
     /**
      * Builds the form.
      *
@@ -47,15 +46,14 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        
             ->add(
-            'content',
-            TextType::class,
-            [
-                'label' => 'label.content',
-                'required' => true,
-                // 'attr' => ['max_length' => 255],
-            ]);
+                'content',
+                TextType::class,
+                [
+                    'label' => 'label.content',
+                    'required' => true,
+                ]
+            );
     }
 
     /**
@@ -65,7 +63,7 @@ class CommentType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Comment::class, 'post_id'=>null]);
+        $resolver->setDefaults(['data_class' => Comment::class, 'post_id' => null]);
     }
 
     /**

@@ -17,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserType extends AbstractType
 {
-
     /**
      * Constructor.
      *
@@ -27,6 +26,7 @@ class UserType extends AbstractType
     {
         // $this->tagsDataTransformer = $tagsDataTransformer;
     }
+
     /**
      * Builds the form.
      *
@@ -40,7 +40,6 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        
         $builder
         ->add(
             'email',
@@ -59,7 +58,7 @@ class UserType extends AbstractType
                 'required' => false,
                 'attr' => ['max_length' => 255],
             ]
-            );
+        );
     }
 
     /**
@@ -69,7 +68,7 @@ class UserType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-       $resolver->setDefaults(['data_class' => User::class, 'validation_groups' => ['edit']]);
+        $resolver->setDefaults(['data_class' => User::class, 'validation_groups' => ['edit']]);
     }
 
     /**

@@ -7,7 +7,6 @@ namespace App\Form\Type;
 
 use App\Entity\Category;
 use App\Entity\Post;
-use App\Entity\Tag;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -22,8 +21,6 @@ class PostType extends AbstractType
 {
     /**
      * Tags data transformer.
-     *
-     * @var TagsDataTransformer
      */
     private TagsDataTransformer $tagsDataTransformer;
 
@@ -36,6 +33,7 @@ class PostType extends AbstractType
     {
         $this->tagsDataTransformer = $tagsDataTransformer;
     }
+
     /**
      * Builds the form.
      *
@@ -56,7 +54,8 @@ class PostType extends AbstractType
                 'label' => 'label.title',
                 'required' => true,
                 'attr' => ['max_length' => 255],
-            ]);
+            ]
+        );
         $builder->add(
             'category',
             EntityType::class,
@@ -77,20 +76,21 @@ class PostType extends AbstractType
                 'label' => 'label.content',
                 'required' => true,
                 // 'attr' => ['max_length' => 255],
-            ]);
-            $builder->add(
-                'tags',
-                TextType::class,
-                [
-                    'label' => 'label.tags',
-                    'required' => false,
-                    'attr' => ['max_length' => 128],
-                ]
-            );
-    
-            $builder->get('tags')->addModelTransformer(
-                $this->tagsDataTransformer
-            );
+            ]
+        );
+        $builder->add(
+            'tags',
+            TextType::class,
+            [
+                'label' => 'label.tags',
+                'required' => false,
+                'attr' => ['max_length' => 128],
+            ]
+        );
+
+        $builder->get('tags')->addModelTransformer(
+            $this->tagsDataTransformer
+        );
     }
 
     /**

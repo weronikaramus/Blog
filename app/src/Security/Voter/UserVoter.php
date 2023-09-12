@@ -8,7 +8,6 @@ namespace App\Security\Voter;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -40,8 +39,6 @@ class UserVoter extends Voter
 
     /**
      * Security helper.
-     *
-     * @var Security
      */
     private Security $security;
 
@@ -102,7 +99,6 @@ class UserVoter extends Voter
      * Checks if user can edit user.
      *
      * @param User $user User entity
-     * @param User $user User
      *
      * @return bool Result
      */
@@ -120,13 +116,11 @@ class UserVoter extends Voter
      * Checks if user can view user.
      *
      * @param User $user User entity
-     * @param User $user User
      *
      * @return bool Result
      */
     private function canView(User $user): bool
     {
-
         $currentUser = $this->security->getUser();
         if ($currentUser === $user || $this->security->isGranted('ROLE_ADMIN')) {
             return true;
@@ -139,7 +133,6 @@ class UserVoter extends Voter
      * Checks if user can delete user.
      *
      * @param User $user User entity
-     * @param User $user User
      *
      * @return bool Result
      */

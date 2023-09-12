@@ -46,11 +46,9 @@ interface CategoryServiceInterface
     public function delete(Category $category): void;
 
     /**
-     * Find category by ID
+     * Find category by ID.
      *
-     * @param int $id
-     *
-     * @return Category|null
+     * @param int $id Index
      */
     public function findOneById(int $id): ?Category;
 }

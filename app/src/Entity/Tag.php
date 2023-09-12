@@ -24,19 +24,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[UniqueEntity(fields: ['title'])]
 class Tag
 {
-
     /**
      * Posts.
-     *
      */
     #[ORM\OneToMany(mappedBy: 'tags', targetEntity: Post::class)]
     private Collection $posts;
 
     /**
-    * Primary key.
-    *
-    * @var int|null
-    */
+     * Primary key.
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -44,23 +40,18 @@ class Tag
 
     /**
      * Title.
-     *
-     * @var string|null
      */
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
     /**
      * Author.
-     * 
-     * @var User|null
      */
     #[ORM\ManyToOne]
     private ?User $author = null;
 
     /**
      * Slug.
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
@@ -100,6 +91,8 @@ class Tag
      * Setter for title.
      *
      * @param string|null $title Title
+     *
+     * @return $this
      */
     public function setTitle(string $title): self
     {
@@ -134,6 +127,7 @@ class Tag
 
     /**
      * Getter for posts.
+     *
      * @return Collection<int, Post>
      */
     public function getPosts(): Collection
@@ -161,7 +155,7 @@ class Tag
     /**
      * Remove a tag from this post.
      *
-     * @param Tag $tag The tag to remove
+     * @param Post $post post with tag
      *
      * @return static This post entity
      */
@@ -176,7 +170,7 @@ class Tag
 
         return $this;
     }
-    
+
     /**
      * Getter for author.
      *
@@ -200,5 +194,4 @@ class Tag
 
         return $this;
     }
-
 }

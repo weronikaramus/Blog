@@ -6,7 +6,6 @@
 namespace App\Service;
 
 use App\Entity\Tag;
-use App\Entity\Post;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
@@ -23,7 +22,6 @@ interface TagServiceInterface
      */
     public function getPaginatedList(int $page): PaginationInterface;
 
-
     /**
      * Find by title.
      *
@@ -32,7 +30,7 @@ interface TagServiceInterface
      * @return Tag|null Tag entity
      */
     public function findOneByTitle(string $title): ?Tag;
-    
+
     /**
      * Save entity.
      *
@@ -48,11 +46,9 @@ interface TagServiceInterface
     public function delete(Tag $tag): void;
 
     /**
-     * Find category by ID
+     * Find category by ID.
      *
-     * @param int $id
-     *
-     * @return Tag|null
+     * @param int $id Index
      */
     public function findOneById(int $id): ?Tag;
 }

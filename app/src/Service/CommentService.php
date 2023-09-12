@@ -1,15 +1,19 @@
 <?php
+/**
+ * This is the license block.
+ * It can contain licensing information, copyright notices, etc.
+ */
 
 namespace App\Service;
 
 use App\Entity\Comment;
-use App\Entity\Post;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
-use DateTimeImmutable;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * Comment Service.
+ */
 class CommentService implements CommentServiceInterface
 {
     private CommentRepository $commentRepository;
@@ -17,8 +21,15 @@ class CommentService implements CommentServiceInterface
     private PostRepository $postRepository;
     private PaginatorInterface $paginator;
 
-
-    public function __construct (CommentRepository $commentRepository, PostRepository $postRepository, PaginatorInterface $paginator) {
+    /**
+     * Constructor.
+     *
+     * @param CommentRepository  $commentRepository Category repository
+     * @param PostRepository     $postRepository    Report
+     * @param PaginatorInterface $paginator         Paginator
+     */
+    public function __construct(CommentRepository $commentRepository, PostRepository $postRepository, PaginatorInterface $paginator)
+    {
         $this->commentRepository = $commentRepository;
         $this->postRepository = $postRepository;
         $this->paginator = $paginator;
@@ -27,12 +38,12 @@ class CommentService implements CommentServiceInterface
     /**
      * Save entity.
      *
-     * @param Comment $category Comment entity
+     * @param Comment $comment Comment entity
      */
     public function save(Comment $comment): void
     {
-        if ($comment->getId() == null) {
-            $comment->setCreatedAt(new DateTimeImmutable());
+        if (null === $comment->getId()) {
+            $comment->setCreatedAt(new \DateTimeImmutable());
         }
         $this->commentRepository->save($comment);
     }

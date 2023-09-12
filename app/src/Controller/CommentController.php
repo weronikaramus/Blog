@@ -37,7 +37,7 @@ class CommentController extends AbstractController
      * Constructor.
      *
      * @param CommentServiceInterface $commentService Comment service
-     * @param TranslatorInterface  $translator  Translator
+     * @param TranslatorInterface     $translator     Translator
      */
     public function __construct(CommentServiceInterface $commentService, TranslatorInterface $translator)
     {
@@ -48,15 +48,12 @@ class CommentController extends AbstractController
     /**
      * Index action.
      *
-     * @param Request $request HTTP Request
-     *
      * @return Response HTTP response
      */
     #[Route(
         name: 'comment_index',
         methods: 'GET'
     )]
-    
     /**
      * Show action.
      *
@@ -64,10 +61,9 @@ class CommentController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}', name: 'comment_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET', )]
+    #[Route('/{id}', name: 'comment_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     public function show(Comment $comment): Response
     {
-        
         return $this->render('comment/show.html.twig', ['comment' => $comment]);
     }
 
@@ -79,7 +75,6 @@ class CommentController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/create', name: 'comment_create', methods: 'GET|POST')]
-    // #[Route('/create', name: 'comment_create', methods: 'GET', )]
     public function create(Request $request): Response
     {
         /** @var User $user */
@@ -115,7 +110,7 @@ class CommentController extends AbstractController
      * Edit action.
      *
      * @param Request $request HTTP request
-     * @param Comment    $comment    Comment entity
+     * @param Comment $comment Comment entity
      *
      * @return Response HTTP response
      */
@@ -127,12 +122,12 @@ class CommentController extends AbstractController
                 'warning',
                 $this->translator->trans('message.access_denied')
             );
-    
+
             return $this->redirectToRoute('comment_index');
         }
         $form = $this->createForm(
-            CommentType::class, 
-            $comment, 
+            CommentType::class,
+            $comment,
             [
                 'method' => 'PUT',
                 'action' => $this->generateUrl('comment_edit', ['id' => $comment->getId()]),
@@ -152,7 +147,7 @@ class CommentController extends AbstractController
         }
 
         return $this->render(
-            'comment/edit.html.twig', 
+            'comment/edit.html.twig',
             [
                 'form' => $form->createView(),
                 'comment' => $comment,
@@ -164,7 +159,7 @@ class CommentController extends AbstractController
      * Delete action.
      *
      * @param Request $request HTTP request
-     * @param Comment    $comment    Comment entity
+     * @param Comment $comment Comment entity
      *
      * @return Response HTTP response
      */
@@ -177,12 +172,12 @@ class CommentController extends AbstractController
                 'warning',
                 $this->translator->trans('message.access_denied')
             );
-    
+
             return $this->redirectToRoute('post_index');
         }
         $form = $this->createForm(
-            FormType::class, 
-            $comment, 
+            FormType::class,
+            $comment,
             [
                 'method' => 'DELETE',
                 'action' => $this->generateUrl('comment_delete', ['id' => $comment->getId()]),
@@ -202,14 +197,11 @@ class CommentController extends AbstractController
         }
 
         return $this->render(
-            'comment/delete.html.twig', 
+            'comment/delete.html.twig',
             [
                 'form' => $form->createView(),
                 'comment' => $comment,
             ]
         );
     }
-
-
-    
 }

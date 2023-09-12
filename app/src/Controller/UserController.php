@@ -38,8 +38,6 @@ class UserController extends AbstractController
 
     /**
      * Security helper.
-     *
-     * @var Security
      */
     private Security $security;
 
@@ -48,8 +46,10 @@ class UserController extends AbstractController
     /**
      * Constructor.
      *
-     * @param UserServiceInterface $userService User service
-     * @param TranslatorInterface  $translator  Translator
+     * @param UserServiceInterface   $userService   User service
+     * @param TranslatorInterface    $translator    Translator
+     * @param Security               $security      Security
+     * @param EntityManagerInterface $entityManager entity manager
      */
     public function __construct(UserServiceInterface $userService, TranslatorInterface $translator, Security $security, EntityManagerInterface $entityManager)
     {
@@ -69,12 +69,12 @@ class UserController extends AbstractController
     #[Route(name: 'user_index', methods: 'GET')]
     public function index(Request $request): Response
     {
-        if (!($this->security->isGranted('ROLE_ADMIN'))) {
-    
+        if (!$this->security->isGranted('ROLE_ADMIN')) {
             $this->addFlash(
                 'warning',
                 $this->translator->trans('message.access_denied')
             );
+
             return $this->redirectToRoute('post_index');
         }
         $pagination = $this->userService->getPaginatedList(
@@ -83,6 +83,7 @@ class UserController extends AbstractController
 
         return $this->render('user/index.html.twig', ['pagination' => $pagination]);
     }
+
     /**
      * Show action.
      *
@@ -90,19 +91,19 @@ class UserController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}', name: 'user_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET', )]
+    #[Route('/{id}', name: 'user_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     public function show(User $user): Response
     {
         $currentUser = $this->security->getUser();
-        if (($this->security->isGranted('ROLE_ADMIN')) OR ($currentUser === $user)) {
+        if ($this->security->isGranted('ROLE_ADMIN') or ($currentUser === $user)) {
             return $this->render('user/show.html.twig', ['user' => $user]);
         }
-        
 
         $this->addFlash(
             'warning',
             $this->translator->trans('message.access_denied')
         );
+
         return $this->redirectToRoute('post_index');
     }
 
@@ -128,7 +129,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
             $this->userService->save($user);
 
             $this->addFlash(
@@ -192,13 +192,15 @@ class UserController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request HTTP request
-     * @param User    $user    User entity
+     * @param Request           $request           HTTP request
+     * @param User              $user              User entity
+     * @param PostRepository    $postRepository    Post repository
+     * @param CommentRepository $commentRepository Comment repository
      *
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'user_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
-    public function delete(Request $request, User $user, PostRepository $postRepository, CommentRepository $commentRepository, SecurityController $security): Response
+    public function delete(Request $request, User $user, PostRepository $postRepository, CommentRepository $commentRepository): Response
     {
         $form = $this->createForm(
             FormType::class,
@@ -209,9 +211,7 @@ class UserController extends AbstractController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-
             $posts = $postRepository->findBy(['author' => $user->getId()]);
             foreach ($posts as $post) {
                 $this->entityManager->remove($post);
@@ -233,7 +233,6 @@ class UserController extends AbstractController
                 $this->translator->trans('message.deleted_successfully')
             );
 
-
             return $this->redirectToRoute('app_login');
         }
 
@@ -245,5 +244,4 @@ class UserController extends AbstractController
             ]
         );
     }
-
 }

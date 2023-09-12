@@ -3,6 +3,7 @@
  * This is the license block.
  * It can contain licensing information, copyright notices, etc.
  */
+
 namespace App\Repository;
 
 use App\Entity\User;
@@ -37,10 +38,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public const PAGINATOR_ITEMS_PER_PAGE = 10;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param ManagerRegistry             $registry
-     * @param UserPasswordHasherInterface $passwordHasher
+     * @param ManagerRegistry             $registry       Manager Registry
+     * @param UserPasswordHasherInterface $passwordHasher User Password Hasher Interface
      */
     public function __construct(ManagerRegistry $registry, UserPasswordHasherInterface $passwordHasher)
     {
@@ -49,11 +50,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Save user
+     * Save user.
      *
-     * @param User $entity
-     *
-     * @return void
+     * @param User $entity User entity
      */
     public function save(User $entity): void
     {
@@ -62,13 +61,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
     }
-    
+
     /**
-     * Create user
+     * Create user.
      *
-     * @param User $entity
-     *
-     * @return void
+     * @param User $entity User entity
      */
     public function create(User $entity): void
     {
@@ -80,11 +77,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Remove user
+     * Remove user.
      *
-     * @param User $entity
-     *
-     * @return void
+     * @param User $entity User entity
      */
     public function delete(User $entity): void
     {
@@ -114,7 +109,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * Query all users.
      *
-     * @return QueryBuilder
+     * @return QueryBuilder Query builder
      */
     public function queryAll(): QueryBuilder
     {

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Comment repository.
+ */
 
 namespace App\Repository;
 
@@ -41,30 +44,16 @@ class CommentRepository extends ServiceEntityRepository
     /**
      * Remove entity.
      *
-     * @param Comment $comment Comment entity
+     * @param Comment $entity Comment entity
      */
     public function remove(Comment $entity): void
     {
         $this->getEntityManager()->remove($entity);
-            $this->getEntityManager()->flush();
-    }
-
-    /**
-     * Get or create new query builder.
-     *
-     * @param QueryBuilder|null $queryBuilder Query builder
-     *
-     * @return QueryBuilder Query builder
-     */
-    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
-    {
-        return $queryBuilder ?? $this->createQueryBuilder('comment');
+        $this->getEntityManager()->flush();
     }
 
     /**
      * Query all records.
-     *
-     * @param array<string, object> $comment Comment
      *
      * @return QueryBuilder Query builder
      */
@@ -73,6 +62,7 @@ class CommentRepository extends ServiceEntityRepository
         return $this->getOrCreateQueryBuilder()
             ->orderBy('comment.createdAt', 'DESC');
     }
+
     /**
      * Save entity.
      *
@@ -93,5 +83,17 @@ class CommentRepository extends ServiceEntityRepository
     {
         $this->_em->remove($comment);
         $this->_em->flush();
+    }
+
+    /**
+     * Get or create new query builder.
+     *
+     * @param QueryBuilder|null $queryBuilder Query builder
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
+    {
+        return $queryBuilder ?? $this->createQueryBuilder('comment');
     }
 }

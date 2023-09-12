@@ -62,7 +62,6 @@ class PostRepository extends ServiceEntityRepository
                 'partial post.{id, createdAt, title}',
                 'partial category.{id, title}',
                 'partial tags.{id, title}'
-                
             )
             ->join('post.category', 'category')
             ->leftJoin('post.tags', 'tags')
@@ -71,6 +70,11 @@ class PostRepository extends ServiceEntityRepository
         return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
+    /**
+     * Show all comments.
+     *
+     * @return QueryBuilder Query builder
+     */
     public function showComments(): QueryBuilder
     {
         $queryBuilder = $this->getOrCreateQueryBuilder()
@@ -79,6 +83,7 @@ class PostRepository extends ServiceEntityRepository
             )
             ->join('comments.post', 'post')
             ->orderBy('comment.createdAt', 'DESC');
+
         return $this->showComments();
     }
 
@@ -177,5 +182,4 @@ class PostRepository extends ServiceEntityRepository
 
         return $queryBuilder;
     }
-    
 }

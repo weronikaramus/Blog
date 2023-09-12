@@ -21,7 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-
 /**
  * Class PostController.
  */
@@ -48,8 +47,10 @@ class PostController extends AbstractController
     /**
      * Constructor.
      *
-     * @param PostServiceInterface $postService Post service
-     * @param TranslatorInterface  $translator  Translator
+     * @param PostServiceInterface   $postService    Post service
+     * @param TranslatorInterface    $translator     Translator
+     * @param CommentService         $commentService Comment service
+     * @param EntityManagerInterface $entityManager  manager
      */
     public function __construct(PostServiceInterface $postService, TranslatorInterface $translator, CommentServiceInterface $commentService, EntityManagerInterface $entityManager)
     {
@@ -80,28 +81,31 @@ class PostController extends AbstractController
             $user,
             $filters
         );
+
         return $this->render('post/index.html.twig', ['pagination' => $pagination]);
     }
+
     /**
      * Show action.
      *
-     * @param Post $post Post entity
+     * @param Request                $request       HTTP request
+     * @param int                    $id            index
+     * @param EntityManagerInterface $entityManager entityManagerInterface
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}', name: 'post_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST', )]
-    public function show(Request $request, $id, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}', name: 'post_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
+    public function show(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {
         $post = $entityManager->getRepository(Post::class)->find($id);
-        
+
         $comment = new Comment();
         $comment->setPost($post); // Set the post for the comment
 
         /** @var User $user */
         $user = $this->getUser();
         $comment->setAuthor($user);
-         
-        
+
         $form = $this->createForm(
             CommentType::class,
             $comment,
@@ -177,12 +181,12 @@ class PostController extends AbstractController
                 'warning',
                 $this->translator->trans('message.access_denied')
             );
-    
+
             return $this->redirectToRoute('post_index');
         }
         $form = $this->createForm(
-            PostType::class, 
-            $post, 
+            PostType::class,
+            $post,
             [
                 'method' => 'PUT',
                 'action' => $this->generateUrl('post_edit', ['id' => $post->getId()]),
@@ -202,7 +206,7 @@ class PostController extends AbstractController
         }
 
         return $this->render(
-            'post/edit.html.twig', 
+            'post/edit.html.twig',
             [
                 'form' => $form->createView(),
                 'post' => $post,
@@ -213,13 +217,13 @@ class PostController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request HTTP request
-     * @param Post    $post    Post entity
+     * @param Request           $request           HTTP request
+     * @param Post              $post              Post entity
+     * @param CommentRepository $commentRepository Comment repository
      *
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'post_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
-    // #[IsGranted('DELETE', subject: 'post')]
     public function delete(Request $request, Post $post, CommentRepository $commentRepository): Response
     {
         if ($post->getAuthor() !== $this->getUser()) {
@@ -227,12 +231,12 @@ class PostController extends AbstractController
                 'warning',
                 $this->translator->trans('message.access_denied')
             );
-    
+
             return $this->redirectToRoute('post_index');
         }
         $form = $this->createForm(
-            FormType::class, 
-            $post, 
+            FormType::class,
+            $post,
             [
                 'method' => 'DELETE',
                 'action' => $this->generateUrl('post_delete', ['id' => $post->getId()]),
@@ -241,9 +245,9 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         $comments = $commentRepository->findBy(['post' => $post->getId()]);
-            foreach ($comments as $comment) {
-                $this->entityManager->remove($comment);
-            }
+        foreach ($comments as $comment) {
+            $this->entityManager->remove($comment);
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->postService->delete($post);
 
@@ -256,7 +260,7 @@ class PostController extends AbstractController
         }
 
         return $this->render(
-            'post/delete.html.twig', 
+            'post/delete.html.twig',
             [
                 'form' => $form->createView(),
                 'post' => $post,
@@ -281,5 +285,4 @@ class PostController extends AbstractController
 
         return $filters;
     }
-
 }

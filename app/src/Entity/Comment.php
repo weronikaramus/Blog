@@ -7,7 +7,6 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
-use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,10 +19,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Comment
 {
     /**
-    * Primary key.
-    *
-    * @var int|null
-    */
+     * Primary key.
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -31,8 +28,6 @@ class Comment
 
     /**
      * Created at.
-     *
-     * @var DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Gedmo\Timestampable(on: 'create')]
@@ -40,15 +35,12 @@ class Comment
 
     /**
      * Content.
-     * @var string|null
      */
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-
     /**
      * Author.
-     * @var User|null
      */
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -56,7 +48,6 @@ class Comment
 
     /**
      * Post.
-     * @var Post|null
      */
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -77,7 +68,6 @@ class Comment
      *
      * @return string|null Content
      */
-
     public function getContent(): ?string
     {
         return $this->content;
@@ -114,7 +104,6 @@ class Comment
      *
      * @return $this
      */
-
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
@@ -125,9 +114,9 @@ class Comment
     /**
      * Getter for created at.
      *
-     * @return DateTimeImmutable|null Created at
+     * @return \DateTimeImmutable|null Created at
      */
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -135,7 +124,9 @@ class Comment
     /**
      * Setter for created at.
      *
-     * @param DateTimeImmutable $createdAt Created at
+     * @param \DateTimeImmutable $createdAt Created at
+     *
+     * @return $this
      */
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {

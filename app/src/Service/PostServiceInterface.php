@@ -17,13 +17,13 @@ interface PostServiceInterface
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param int   $page    Page number
+     * @param User  $author  Post author
+     * @param array $filters Post filters
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
     public function getPaginatedList(int $page, User $author, array $filters = []): PaginationInterface;
-
-
 
     /**
      * Save entity.

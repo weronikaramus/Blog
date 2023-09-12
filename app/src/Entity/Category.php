@@ -23,27 +23,21 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Category
 {
     /**
-    * Primary key.
-    *
-    * @var int|null
-    */
-   #[ORM\Id]
-   #[ORM\GeneratedValue]
-   #[ORM\Column(type: 'integer')]
-   private ?int $id = null;
+     * Primary key.
+     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
     /**
      * Author.
-     * 
-     * @var User|null
      */
     #[ORM\ManyToOne]
     private ?User $author = null;
 
     /**
      * Title.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Type('string')]
@@ -53,21 +47,18 @@ class Category
 
     /**
      * Posts.
-     *
      */
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Post::class)]
     private Collection $posts;
 
     /**
      * Slug.
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
     #[Assert\Length(min: 3, max: 64)]
     #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug;
-
 
     /**
      * Constructor.
@@ -109,7 +100,7 @@ class Category
 
     /**
      * Getter for posts.
-     * 
+     *
      * @return Collection<int, Post>
      */
     public function getPosts(): Collection
@@ -176,7 +167,7 @@ class Category
 
         return $this;
     }
-    
+
     /**
      * Getter for author.
      *
@@ -200,5 +191,4 @@ class Category
 
         return $this;
     }
-
 }

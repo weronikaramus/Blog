@@ -35,6 +35,9 @@ class CategoryController extends AbstractController
 
     /**
      * Constructor.
+     *
+     * @param CategoryServiceInterface $categoryService Category service
+     * @param TranslatorInterface      $translator      Translator
      */
     public function __construct(CategoryServiceInterface $categoryService, TranslatorInterface $translator)
     {
@@ -62,7 +65,10 @@ class CategoryController extends AbstractController
     /**
      * Show action.
      *
-     * @param Category $category Category
+     * @param Request            $request            HTTP Request
+     * @param CategoryRepository $categoryRepository CategoryRepository
+     * @param int                $id                 index
+     * @param PaginatorInterface $paginator          PaginatorInterface
      *
      * @return Response HTTP response
      */
@@ -72,10 +78,10 @@ class CategoryController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
-    public function show(Request $request, CategoryRepository $categoryRepository, $id, PaginatorInterface $paginator): Response
+    public function show(Request $request, CategoryRepository $categoryRepository, int $id, PaginatorInterface $paginator): Response
     {
         $category = $categoryRepository->find($id);
-        
+
         if (!$category) {
             throw $this->createNotFoundException('Category not found');
         }
@@ -134,7 +140,7 @@ class CategoryController extends AbstractController
     #[Route('/{id}/delete', name: 'category_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     public function delete(Request $request, Category $category): Response
     {
-        if(!$this->categoryService->canBeDeleted($category)) {
+        if (!$this->categoryService->canBeDeleted($category)) {
             $this->addFlash(
                 'warning',
                 $this->translator->trans('message.category_contains_tasks')
@@ -144,8 +150,8 @@ class CategoryController extends AbstractController
         }
 
         $form = $this->createForm(
-            FormType::class, 
-            $category, 
+            FormType::class,
+            $category,
             [
               'method' => 'DELETE',
               'action' => $this->generateUrl('category_delete', ['id' => $category->getId()]),
@@ -172,7 +178,7 @@ class CategoryController extends AbstractController
             ]
         );
     }
-    
+
     /**
      * Edit action.
      *
@@ -185,8 +191,8 @@ class CategoryController extends AbstractController
     public function edit(Request $request, Category $category): Response
     {
         $form = $this->createForm(
-            CategoryType::class, 
-            $category, 
+            CategoryType::class,
+            $category,
             [
                 'method' => 'PUT',
                 'action' => $this->generateUrl('category_edit', ['id' => $category->getId()]),
@@ -206,11 +212,11 @@ class CategoryController extends AbstractController
         }
 
         return $this->render(
-            'category/edit.html.twig', 
+            'category/edit.html.twig',
             [
                 'form' => $form->createView(),
                 'category' => $category,
             ]
         );
-    }  
+    }
 }

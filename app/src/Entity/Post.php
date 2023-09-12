@@ -6,14 +6,12 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  * Class Post.
@@ -26,19 +24,14 @@ class Post
 {
     /**
      * Primary key.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-
     /**
      * Title.
-     *
-     * @var String|null
      *
      * @psalm-suppress PropertyNotSetInConstructor
      */
@@ -57,8 +50,6 @@ class Post
 
     /**
      * Created at.
-     *
-     * @var DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Gedmo\Timestampable(on: 'create')]
@@ -66,7 +57,6 @@ class Post
 
     /**
      * Slug.
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
@@ -76,8 +66,6 @@ class Post
 
     /**
      * Category.
-     *
-     * @var Category
      */
     #[ORM\ManyToOne(targetEntity: Category::class)]
     #[ORM\JoinColumn(nullable: false)]
@@ -93,11 +81,8 @@ class Post
     #[ORM\JoinTable(name: 'posts_tags')]
     private $tags;
 
-
     /**
      * Author.
-     * 
-     * @var User|null
      */
     #[ORM\ManyToOne]
     private ?User $author = null;
@@ -109,7 +94,7 @@ class Post
      */
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
-    
+
     /**
      * Constructor.
      */
@@ -143,6 +128,8 @@ class Post
      * Setter for title.
      *
      * @param string|null $title Title
+     *
+     * @return $this
      */
     public function setTitle(string $title): self
     {
@@ -154,7 +141,7 @@ class Post
     /**
      * Getter for content.
      *
-     * @param text|null $content Content
+     * @return $this
      */
     public function getContent(): ?string
     {
@@ -165,6 +152,8 @@ class Post
      * Setter for content.
      *
      * @param text|null $content Content
+     *
+     * @return $this
      */
     public function setContent(string $content): self
     {
@@ -176,9 +165,9 @@ class Post
     /**
      * Getter for created at.
      *
-     * @return DateTimeImmutable|null Created at
+     * @return \DateTimeImmutable|null Created at
      */
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -186,7 +175,9 @@ class Post
     /**
      * Setter for created at.
      *
-     * @param DateTimeImmutable $createdAt Created at
+     * @param \DateTimeImmutable $createdAt Created at
+     *
+     * @return $this
      */
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
@@ -250,7 +241,7 @@ class Post
     /**
      * Setter for tags.
      *
-     * @param Category|null $category Category
+     * @param Tags|null $tags Tags
      */
     public function setTags(?Tag $tags): void
     {
@@ -348,5 +339,4 @@ class Post
 
         return $this;
     }
-
 }
