@@ -8,16 +8,14 @@
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.password, {
-            label: 'Password'
-        }) }}
+        {{ form_row(registrationForm.email, {label: 'label.email' | trans}) }}
+        {{ form_row(registrationForm.username, {label: 'label.username' | trans}) }}
+        {{ form_row(registrationForm.password, {label: 'label.password' | trans}) }}
 
         <button type="submit" class="btn btn-outline-success">{{'action.register' |trans}}</button>
         <p><a class="btn btn-outline-primary" href="{{ url('app_login') }}" title="{{ 'action.login'|trans }}">{{'label.login' | trans}}</a></p>
 
-        
+
     {{ form_end(registrationForm) }}
 {% endblock %}
 
