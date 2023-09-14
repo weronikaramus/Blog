@@ -31,13 +31,6 @@ class UserVoter extends Voter
     public const VIEW = 'VIEW';
 
     /**
-     * Show permission.
-     *
-     * @const string
-     */
-    public const SHOW = 'SHOW';
-
-    /**
      * Delete permission.
      *
      * @const string
@@ -69,7 +62,7 @@ class UserVoter extends Voter
      */
     protected function supports(string $attribute, $subject): bool
     {
-        return in_array($attribute, [self::EDIT, self::VIEW, self::SHOW, self::DELETE])
+        return in_array($attribute, [self::EDIT, self::VIEW, self::DELETE])
             && $subject instanceof User;
     }
 
@@ -95,8 +88,6 @@ class UserVoter extends Voter
                 return $this->canEdit($subject, $user);
             case self::VIEW:
                 return $this->canView($subject, $user);
-            case self::SHOW:
-                return $this->canShow($subject, $user);
             case self::DELETE:
                 return $this->canDelete($subject, $user);
         }
@@ -119,7 +110,7 @@ class UserVoter extends Voter
     }
 
     /**
-     * Checks if user can view users.
+     * Checks if user can view user.
      *
      * @param User $user User entity
      *
@@ -127,21 +118,9 @@ class UserVoter extends Voter
      */
     private function canView(User $user): bool
     {
-        return ($this->security->isGranted('ROLE_ADMIN'));
-    }
-
-    /**
-     * Checks if user can show user.
-     *
-     * @param User $user User entity
-     *
-     * @return bool Result
-     */
-    private function canShow(User $user): bool
-    {
         $currentUser = $this->security->getUser();
 
-        return ($this->security->isGranted('ROLE_ADMIN') or ($currentUser === $user));
+        return ($currentUser === $user || $this->security->isGranted('ROLE_ADMIN'));
     }
 
     /**
@@ -154,7 +133,10 @@ class UserVoter extends Voter
     private function canDelete(User $user): bool
     {
         $currentUser = $this->security->getUser();
+        if ($currentUser !== $user && $this->security->isGranted('ROLE_ADMIN')) {
+            return true;
+        }
 
-        return ($currentUser !== $user && $this->security->isGranted('ROLE_ADMIN'));
+        return false;
     }
 }

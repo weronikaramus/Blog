@@ -65,7 +65,7 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(name: 'user_index', methods: 'GET')]
-    #[IsGranted('VIEW', subject: 'user')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(Request $request): Response
     {
         $pagination = $this->userService->getPaginatedList(
@@ -83,15 +83,10 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}', name: 'user_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
-    #[IsGranted('SHOW', subject: 'user')]
+    #[IsGranted('VIEW', subject: 'user')]
     public function show(User $user): Response
     {
-        $this->addFlash(
-            'warning',
-            $this->translator->trans('message.access_denied')
-        );
-
-        return $this->redirectToRoute('post_index');
+        return $this->render('user/show.html.twig', ['user' => $user]);
     }
 
     /**
