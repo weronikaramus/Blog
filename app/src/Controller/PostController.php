@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Class PostController.
@@ -171,16 +172,9 @@ class PostController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'post_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    #[IsGranted('EDIT', subject: 'post')]
     public function edit(Request $request, Post $post): Response
     {
-        if ($post->getAuthor() !== $this->getUser()) {
-            $this->addFlash(
-                'warning',
-                $this->translator->trans('message.access_denied')
-            );
-
-            return $this->redirectToRoute('post_index');
-        }
         $form = $this->createForm(
             PostType::class,
             $post,
@@ -221,16 +215,9 @@ class PostController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'post_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    #[IsGranted('DELETE', subject: 'post')]
     public function delete(Request $request, Post $post, CommentRepository $commentRepository): Response
     {
-        if ($post->getAuthor() !== $this->getUser()) {
-            $this->addFlash(
-                'warning',
-                $this->translator->trans('message.access_denied')
-            );
-
-            return $this->redirectToRoute('post_index');
-        }
         $form = $this->createForm(
             FormType::class,
             $post,

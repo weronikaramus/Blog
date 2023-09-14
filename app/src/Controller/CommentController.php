@@ -115,16 +115,9 @@ class CommentController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'comment_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    #[IsGranted('EDIT', subject: 'comment')]
     public function edit(Request $request, Comment $comment): Response
     {
-        if ($comment->getAuthor() !== $this->getUser()) {
-            $this->addFlash(
-                'warning',
-                $this->translator->trans('message.access_denied')
-            );
-
-            return $this->redirectToRoute('comment_index');
-        }
         $form = $this->createForm(
             CommentType::class,
             $comment,
@@ -167,14 +160,6 @@ class CommentController extends AbstractController
     #[IsGranted('DELETE', subject: 'comment')]
     public function delete(Request $request, Comment $comment): Response
     {
-        if ($comment->getAuthor() !== $this->getUser()) {
-            $this->addFlash(
-                'warning',
-                $this->translator->trans('message.access_denied')
-            );
-
-            return $this->redirectToRoute('post_index');
-        }
         $form = $this->createForm(
             FormType::class,
             $comment,

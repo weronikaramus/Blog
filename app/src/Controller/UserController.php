@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Class UserController.
@@ -64,16 +65,9 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(name: 'user_index', methods: 'GET')]
+    #[IsGranted('VIEW', subject: 'user')]
     public function index(Request $request): Response
     {
-        if (!$this->security->isGranted('ROLE_ADMIN')) {
-            $this->addFlash(
-                'warning',
-                $this->translator->trans('message.access_denied')
-            );
-
-            return $this->redirectToRoute('post_index');
-        }
         $pagination = $this->userService->getPaginatedList(
             $request->query->getInt('page', 1)
         );
@@ -89,13 +83,9 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}', name: 'user_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
+    #[IsGranted('SHOW', subject: 'user')]
     public function show(User $user): Response
     {
-        $currentUser = $this->security->getUser();
-        if ($this->security->isGranted('ROLE_ADMIN') or ($currentUser === $user)) {
-            return $this->render('user/show.html.twig', ['user' => $user]);
-        }
-
         $this->addFlash(
             'warning',
             $this->translator->trans('message.access_denied')
@@ -113,6 +103,7 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'user_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    #[IsGranted('EDIT', subject: 'user')]
     public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(
@@ -154,6 +145,7 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/editPassword', name: 'user_password', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    #[IsGranted('EDIT', subject: 'user')]
     public function editPassword(Request $request, User $user): Response
     {
         $form = $this->createForm(
@@ -198,6 +190,7 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'user_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    #[IsGranted('EDIT', subject: 'user')]
     public function delete(Request $request, User $user, PostRepository $postRepository, CommentRepository $commentRepository, UserService $userService): Response
     {
         $form = $this->createForm(
