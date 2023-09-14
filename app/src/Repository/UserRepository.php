@@ -52,39 +52,39 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * Save user.
      *
-     * @param User $entity User entity
+     * @param User $user User entity
      */
-    public function save(User $entity): void
+    public function save(User $user): void
     {
-        $hashedPassword = $this->passwordHasher->hashPassword($entity, $entity->getPassword());
-        $entity->setPassword($hashedPassword);
-        $this->getEntityManager()->persist($entity);
-        $this->getEntityManager()->flush();
+        $hashedPassword = $this->passwordHasher->hashPassword($user, $user->getPassword());
+        $user->setPassword($hashedPassword);
+        $this->_em->persist($user);
+        $this->_em->flush();
     }
 
     /**
      * Create user.
      *
-     * @param User $entity User entity
+     * @param User $user User entity
      */
-    public function create(User $entity): void
+    public function create(User $user): void
     {
-        $hashedPassword = $this->passwordHasher->hashPassword($entity, $entity->getPassword());
-        $entity->setPassword($hashedPassword);
-        $entity->setRoles(['ROLE_USER']);
-        $this->getEntityManager()->persist($entity);
-        $this->getEntityManager()->flush();
+        $hashedPassword = $this->passwordHasher->hashPassword($user, $user->getPassword());
+        $user->setPassword($hashedPassword);
+        $user->setRoles(['ROLE_USER']);
+        $this->_em->persist($user);
+        $this->_em->flush();
     }
 
     /**
      * Remove user.
      *
-     * @param User $entity User entity
+     * @param User $user User entity
      */
-    public function delete(User $entity): void
+    public function delete(User $user): void
     {
-        $this->getEntityManager()->remove($entity);
-        $this->getEntityManager()->flush();
+        $this->_em->remove($user);
+        $this->_em->flush();
     }
 
     /**

@@ -42,14 +42,14 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     /**
-     * Remove entity.
+     * Remove comment.
      *
-     * @param Comment $entity Comment entity
+     * @param Comment $comment Comment entity
      */
-    public function remove(Comment $entity): void
+    public function remove(Comment $comment): void
     {
-        $this->getEntityManager()->remove($entity);
-        $this->getEntityManager()->flush();
+        $this->_em->remove($comment);
+        $this->_em->flush();
     }
 
     /**

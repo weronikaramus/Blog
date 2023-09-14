@@ -11,6 +11,7 @@ use App\Entity\Comment;
 use App\Form\Type\PostType;
 use App\Form\Type\CommentType;
 use App\Repository\CommentRepository;
+use App\Repository\PostRepository;
 use App\Service\PostServiceInterface;
 use App\Service\CommentServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class PostController.
@@ -42,7 +42,6 @@ class PostController extends AbstractController
      */
     private TranslatorInterface $translator;
 
-    private EntityManagerInterface $entityManager;
 
     /**
      * Constructor.
@@ -50,14 +49,12 @@ class PostController extends AbstractController
      * @param PostServiceInterface   $postService    Post service
      * @param TranslatorInterface    $translator     Translator
      * @param CommentService         $commentService Comment service
-     * @param EntityManagerInterface $entityManager  manager
      */
-    public function __construct(PostServiceInterface $postService, TranslatorInterface $translator, CommentServiceInterface $commentService, EntityManagerInterface $entityManager)
+    public function __construct(PostServiceInterface $postService, TranslatorInterface $translator, CommentServiceInterface $commentService)
     {
         $this->postService = $postService;
         $this->translator = $translator;
         $this->commentService = $commentService;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -88,16 +85,16 @@ class PostController extends AbstractController
     /**
      * Show action.
      *
-     * @param Request                $request       HTTP request
-     * @param int                    $id            index
-     * @param EntityManagerInterface $entityManager entityManagerInterface
+     * @param Request                $request        HTTP request
+     * @param int                    $id             index
+     * @param PostRepository         $postRepository repository
      *
      * @return Response HTTP response
      */
     #[Route('/{id}', name: 'post_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
-    public function show(Request $request, int $id, EntityManagerInterface $entityManager): Response
+    public function show(Request $request, int $id, PostRepository $postRepository): Response
     {
-        $post = $entityManager->getRepository(Post::class)->find($id);
+        $post = $postRepository->find($id);
 
         $comment = new Comment();
         $comment->setPost($post); // Set the post for the comment
@@ -244,9 +241,9 @@ class PostController extends AbstractController
         );
         $form->handleRequest($request);
 
-        $comments = $commentRepository->findBy(['post' => $post->getId()]);
+        $comments = $commentRepository->findBy(['post' => $post]);
         foreach ($comments as $comment) {
-            $this->entityManager->remove($comment);
+            $commentRepository->deleteComment($comment);
         }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->postService->delete($post);

@@ -10,6 +10,7 @@ use App\Form\Type\UserPasswordType;
 use App\Form\Type\UserType;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
+use App\Service\UserService;
 use App\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -18,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Security;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class UserController.
@@ -41,22 +41,19 @@ class UserController extends AbstractController
      */
     private Security $security;
 
-    private EntityManagerInterface $entityManager;
-
     /**
      * Constructor.
      *
-     * @param UserServiceInterface   $userService   User service
-     * @param TranslatorInterface    $translator    Translator
-     * @param Security               $security      Security
-     * @param EntityManagerInterface $entityManager entity manager
+     * @param UserServiceInterface   $userService    User service
+     * @param TranslatorInterface    $translator     Translator
+     * @param Security               $security       Security
+     * @param UserRepository         $userRepository User repository
      */
-    public function __construct(UserServiceInterface $userService, TranslatorInterface $translator, Security $security, EntityManagerInterface $entityManager)
+    public function __construct(UserServiceInterface $userService, TranslatorInterface $translator, Security $security)
     {
         $this->userService = $userService;
         $this->translator = $translator;
         $this->security = $security;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -196,11 +193,12 @@ class UserController extends AbstractController
      * @param User              $user              User entity
      * @param PostRepository    $postRepository    Post repository
      * @param CommentRepository $commentRepository Comment repository
+     * @param UserService       $userService       User service
      *
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'user_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
-    public function delete(Request $request, User $user, PostRepository $postRepository, CommentRepository $commentRepository): Response
+    public function delete(Request $request, User $user, PostRepository $postRepository, CommentRepository $commentRepository, UserService $userService): Response
     {
         $form = $this->createForm(
             FormType::class,
@@ -214,16 +212,15 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $posts = $postRepository->findBy(['author' => $user->getId()]);
             foreach ($posts as $post) {
-                $this->entityManager->remove($post);
+                $postRepository->delete($post);
             }
 
             $comments = $commentRepository->findBy(['author' => $user->getId()]);
             foreach ($comments as $comment) {
-                $this->entityManager->remove($comment);
+                $commentRepository->delete($comment);
             }
 
-            $this->entityManager->remove($user);
-            $this->entityManager->flush();
+            $userService->delete($user);
 
             $this->userService->delete($user);
             $request->getSession()->invalidate();

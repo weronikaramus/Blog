@@ -11,8 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
@@ -58,13 +58,13 @@ class SecurityController extends AbstractController
      * @param Request                     $request           HTTP request
      * @param UserAuthenticatorInterface  $userAuthenticator user authentication utils
      * @param LoginFormAuthenticator      $authenticator     authenticator
-     * @param EntityManagerInterface      $entityManager     entityManagerInterface
+     * @param UserRepository              $userRepository    User repository
      * @param UserPasswordHasherInterface $passwordHasher    password hasher
      *
      * @return Response HTTP response
      */
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function register(Request $request, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('post_index');
@@ -84,8 +84,7 @@ class SecurityController extends AbstractController
             $user->setEmail($email);
             $user->setUsername($username);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $userRepository->save($user);
 
             return $userAuthenticator->authenticateUser(
                 $user,
