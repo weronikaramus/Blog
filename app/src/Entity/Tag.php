@@ -27,7 +27,7 @@ class Tag
     /**
      * Posts.
      */
-    #[ORM\OneToMany(mappedBy: 'tags', targetEntity: Post::class)]
+    #[ORM\ManyToMany(mappedBy: 'tags', targetEntity: Post::class)]
     private Collection $posts;
 
     /**

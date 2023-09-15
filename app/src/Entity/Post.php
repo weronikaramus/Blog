@@ -67,7 +67,7 @@ class Post
     /**
      * Category.
      */
-    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
@@ -77,7 +77,7 @@ class Post
      * @var ArrayCollection<int, Tag>
      */
     #[Assert\Valid]
-    #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true, inversedBy: 'posts')]
     #[ORM\JoinTable(name: 'posts_tags')]
     private $tags;
 

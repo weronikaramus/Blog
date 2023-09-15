@@ -42,8 +42,7 @@ class Comment
     /**
      * Author.
      */
-    #[ORM\ManyToOne(inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne]
     private ?User $author = null;
 
     /**
