@@ -141,11 +141,6 @@ Search.appendIndex(
             "summary": "Translator.",
             "url": "classes/App-Controller-PostController.html#property_translator"
         },                {
-            "fqsen": "\\App\\Controller\\PostController\u003A\u003A\u0024entityManager",
-            "name": "entityManager",
-            "summary": "",
-            "url": "classes/App-Controller-PostController.html#property_entityManager"
-        },                {
             "fqsen": "\\App\\Controller\\SecurityController",
             "name": "SecurityController",
             "summary": "Class\u0020SecurityController.",
@@ -260,11 +255,6 @@ Search.appendIndex(
             "name": "security",
             "summary": "Security\u0020helper.",
             "url": "classes/App-Controller-UserController.html#property_security"
-        },                {
-            "fqsen": "\\App\\Controller\\UserController\u003A\u003A\u0024entityManager",
-            "name": "entityManager",
-            "summary": "",
-            "url": "classes/App-Controller-UserController.html#property_entityManager"
         },                {
             "fqsen": "\\App\\DataFixtures\\AbstractBaseFixtures",
             "name": "AbstractBaseFixtures",
@@ -1138,7 +1128,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Repository\\CommentRepository\u003A\u003Aremove\u0028\u0029",
             "name": "remove",
-            "summary": "Remove\u0020entity.",
+            "summary": "Remove\u0020comment.",
             "url": "classes/App-Repository-CommentRepository.html#method_remove"
         },                {
             "fqsen": "\\App\\Repository\\CommentRepository\u003A\u003AqueryAll\u0028\u0029",

@@ -47,9 +47,9 @@ class PostController extends AbstractController
     /**
      * Constructor.
      *
-     * @param PostServiceInterface   $postService    Post service
-     * @param TranslatorInterface    $translator     Translator
-     * @param CommentService         $commentService Comment service
+     * @param PostServiceInterface $postService    Post service
+     * @param TranslatorInterface  $translator     Translator
+     * @param CommentService       $commentService Comment service
      */
     public function __construct(PostServiceInterface $postService, TranslatorInterface $translator, CommentServiceInterface $commentService)
     {
@@ -86,9 +86,9 @@ class PostController extends AbstractController
     /**
      * Show action.
      *
-     * @param Request                $request        HTTP request
-     * @param int                    $id             index
-     * @param PostRepository         $postRepository repository
+     * @param Request        $request        HTTP request
+     * @param int            $id             index
+     * @param PostRepository $postRepository repository
      *
      * @return Response HTTP response
      */
